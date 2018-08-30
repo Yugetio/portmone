@@ -1,0 +1,119 @@
+version: '3'
+
+volumes:
+  elasticsearch:
+
+services:
+
+### PHP-FPM ##############################################
+    php-fpm:
+      build:
+        context: ./docker/php-fpm
+      volumes:
+        - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
+        - ./:/var/www
+      expose:
+        - "9000"
+
+### NGINX Server #########################################
+    nginx:
+      build:
+        context: ./docker/nginx
+      volumes:
+        - ./:/var/www
+      ports:
+        - 8080:80
+        - 8442:443
+      depends_on:
+        - php-fpm
+
+#### PostgreSQL ###########################################
+#    postgres:
+#      build: ./docker/postgres
+#      volumes:
+#        - ${POSTGRES_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+#      ports:
+#        - "5432:5432"
+
+#### ElasticSearch ########################################
+#    elasticsearch:
+#      build: ./elasticsearch
+#      volumes:
+#        - elasticsearch:/usr/share/elasticsearch/data
+#      environment:
+#        - cluster.name=portmone
+#        - bootstrap.memory_lock=true
+#        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#      ulimits:
+#        memlock:
+#          soft: -1
+#          hard: -1
+#      ports:
+#        - "9200:9200"
+#        - "9300:9300"
+#      depends_on:
+#        - php-fpm
+
+#### MySQL ################################################
+#    mysql:
+#      build:
+#        context: ./mysql
+#        args:
+#          - MYSQL_VERSION=${MYSQL_VERSION}
+#      environment:
+#        - MYSQL_DATABASE=${MYSQL_DATABASE}
+#        - MYSQL_USER=${MYSQL_USER}
+#        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+#        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+#        - TZ=${WORKSPACE_TIMEZONE}
+#      volumes:
+#        - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
+#        - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+#      ports:
+#        - "${MYSQL_PORT}:3306"
+#      networks:
+#        - backend
+#
+#### MongoDB ##############################################
+#    mongo:
+#      build: ./mongo
+#      ports:
+#        - "${MONGODB_PORT}:27017"
+#      volumes:
+#        - ${DATA_PATH_HOST}/mongo:/data/db
+#      networks:
+#        - backend
+#
+#### phpMyAdmin ###########################################
+#    phpmyadmin:
+#      build: ./phpmyadmin
+#      environment:
+#        - PMA_ARBITRARY=1
+#        - MYSQL_USER=${PMA_USER}
+#        - MYSQL_PASSWORD=${PMA_PASSWORD}
+#        - MYSQL_ROOT_PASSWORD=${PMA_ROOT_PASSWORD}
+#      ports:
+#        - "${PMA_PORT}:80"
+#      depends_on:
+#        - "${PMA_DB_ENGINE}"
+#      networks:
+#        - frontend
+#        - backend
+#
+#### MongoWebUI ################################################
+#    mongo-webui:
+#      build:
+#        context: ./mongo-webui
+#      restart: always
+#      environment:
+#        - ROOT_URL=${MONGO_WEBUI_ROOT_URL}
+#        - MONGO_URL=${MONGO_WEBUI_MONGO_URL}
+#        - INSTALL_MONGO=${MONGO_WEBUI_INSTALL_MONGO}
+#      volumes:
+#        - ${DATA_PATH_HOST}/mongo-webui:/data/db
+#      ports:
+#        - "${MONGO_WEBUI_PORT}:3000"
+#      networks:
+#        - backend
+#      depends_on:
+#        - mongo
