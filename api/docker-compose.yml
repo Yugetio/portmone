@@ -5,6 +5,13 @@ volumes:
 
 services:
 
+### Composer ##############################################
+    composer:
+      image: composer:latest
+      volumes:
+      - .:/app
+      command: 'true'
+
 ### PHP-FPM ##############################################
     php-fpm:
       build:
