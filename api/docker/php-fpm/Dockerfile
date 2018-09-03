@@ -34,16 +34,15 @@ RUN sed -i "s/xdebug.remote_autostart=0/xdebug.remote_autostart=1/" /usr/local/e
 # pgsql
 ###########################################################################
 
-RUN docker-php-ext-install pgsql \
+RUN docker-php-ext-install pgsql
 
 ###########################################################################
 # pgsql client
 ###########################################################################
-
+#
 RUN mkdir -p /usr/share/man/man1 && \
     mkdir -p /usr/share/man/man7 && \
-    # Install the pgsql client
-    apt-get install -y postgresql-client \
+    apt-get install -y postgresql-client
 
 #
 #--------------------------------------------------------------------------
