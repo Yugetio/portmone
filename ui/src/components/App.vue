@@ -1,81 +1,104 @@
 <template>
   <div id="app">
-    <div class="banner">
-      <img
-        src="https://vuejs.org/images/logo.png"
-        width="100"
-        alt="vue"
-        class="logo"
-      />
-      <h1>Welcome to Vue.js</h1>
-    </div>
-    <div class="bottom">
-      To get started, edit <code>./src/components/App.vue</code> and save to reload.<br/>
-      <span class="fade">
-        Checkout <code>./README.md</code> for more usages.
-      </span>
+    <router-view></router-view>
+    <div id="wrapper">
+      <form name="login-form" class="login-form" action="" method="post">
+  <div class="content">
+    <Header></Header>
+    <Username></Username>
+    <Password></Password>
+  </div>
+  <div class="footer">
+    <Login></Login>
+    <Register></Register>
+  </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
+import Login from './wi-base/Login.vue';
+import Register from './wi-base/Sign_up.vue';
+import Username from './wi-base/input_username.vue';
+import Password from './wi-base/input_password.vue';
+import Header from './main/header.vue';
   export default {
-    name: 'app'
+    components: {
+      Login,
+      Register,
+      Username,
+      Password,
+      Header
+    }
+    //,
+  //  methods:(
+
+    //)
   }
 </script>
 
-<!-- CSS libraries -->
-<style src="normalize.css/normalize.css"></style>
-
-<!-- Global CSS -->
 <style>
-  code {
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-    font-size: 0.9em;
-    white-space: pre-wrap;
-    color: #2c3e50;
-  }
+@import url(http://fonts.googleapis.com/css?family=Bree+Serif);
 
-  code::before, code::after {
-    content: '`';
-  }
-</style>
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
 
-<!-- Scoped component css -->
-<!-- It only affect current component -->
-<style scoped>
-  #app {
-    text-align: center;
-  }
+body {
+	background: url(../assets/images/bg.png) repeat;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight:300;
+	text-align: left;
+	text-decoration: none;
+}
 
-  #app h1 {
-    color: #2c3e50;
-    font-weight: 300;
-    margin: 0;
-  }
+#wrapper {
+	width: 300px;
+	height: 400px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -150px;
+	margin-top: -200px;
+}
+/*******************
+FOOTER
+*******************/
+.login-form .footer {
+	padding: 25px 30px 40px 30px;
+	overflow: auto;
 
-  .banner {
-    height: 200px;
-    background-color: #f6f6f6;
-    padding: 50px 10px;
-  }
+	background: #d4dedf;
+	border-top: 1px solid #fff;
 
-  .bottom {
-    padding: 80px 10px;
-    font-size: 24px;
-    font-weight: 300;
-  }
+	box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+	-moz-box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+	-webkit-box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+}
 
-  .fade {
-    font-size: 14px;
-  }
+.login-form .content .input {
+	width: 188px;
+	padding: 15px 25px;
 
-  .logo {
-    animation: spin 4s 1s infinite linear
-  }
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	color: #9d9e9e;
+	text-shadow: 1px 1px 0 rgba(256,256,256,1.0);
 
-  @keyframes spin {
-    from {transform:rotate(0deg);}
-    to {transform:rotate(360deg);}
-  }
+	background: #fff;
+	border: 1px solid #fff;
+	border-radius: 5px;
+
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.50);
+	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.50);
+	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.50);
+}
+
+.login-form .content {
+	padding: 0 30px 25px 30px;
+}
 </style>

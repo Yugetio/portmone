@@ -1,11 +1,11 @@
-version: "3"
+version: '3'
 services:
-  react:
+  vue:
     build:
       context: ./
     volumes:
-    - '.:/app'
-    - '/app/node_modules'
+      - '.:/app'
+      - /app/node_modules
     ports:
-    - "4000:4000"
-    - "35729:35729"
+      - '4000:4000'
+      - '35729:35729'
