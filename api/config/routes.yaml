@@ -1,7 +1,3 @@
-create-user:
-   path: /user #url за яким йде виклик методу у роутера
-   controller: App\Controller\CreateUserController::createAction #шлях до контролеру і виклик методу для створення юзера
-
-get-auth:
-   path: /auth #url за яким йде виклик методу у роутера
-   controller: App\Controller\GetUserAuth::getAuth #шлях до контролеру і виклик методу для створення юзера
+bundle:
+    resource: '../src/Portmone/Resources/config/'
+    type:     directory
