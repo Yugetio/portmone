@@ -1,7 +1,10 @@
 <template>
+
   <div id="app">
     <router-view></router-view>
+<Panel></Panel>
     <div id="wrapper">
+
       <form name="login-form" class="login-form" action="" method="post">
   <div class="content">
     <Header></Header>
@@ -10,7 +13,7 @@
   </div>
   <div class="footer">
     <Login></Login>
-    <Register></Register>
+
   </div>
       </form>
     </div>
@@ -18,18 +21,20 @@
 </template>
 
 <script>
-import Login from './wi-base/Login.vue';
-import Register from './wi-base/Sign_up.vue';
-import Username from './wi-base/input_username.vue';
-import Password from './wi-base/input_password.vue';
-import Header from './main/header.vue';
+import Login from './main/forms/Login.vue';
+import Register from './main/forms/Sign_up.vue';
+import Username from './main/forms/input_username.vue';
+import Password from './main/forms/input_password.vue';
+import Header from './main/forms/header.vue';
+import Panel from './main/top-panel/top_panel.vue';
   export default {
     components: {
       Login,
       Register,
       Username,
       Password,
-      Header
+      Header,
+      Panel
     }
     //,
   //  methods:(
