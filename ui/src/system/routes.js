@@ -1,5 +1,7 @@
-import app from '../components/App.vue'
+
+import main from '../components/main/pages/main.vue'
+
 
 export const routes = [
-  {path: '/', component: app}
+  {path: '/', component: main}
 ]
