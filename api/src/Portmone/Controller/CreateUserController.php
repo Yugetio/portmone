@@ -1,5 +1,5 @@
 <?php
-
+#api/src/Portmone/Controller/CreateUserController.php
 namespace Portmone\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -7,21 +7,32 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Portmone\Exception\InvalidSignUpException;
 use App\Portmone\Exception\UserAlreadyExistException;
 use App\Portmone\Exception\DataBaseConnectionException;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Portmone\Service;
 
-class CreateUserController #контролер для створення користувачів
+class CreateUserController extends Controller
 {
 
-  public function createAction() : Response
+  public function createAction(UserDataValid $userDataValid,UserExist $userExist,
+  DataBaseConnection $dataBaseConnection) : Response
   {
     try {
-        $data=json_decode( file_get_contents('php://input'), true );
-        $str = sprintf("%s %s", $data['name'], $data['email']."\r\n");
 
-        if(strlen($data['name'])<5 || strlen($data['name'])>32){
-             throw new InvalidLoginException("Error Processing Request", 1);
-        }elseif (strlen($data['email'])<5 || strlen($data['email'])>32) {
-            throw new InvalidLoginException("Error Processing Request", 1);
+        $isValid = $userDataValid->validCheck();
+        if ($isValid == false) {
+            throw new InvalidSignUpException("Error Processing Request", 1);
+
+        }
+        $isUserExist = $userExist->existCheck();
+        if ($isUserExist == false) {
+            throw new UserAlreadyExistException("Error Processing Request", 1);
+
+        }
+        $isConnect = $dataBaseConnection->connectionCheck();
+        if ($isConnect == false) {
+            throw new DataBaseConnectionException("Error Processing Request", 1);
+
         }
 
     } catch (InvalidSignUpException $e) {
