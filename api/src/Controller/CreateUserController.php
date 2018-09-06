@@ -1,39 +1,24 @@
 <?php
 #api/src/Portmone/Controller/CreateUserController.php
-namespace Portmone\Controller;
+namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Portmone\Exception\InvalidSignUpException;
-use App\Portmone\Exception\UserAlreadyExistException;
-use App\Portmone\Exception\DataBaseConnectionException;
+use App\Exception\InvalidSignUpException;
+use App\Exception\UserAlreadyExistException;
+use App\Exception\DataBaseConnectionException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Portmone\Service;
+use App\Service;
 
 class CreateUserController extends Controller
 {
 
-  public function createAction(UserDataValid $userDataValid,UserExist $userExist,
-  DataBaseConnection $dataBaseConnection) : Response
+  public function createAction() : Response
   {
     try {
 
-        $isValid = $userDataValid->validCheck();
-        if ($isValid == false) {
-            throw new InvalidSignUpException("Error Processing Request", 1);
-
-        }
-        $isUserExist = $userExist->existCheck();
-        if ($isUserExist == false) {
-            throw new UserAlreadyExistException("Error Processing Request", 1);
-
-        }
-        $isConnect = $dataBaseConnection->connectionCheck();
-        if ($isConnect == false) {
-            throw new DataBaseConnectionException("Error Processing Request", 1);
-
-        }
+         throw new InvalidSignUpException("Error Processing Request", 1);
 
     } catch (InvalidSignUpException $e) {
       $httpStatusCode = array('Bad request' => 400);

@@ -1,7 +1,7 @@
 <?php
-namespace App\Portmone\Exception;
+namespace App\Exception;
 
 class InvalidSignUpException extends \Exception
 {
-  
+
 }
