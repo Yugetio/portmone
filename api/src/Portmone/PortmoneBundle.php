@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api;
+namespace App\Portmone;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

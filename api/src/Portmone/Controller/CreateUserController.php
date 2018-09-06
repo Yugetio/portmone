@@ -1,19 +1,24 @@
 <?php
 #api/src/Portmone/Controller/CreateUserController.php
-namespace App\Controller;
+namespace App\Portmone\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Exception\InvalidSignUpException;
 use App\Exception\UserAlreadyExistException;
 use App\Exception\DataBaseConnectionException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use App\Service;
+use Portmone\Service;
+
+
 
 class CreateUserController extends Controller
 {
-
+    /**
+     * @Route("/user")
+    */
   public function createAction() : Response
   {
     try {
