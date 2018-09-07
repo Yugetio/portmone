@@ -1,53 +1,21 @@
 <template>
-
   <div id="app">
-    
-    <Panel></Panel>
-    <div id="wrapper">
-
-      <form name="login-form" class="login-form" action="" method="post">
-  <div class="content">
-    <Header></Header>
-    <Username></Username>
-    <Password></Password>
+      <TopPanel></TopPanel>
+      <Forma></Forma>
   </div>
-  <div class="footer">
-    <Login></Login>
-
-  </div>
-      </form>
-    </div>
-  </div>
-
-  </div>
-   
-    
-
 </template>
 
 <script>
-
-import Login from '../../main/forms/Login.vue';
-import Register from '../../main/forms/Sign_up.vue';
-import Username from '../../main/forms/input_username.vue';
-import Password from '../../main/forms/input_password.vue';
-import Header from '../../main/forms/header.vue';
-import Panel from '../../main/top-panel/topPanel.vue';
+import TopPanel from '../../main/top-panel/topPanel.vue';
+import Forma from '../../main/forms/forma.vue';
   export default {
     components: {
-      Login,
-      Register,
-      Username,
-      Password,
-      Header,
-      Panel
+      TopPanel,
+      Forma
     }
-
   }
-
 </script>
 
 <style>
-@import './../../../assets/style/forms.css';
-</style>
 
+</style>
