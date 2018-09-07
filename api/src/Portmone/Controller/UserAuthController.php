@@ -1,19 +1,26 @@
 <?php
 
-namespace App\Portmone\Controller; #простір імен , в якому лежать контролери
+namespace App\Portmone\Controller;
 
-use Symfony\Component\HttpFoundation\Response;#виклик методу Респонс з дефолтної ліби
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class UserAuthController extends Controller
 {
 
-  public function userAuth() : Response #метод контролера для автентифікація
+/**
+*@Route("/auth")
+*/
+  public function userAuth() : Response
   {
     try {
-      return new Response('Hello');
-    } catch (Exception $e) {
+      throw new Exception("Error Processing Request", 1);
 
+    } catch (Exception $e) {
+        $httpStatusCode = array('Server Auth Error' => 500);
+        return new Response(json_encode($httpStatusCode));
     }
   }
 }

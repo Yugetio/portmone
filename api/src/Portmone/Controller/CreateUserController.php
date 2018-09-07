@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Portmone\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -11,11 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use App\Portmone\Service;
 
-
-
 class CreateUserController extends Controller
 {
 
+/**
+*@Route("/user")
+*/
   public function createAction() : Response
   {
     try {
