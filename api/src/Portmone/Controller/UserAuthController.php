@@ -3,13 +3,11 @@
 namespace App\Portmone\Controller; #простір імен , в якому лежать контролери
 
 use Symfony\Component\HttpFoundation\Response;#виклик методу Респонс з дефолтної ліби
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class UserAuthController #контролер
+class UserAuthController extends Controller
 {
-    /**
-     * @Route("/auth")
-    */
+
   public function userAuth() : Response #метод контролера для автентифікація
   {
     try {

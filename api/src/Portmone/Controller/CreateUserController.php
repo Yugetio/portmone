@@ -1,29 +1,26 @@
 <?php
-#api/src/Portmone/Controller/CreateUserController.php
 namespace App\Portmone\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Exception\InvalidSignUpException;
-use App\Exception\UserAlreadyExistException;
-use App\Exception\DataBaseConnectionException;
+use App\Portmone\Exception\InvalidSignUpException;
+use App\Portmone\Exception\UserAlreadyExistException;
+use App\Portmone\Exception\DataBaseConnectionException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Portmone\Service;
+use App\Portmone\Service;
 
 
 
 class CreateUserController extends Controller
 {
-    /**
-     * @Route("/user")
-    */
+
   public function createAction() : Response
   {
     try {
 
-         throw new InvalidSignUpException("Error Processing Request", 1);
+         throw new Exception("Error Processing Request", 1);
 
     } catch (InvalidSignUpException $e) {
       $httpStatusCode = array('Bad request' => 400);
