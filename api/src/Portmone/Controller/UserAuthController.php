@@ -4,12 +4,17 @@ use Symfony\Component\HttpFoundation\Response;#виклик методу Рес�
 class UserAuthController #контролер
 {
 
-  public function userAuth() : Response #метод контролера для автентифікація
+  public function getAuth() : Response #метод контролера для автентифікація
   {
     try {
-      return new Response('Hello');
-    } catch (Exception $e) {
-
+        return $this->formResponse(200, ['status'=>'ok']);
+    } catch (\Exception $e) {
+        return $this->formResponse(500, ['status'=>'Internal Server Error']);
     }
   }
+
+    private function formResponse(int $code, array $data) : Response
+    {
+        return new Response(json_encode($data), $code);
+    }
 }
