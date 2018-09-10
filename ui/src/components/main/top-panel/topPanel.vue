@@ -1,19 +1,15 @@
 <template>
-<div class="panel">
-<LoginButton></LoginButton>
-
-</div>
-
+    <div class="panel">
+        <LoginButton></LoginButton>
+    </div>
 </template>
 
 <script>
-import LoginButton from './login-button.vue';
-import RegButton from './registration-button.vue';
+import LoginButton from './topImages.vue';
 
   export default {
     components: {
-      LoginButton,
-      RegButton
+      LoginButton
     }
   }
 </script>
