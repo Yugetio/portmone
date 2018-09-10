@@ -37,7 +37,7 @@ class CreateUserController extends Controller
             throw new DataBaseConnectionException("Error Processing Request", 1);
 
         }
-
+        
 
     } catch (InvalidSignUpException $e) {
       $httpStatusCode = array('Bad request' => 400);
