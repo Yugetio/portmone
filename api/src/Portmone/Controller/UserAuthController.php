@@ -11,7 +11,7 @@ class UserAuthController extends Controller
 {
 
 /**
-*@Route("/auth")
+*@Route("/auth", methods={"POST"})
 */
   public function userAuth() : Response
   {
