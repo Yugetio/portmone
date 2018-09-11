@@ -1,7 +1,5 @@
 <template>
-
     <input @click="sendData" name="submit" type="button" v-bind:value="nameButton" class="button" />
-
 </template>
 
 <script>

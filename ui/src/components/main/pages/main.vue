@@ -1,21 +1,17 @@
 <template>
-  <div id="app">
-      <TopPanel></TopPanel>
+  <div id="app"
       <Forma></Forma>
   </div>
 </template>
 
 <script>
-import TopPanel from '../../main/top-panel/topPanel.vue';
-import Forma from '../../main/forms/forma.vue';
+import Forma from '../../main/forms/loginForm.vue';
   export default {
     components: {
-      TopPanel,
       Forma
     }
   }
 </script>
 
 <style>
-
 </style>

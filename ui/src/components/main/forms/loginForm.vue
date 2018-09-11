@@ -20,7 +20,7 @@
 
 <script>
 
-import Login from '../../main/forms/Login.vue';
+import Login from '../../main/forms/button.vue';
 import Input from '../../main/forms/input.vue';
   export default {
     data() { return {
