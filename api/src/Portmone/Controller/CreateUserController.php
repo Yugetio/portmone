@@ -30,14 +30,14 @@ class CreateUserController extends Controller
         if ($userDataValid->validCheck()==false) {
             throw new InvalidSignUpException("Error Processing Request", 1);
 
-        }elseif ($userExist->existCheck()==false) {
+        }elseif ($userExist->existCheck()==true) {
             throw new UserAlreadyExistException("Error Processing Request", 1);
 
         }elseif ($dataBaseConnection->connectionCheck()==false) {
             throw new DataBaseConnectionException("Error Processing Request", 1);
 
         }
-        
+
 
     } catch (InvalidSignUpException $e) {
       $httpStatusCode = array('Bad request' => 400);

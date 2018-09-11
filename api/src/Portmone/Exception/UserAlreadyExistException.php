@@ -1,5 +1,7 @@
 <?php
 namespace App\Portmone\Exception;
 
-class UserAlreadyExistException extends \Exception { };
-?>
+class UserAlreadyExistException extends \Exception
+{
+
+}
