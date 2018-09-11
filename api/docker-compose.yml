@@ -41,6 +41,10 @@ services:
         - ./docker/postgres/entrypoint-initdb.d:/docker-entrypoint-initdb.d
       ports:
         - "5432:5432"
+      environment:
+        - POSTGRES_DB=portmone
+        - POSTGRES_USER=api_user
+        - POSTGRES_PASSWORD=GR&G)(HR&RH
 
 #### ElasticSearch ########################################
     elasticsearch:
