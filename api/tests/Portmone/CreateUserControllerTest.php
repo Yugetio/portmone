@@ -5,8 +5,9 @@ namespace App\Portmone\Controller;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-class CreateUserControllerTest extends TestCase
+class CreateUserControllerTest extends WebTestCase
 {
     
     public function createUserControllerTest()

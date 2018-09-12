@@ -1,3 +1,7 @@
 controllers:
     resource: ../../src/Portmone/Controller
     type: annotation
+# 
+# tests:
+#     resource: ../../tests/Portmone
+#     type: annotation

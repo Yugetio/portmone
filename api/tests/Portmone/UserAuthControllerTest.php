@@ -6,9 +6,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class UserAuthControllerTest extends WebTe      stCase
+class UserAuthControllerTest extends WebTestCase
 {
-    
     public function userAuthTest()
     {
         $client = static::createClient();
