@@ -3,6 +3,7 @@
 namespace App\Portmone\Controller;
 
 use App\Portmone\Service\UserExist;
+use App\Portmone\Service\DataBaseUserLoad;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Portmone\Exception\UserNotExistException;
@@ -22,10 +23,13 @@ class UserAuthController extends Controller
     try {
         if ($userExist->existCheck()==false) {
             throw new UserNotExistException("Error Processing Request", 1);
+        }else {
+            $dataBaseUserLoad = new DataBaseUserLoad();
+            $dataBaseUserLoad->userLoadFromDb();
         }
 
     }catch (UserNotExistException $e) {
-        $httpStatusCode = array('Not Found' => 404);
+        $httpStatusCode = array('Not Found User' => 404);
         return new Response(json_encode($httpStatusCode));
     }catch (Exception $e) {
         $httpStatusCode = array('Server Auth Error' => 500);

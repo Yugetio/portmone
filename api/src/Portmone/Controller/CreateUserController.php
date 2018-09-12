@@ -24,28 +24,26 @@ class CreateUserController extends Controller
 */
   public function createAction() : Response
   {
-    $dataBaseConnection = new DataBaseConnection();
-    $userDataValid = new UserDataValid();
     $userExist = new UserExist();
-
-    $data=json_decode( file_get_contents('php://input'), true );
+    $userDataValid = new UserDataValid();
+    $dataBaseConnection = new DataBaseConnection();
 
     try {
 
-        if ($userDataValid->validCheck($data)==false) {
-            throw new InvalidSignUpException("Error Processing Request", 1);
+        if ($userDataValid->validCheck()==false) {
+            throw new InvalidSignUpException("Invalid Sign Up", 1);
 
-        }elseif ($userExist->existCheck($data)==true) {
-            throw new UserAlreadyExistException("Error Processing Request", 1);
+        } elseif ($userExist->existCheck()==true) {
+            throw new UserAlreadyExistException("User Already Exist", 1);
 
-        }elseif ($dataBaseConnection->connectionCheck($data)==false) {
-            throw new DataBaseConnectionException("Error Processing Request", 1);
+        } elseif ($dataBaseConnection->connectionCheck()==false) {
+            throw new DataBaseConnectionException("Lost connection with Data Base", 1);
+
+        } else {
+            $dataBaseSave = new DataBaseSave();
+            $dataBaseSave->saveToDb();
 
         }
-
-
-
-
 
     } catch (InvalidSignUpException $e) {
       $httpStatusCode = array('Bad request' => 400);

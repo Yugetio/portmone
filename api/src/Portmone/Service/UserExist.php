@@ -2,15 +2,23 @@
 
 namespace App\Portmone\Service;
 
+use App\Portmone\Entity\UserEntity;
+
 /**
  *
  */
 class UserExist
 {
 
-    public function existCheck($data)
+    public function existCheck()
     {
-        $isUserExist = false;
-        return $isUserExist;
+        $user = $this->getDoctrine()
+        ->getRepository(UserEntity::class)
+        ->find($data['email']);
+
+    if (!$user) {
+            return false;
+        };
     }
+    
 }
