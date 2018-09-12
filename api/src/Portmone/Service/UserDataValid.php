@@ -8,9 +8,9 @@ namespace App\Portmone\Service;
 class UserDataValid
 {
 
-    public function validCheck()
+    public function validCheck($data)
     {
-        $data=json_decode( file_get_contents('php://input'), true );
+        
         $str = sprintf("%s %s", $data['name'], $data['email']."\r\n");
 
         if(strlen($data['name'])<5 || strlen($data['name'])>32){

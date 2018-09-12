@@ -29,22 +29,22 @@ services:
       volumes:
         - ./:/var/www
       ports:
-        - 8080:80
-        - 8442:443
+        - "8080:80"
+        - "8442:443"
       depends_on:
         - php-fpm
 
 #### PostgreSQL ###########################################
-    postgres:
+    postgres.loc:
       build: ./docker/postgres
       volumes:
         - ./docker/postgres/entrypoint-initdb.d:/docker-entrypoint-initdb.d
       ports:
         - "5432:5432"
       environment:
-        - POSTGRES_DB=portmone
+        - POSTGRES_DB=portmonea
         - POSTGRES_USER=api_user
-        - POSTGRES_PASSWORD=GR&G)(HR&RH
+        - POSTGRES_PASSWORD=1111
 
 #### ElasticSearch ########################################
     elasticsearch:

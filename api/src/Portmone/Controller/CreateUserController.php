@@ -2,8 +2,10 @@
 
 namespace App\Portmone\Controller;
 
+
 use App\Portmone\Service\UserExist;
 use App\Portmone\Service\UserDataValid;
+use App\Portmone\Service\DataBaseSave;
 use App\Portmone\Service\DataBaseConnection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,17 +28,23 @@ class CreateUserController extends Controller
     $userDataValid = new UserDataValid();
     $userExist = new UserExist();
 
+    $data=json_decode( file_get_contents('php://input'), true );
+
     try {
-        if ($userDataValid->validCheck()==false) {
+
+        if ($userDataValid->validCheck($data)==false) {
             throw new InvalidSignUpException("Error Processing Request", 1);
 
-        }elseif ($userExist->existCheck()==true) {
+        }elseif ($userExist->existCheck($data)==true) {
             throw new UserAlreadyExistException("Error Processing Request", 1);
 
-        }elseif ($dataBaseConnection->connectionCheck()==false) {
+        }elseif ($dataBaseConnection->connectionCheck($data)==false) {
             throw new DataBaseConnectionException("Error Processing Request", 1);
 
         }
+
+
+
 
 
     } catch (InvalidSignUpException $e) {
