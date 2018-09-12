@@ -1,16 +1,21 @@
 <template>
   <div>
-      <TopPanel></TopPanel>
+      <Header></Header>
+        <Footer></Footer>
       <router-view></router-view>
   </div>
 </template>
 
 <script>
-import TopPanel from  './main/top-panel/topPanel.vue';
+
+import Header from  './main/panel/header.vue';
+import Footer from  './main/panel/footer.vue';
 
 export default {
   components: {
-    TopPanel
+    Header,
+    Footer
+
   }
 }
 </script>

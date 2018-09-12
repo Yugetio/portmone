@@ -1,16 +1,16 @@
 <template>
 
-  <div id="wrapper">
+  <div class="wrapper">
 
    <form name="login-form" class="login-form" action="" method="post">
-     <div class="content">
-       <div class="header">
-        <h1>Registration</h1>
-        <span>Enter login information</span>
+     <div class="content-forms">
+       <div class="header-forms">
+        <h1>Authorization</h1>
+        <span>Enter your registration information to enter your personal account.</span>
   </div>
  <Input @sendInputData='receivedInputData'/>
      </div>
-    <div class="footer">
+    <div class="footer-forms">
       <Login :inputData="inputData" :nameButton="nameButton" />
     </div>
    </form>
@@ -20,12 +20,12 @@
 
 <script>
 
-import Login from '../../main/forms/Login.vue';
+import Login from '../../main/forms/button.vue';
 import Input from '../../main/forms/input.vue';
   export default {
     data() { return {
       inputData: {},
-      nameButton: "Sign up"
+      nameButton: "Login"
     }
     },
     components: {

@@ -1,5 +1,6 @@
 <template>
-    <div class="panel">
+    <div class="header">
+        <div class="logo"> <img src="./../../../assets/images/logo.png" alt="logo"></div>
         <LoginButton></LoginButton>
     </div>
 </template>
@@ -15,5 +16,5 @@ import LoginButton from './topImages.vue';
 </script>
 
 <style>
-@import './../../../assets/style/topPanel.css';
+@import './../../../assets/style/header.css';
 </style>
