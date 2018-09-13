@@ -2,6 +2,8 @@
 
 namespace App\Portmone\Entity;
 
+use App\Portmone\Exception\InvalidSignUpException;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,6 +40,12 @@ class UserEntity
 
     public function setPassword(string $password): self
     {
+        if($email<5 || $email>32){
+            throw new InvalidSignUpException();
+
+        }elseif ($email != strlen(utf8_decode($email))) {
+            throw new InvalidSignUpException();
+        }
         $this->password = $password;
 
         return $this;
@@ -50,7 +58,13 @@ class UserEntity
 
     public function setEmail(string $email): self
     {
-        $this->email = $email;
+        if($email<5 || $email>32){
+            throw new InvalidSignUpException();
+
+        }elseif ($email != strlen(utf8_decode($email))) {
+            throw new InvalidSignUpException();
+        }
+        $this->$email = $email;
 
         return $this;
     }
