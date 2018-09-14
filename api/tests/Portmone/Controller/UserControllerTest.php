@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class CreateUserControllerTest extends WebTestCase
+class CreateUserControllerTest extends TestCase
 {
 
     public function createUserControllerTest()

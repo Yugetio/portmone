@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class UserAuthControllerTest extends WebTestCase
+class UserAuthControllerTest extends TestCase
 {
     public function userAuthTest()
     {

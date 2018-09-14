@@ -30,7 +30,7 @@ class UserController extends Controller
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return new JsonResponse(['userId' => $user->getId()]);
+        return new JsonResponse(['User create is successfully' => $user->getEmail()]);
 
     } catch (Exception $e) {
       return $this->fail($e);
@@ -48,13 +48,13 @@ class UserController extends Controller
         ->getRepository(UserEntity::class)
         ->find($email);
 
-    if (!$product) {
+    if (!$user) {
         throw $this->createNotFoundException(
-            'No product found for id '.$id
+            'No user found for email '.$email
         );
     }
 
-    return new Response('Check out this great product: '.$product->getName());
+    return new Response('Hello: '->getName());
 
     }catch (Exception $e) {
           return $this->fail($e);

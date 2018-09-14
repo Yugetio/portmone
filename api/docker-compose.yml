@@ -52,3 +52,8 @@ services:
       - '9300:9300'
     depends_on:
       - php-fpm
+  phpunit:
+    image: phpunit/phpunit
+    command:  ./bin/phpunit tests/Portmone/Controller/UserControllerTest.php
+    volumes:
+       - './:/var/www'
