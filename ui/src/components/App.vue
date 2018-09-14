@@ -1,8 +1,8 @@
 <template>
-  <div>
-      <Header></Header>
+  <div id="app">
+        <Header></Header>
+        <router-view></router-view>
         <Footer></Footer>
-      <router-view></router-view>
   </div>
 </template>
 
@@ -21,5 +21,5 @@ export default {
 </script>
 
 <style>
-
+@import './../assets/style/general.css';
 </style>

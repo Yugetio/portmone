@@ -1,5 +1,7 @@
 import main from '../components/main/pages/main.vue'
 import registrationForm from '../components/main/forms/registrationForm.vue'
+import workPage from '../components/main/pages/workPage.vue'
+import profilePage from '../components/main/pages/profilePage.vue'
 
 
 
@@ -11,5 +13,13 @@ export const routes = [
   {
     path: '/registration',
     component: registrationForm
+  },
+  {
+    path: '/workpage',
+    component: workPage
+  },
+  {
+    path: '/profile',
+    component: profilePage
   }
 ];

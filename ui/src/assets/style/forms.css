@@ -1,20 +1,5 @@
 
-@import url(http://fonts.googleapis.com/css?family=Bree+Serif);
 
-
-* {
-	margin: 0;
-	padding: 0;
-	border: 0;
-}
-
-body {
-	background: url(../images/bg.png) repeat;
-	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-	font-weight:300;
-	text-align: left;
-	text-decoration: none;
-}
 
 .wrapper {
 
@@ -23,23 +8,6 @@ body {
 	margin: 40px auto;
 }
 
-
-.gradient {
-	/* Center Positioning */
-	width: 600px;
-	height: 600px;
-	position: fixed;
-	left: 50%;
-	top: 50%;
-	margin-left: -300px;
-	margin-top: -300px;
-
-	/* Fallback */
-	background-image: url(../images/gradient.png);
-	background-repeat: no-repeat;
-
-
-}
 
 	/*LOGIN FORM*/
 
@@ -52,8 +20,6 @@ body {
 	background: #f3f3f3;
 	border: 1px solid #fff;
 	border-radius: 5px;
-
-
 }
 
 /*HEADER*/
@@ -99,8 +65,6 @@ body {
 	background: #fff;
 	border: 1px solid #fff;
 	border-radius: 5px;
-
-
 }
 
 /* Second input field */
@@ -116,8 +80,6 @@ body {
 .login-form .content-forms .input:focus {
 	background: #dfe9ec;
 	color: #414848;
-
-
 }
 
 .user-icon, .pass-icon {
@@ -128,8 +90,6 @@ body {
 	left: 0px;
 	padding-right: 2px;
 	z-index: 3;
-
-
 }
 
 /*FOOTER*/
@@ -140,8 +100,6 @@ body {
 
 	background: #d4dedf;
 	border-top: 1px solid #fff;
-
-
 }
 
 /* Login button */
@@ -159,15 +117,11 @@ body {
 	border: 1px solid #46b3d3;
 	border-radius: 5px;
 	cursor: pointer;
-
-
 }
 
 .login-form .footer-forms .button:hover {
 	background: #3f9db8;
 	border: 1px solid rgba(256,256,256,0.75);
-
-
 }
 
 .login-form .footer-forms .button:focus {
@@ -175,8 +129,6 @@ body {
 	bottom: -1px;
 
 	background: #56c2e1;
-
-
 }
 
 /* Register button */
