@@ -2,12 +2,20 @@
   width: 90%;
   height: 400px;
   background: #fff;
-  margin: 0 auto;
+  margin: 57px auto;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 .username img{
   display: block;
-  margin: 0 auto;
-  width: 300 px;
+  margin: 2px auto;
+  padding: 22px;
   height: 300px;
+}
+
+.back img{
+  width: 25px;
+  height: 25px;
+  margin: -7px 95px;
 }

@@ -18,5 +18,5 @@ Accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae. Hic tenetu
 </script>
 
 <style>
-@import '../../../assets/style/description.css';
+@import './../../../../assets/style/description.css';
 </style>

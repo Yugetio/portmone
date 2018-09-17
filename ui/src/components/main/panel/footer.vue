@@ -1,12 +1,13 @@
 <template>
-    <div class="footer">
+<footer>
 
-    </div>
+</footer>
 </template>
 
 <script>
 
 </script>
+
 
 <style>
 @import './../../../assets/style/footer.css';

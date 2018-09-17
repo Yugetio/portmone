@@ -1,6 +1,6 @@
 <template>
 
-  <div class="wrapper">
+  <div class="wrapper-form">
 
    <form name="login-form" class="login-form" action="" method="post">
      <div class="content-forms">
@@ -20,8 +20,8 @@
 
 <script>
 
-import Login from '../../main/forms/button.vue';
-import Input from '../../main/forms/input.vue';
+import Login from '../../../main/elements/forma/button.vue';
+import Input from '../../../main/elements/forma/input.vue';
   export default {
     data() { return {
       inputData: {},
@@ -41,5 +41,5 @@ import Input from '../../main/forms/input.vue';
 </script>
 
 <style>
-@import './../../../assets/style/forms.css';
+@import './../../../../assets/style/forma.css';
 </style>
