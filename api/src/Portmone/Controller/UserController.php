@@ -6,11 +6,14 @@ use App\Portmone\Service\DataBase;
 use App\Portmone\Service\UserDataValid;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Portmone\Exception\UserAlreadyExistException;
 use App\Portmone\Exception\DataBaseConnectionException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+
+use App\Portmone\Entity\UserEntity;
 
 class UserController extends Controller
 {
@@ -18,29 +21,81 @@ class UserController extends Controller
 /**
 *@Route("/user", methods={"POST"})
 */
-  public function createAction() : Response
+ public function createAction(Request $request) : Response
   {
 
     try {
 
+        $data = json_decode($request->getContent(), true);
         $entityManager = $this->getDoctrine()->getManager();
         $user = new UserEntity();
-        $user->setPassword($response->get('password'));
-        $user->setEmail($response->get('email'));
+        $user->setPassword($data['password']);
+        $user->setEmail($data['email']);
         $entityManager->persist($user);
         $entityManager->flush();
-
-        return new JsonResponse(['User create is successfully' => $user->getEmail()]);
+        return new JsonResponse(['User created is successfully' => $user->getEmail()], 201);
 
     } catch (Exception $e) {
       return $this->fail($e);
     }
   }
 
-  /**
-  *@Route("/auth", methods={"POST"})
-  */
-  public function userAuth() : Response
+
+/**
+*@Route("/user", methods={"PUT"})
+*/
+ public function updateAction(Request $request) : Response
+  {
+
+    try {
+        $data = json_decode($request->getContent(), true);
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(UserEntity::class)->find($data['email']);
+        // if (!$user) {
+        //     throw $this->createNotFoundException(
+        //        'No product found for email '.$data['email']
+        //     );
+        // }
+
+       $user->setPassword($data['password']);
+       $user->setPassword($data['email']);
+       $em->flush();
+
+      } catch (Exception $e) {
+        return $this->fail($e);
+      }
+  }
+
+
+/**
+*@Route("/user", methods={"DELETE"})
+*/
+ public function deleteAction(Request $request) : Response
+ {
+
+    try {
+        $data = json_decode($request->getContent(), true);
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(UserEntity::class)->find($data['email']);
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No product found for email '.$data['email']
+            );
+        }
+
+        $em->remove($user);
+        $em->flush();
+
+       } catch (Exception $e) {
+         return $this->fail($e);
+       }
+ }
+
+
+/**
+*@Route("/auth", methods={"POST"})
+*/
+ public function userAuth() : Response
   {
 
     try {

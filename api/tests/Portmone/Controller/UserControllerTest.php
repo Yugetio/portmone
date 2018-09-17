@@ -7,23 +7,55 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Portmone\Entity\UserEntity;
 
-class CreateUserControllerTest extends TestCase
+class CreateUserControllerTest extends WebTestCase
 {
 
-    public function createUserControllerTest()
+   //  public function testCreateUserControllerTest()
+   //  {
+   //      $this->client = static::createClient();
+   //      $this->client->request(
+   //      'POST',
+   //      '/user',
+   //      array(),
+   //      array(),
+   //      array('CONTENT_TYPE' => 'application/json'),
+   //      json_encode(["password"=>"vasyaaaaa","email"=>"vasyapupafgsf@gmail.com"])
+   // );
+   //var_dump($this->client->getResponse());
+    // $this->assertJsonResponse($this->client->getResponse(), 201, false);
+    // }
+   //
+    public function testUpdateActionTest()
     {
         $this->client = static::createClient();
         $this->client->request(
-        'POST',
+        'PUT',
         '/user',
         array(),
         array(),
         array('CONTENT_TYPE' => 'application/json'),
-        '[{"name":"vasya","email":"vasyapupkin@gmail.com"}]'
+        json_encode(["password"=>"Petyaaaaaa","email"=>"vasyapupafgsf@gmail.com"])
    );
-   $this->assertJsonResponse($this->client->getResponse(), 201, false);
+   var_dump($this->client->getResponse());
+    $this->assertJsonResponse($this->client->getResponse(), 201, false);
     }
+   //
+   //  public function testDeleteActionTest()
+   //  {
+   //      $this->client = static::createClient();
+   //      $this->client->request(
+   //      'DELETE',
+   //      '/user',
+   //      array(),
+   //      array(),
+   //      array('CONTENT_TYPE' => 'application/json'),
+   //      json_encode(["password"=>"vasyaaaaa","email"=>"vasyapupafgsf@gmail.com"])
+   // );
+   //  var_dump($this->client->getResponse());
+   //  $this->assertJsonResponse($this->client->getResponse(), 201, false);
+   //  }
 
     protected function assertJsonResponse($response, $statusCode = 200)
     {

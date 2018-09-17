@@ -40,12 +40,11 @@ class UserEntity
 
     public function setPassword(string $password): self
     {
-        if($email<5 || $email>32){
-            throw new InvalidSignUpException();
-
-        }elseif ($email != strlen(utf8_decode($email))) {
+        $passwordSize = strlen($password);
+        if($passwordSize < 5 || $passwordSize > 32){
             throw new InvalidSignUpException();
         }
+
         $this->password = $password;
 
         return $this;
@@ -58,13 +57,11 @@ class UserEntity
 
     public function setEmail(string $email): self
     {
-        if($email<5 || $email>32){
-            throw new InvalidSignUpException();
-
-        }elseif ($email != strlen(utf8_decode($email))) {
+        $emailSize = strlen($email);
+        if($emailSize < 5 || $emailSize > 32){
             throw new InvalidSignUpException();
         }
-        $this->$email = $email;
+        $this->email = $email;
 
         return $this;
     }
