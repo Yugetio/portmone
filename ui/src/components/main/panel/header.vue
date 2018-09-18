@@ -1,16 +1,18 @@
 <template>
     <div class="header">
-        <div class="logo"> <img src="./../../../assets/images/logo.png" alt="logo"></div>
+        <Logo></Logo>
         <LoginButton></LoginButton>
     </div>
 </template>
 
 <script>
 import LoginButton from './topImages.vue';
+import Logo from './logo.vue';
 
   export default {
     components: {
-      LoginButton
+      LoginButton,
+      Logo
     }
   }
 </script>
