@@ -1,7 +1,7 @@
 
 <template>
 <div class="nav">
-  <div class="header" v-if="this.$route.path === '/', '/registration'">
+  <div class="header" v-if="this.$route.path === '/'">
     <Logo></Logo>
     <LoginButton></LoginButton>
   </div>

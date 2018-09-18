@@ -1,6 +1,6 @@
 <template>
 <div class="profile">
-		<img src="./../../../assets/images/account.png" alt="account">
+		<router-link to="/"><img src="./../../../assets/images/account.png" alt="account"></router-link>
 </div>
 
 </template>

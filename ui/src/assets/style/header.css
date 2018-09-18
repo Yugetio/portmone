@@ -14,9 +14,14 @@
   float: right;
 }
 
- .topImages, .profile {
+ .topImages{
   float: right;
   margin: 12px 27px 1px 1px;
+}
+
+.profile {
+   float: right;
+  margin: -49px 27px 1px 1px;
 }
 
  .topImages img, .profile img{
