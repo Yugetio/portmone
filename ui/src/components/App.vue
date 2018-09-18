@@ -15,7 +15,6 @@ import Footer from './main/panel/footer.vue'
 export default {
   components: {
     Header,
-   
     Footer
   }
 }
@@ -28,11 +27,5 @@ export default {
 
 @import './../assets/style/general.css';
 
-#app {
-   display: flex;
-   flex-direction: column;
-   min-height: 100vh;
-   margin: 0;
-}
 
 </style>
