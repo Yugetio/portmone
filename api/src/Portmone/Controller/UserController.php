@@ -50,16 +50,19 @@ class UserController extends Controller
     try {
         $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(UserEntity::class)->find($data['email']);
-        // if (!$user) {
-        //     throw $this->createNotFoundException(
-        //        'No product found for email '.$data['email']
-        //     );
-        // }
+        $user = $em->getRepository(UserEntity::class)->find($data['id']);
+        if (!$user) {
+            throw $this->createNotFoundException(
+               'No product found for id '.$data['id']
+            );
+        }
 
-       $user->setPassword($data['password']);
-       $user->setPassword($data['email']);
-       $em->flush();
+        $user->setPassword($data['password']);
+        $user->setPassword($data['email']);
+        $em->flush();
+        return new JsonResponse(['User update is successfully' => $data['id']], 201);
+
+        var_dump($data);
 
       } catch (Exception $e) {
         return $this->fail($e);

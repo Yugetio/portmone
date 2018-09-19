@@ -12,35 +12,35 @@ use App\Portmone\Entity\UserEntity;
 class CreateUserControllerTest extends WebTestCase
 {
 
-   //  public function testCreateUserControllerTest()
-   //  {
-   //      $this->client = static::createClient();
-   //      $this->client->request(
-   //      'POST',
-   //      '/user',
-   //      array(),
-   //      array(),
-   //      array('CONTENT_TYPE' => 'application/json'),
-   //      json_encode(["password"=>"vasyaaaaa","email"=>"vasyapupafgsf@gmail.com"])
-   // );
-   //var_dump($this->client->getResponse());
-    // $this->assertJsonResponse($this->client->getResponse(), 201, false);
-    // }
-   //
-    public function testUpdateActionTest()
+    public function testCreateUserControllerTest()
     {
         $this->client = static::createClient();
         $this->client->request(
-        'PUT',
+        'POST',
         '/user',
         array(),
         array(),
         array('CONTENT_TYPE' => 'application/json'),
-        json_encode(["password"=>"Petyaaaaaa","email"=>"vasyapupafgsf@gmail.com"])
+        json_encode(["password"=>"vasya14213","email"=>"petya@gmail.com"])
    );
    var_dump($this->client->getResponse());
     $this->assertJsonResponse($this->client->getResponse(), 201, false);
     }
+
+   //  public function testUpdateActionTest()
+   //  {
+   //      $this->client = static::createClient();
+   //      $this->client->request(
+   //      'PUT',
+   //      '/user',
+   //      array(),
+   //      array(),
+   //      array('CONTENT_TYPE' => 'application/json'),
+   //      json_encode(["password"=>"petya12345","email"=>"vasyapupkin@gmail.com","id"=>1])
+   // );
+   //  var_dump($this->client->getResponse());
+   //  $this->assertJsonResponse($this->client->getResponse(), 201, false);
+   //  }
    //
    //  public function testDeleteActionTest()
    //  {
