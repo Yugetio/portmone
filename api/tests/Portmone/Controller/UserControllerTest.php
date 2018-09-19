@@ -12,21 +12,21 @@ use App\Portmone\Entity\UserEntity;
 class CreateUserControllerTest extends WebTestCase
 {
 
-    public function testCreateUserControllerTest()
-    {
-        $this->client = static::createClient();
-        $this->client->request(
-        'POST',
-        '/user',
-        array(),
-        array(),
-        array('CONTENT_TYPE' => 'application/json'),
-        json_encode(["password"=>"vasya14213","email"=>"petya@gmail.com"])
-   );
-   var_dump($this->client->getResponse());
-    $this->assertJsonResponse($this->client->getResponse(), 201, false);
-    }
-
+   //  public function testCreateUserControllerTest()
+   //  {
+   //      $this->client = static::createClient();
+   //      $this->client->request(
+   //      'POST',
+   //      '/user',
+   //      array(),
+   //      array(),
+   //      array('CONTENT_TYPE' => 'application/json'),
+   //      json_encode(["password"=>"stepan14213","email"=>"stepan@gmail.com"])
+   // );
+   // var_dump($this->client->getResponse());
+   //  $this->assertJsonResponse($this->client->getResponse(), 201, false);
+   //  }
+   //
    //  public function testUpdateActionTest()
    //  {
    //      $this->client = static::createClient();
@@ -36,7 +36,7 @@ class CreateUserControllerTest extends WebTestCase
    //      array(),
    //      array(),
    //      array('CONTENT_TYPE' => 'application/json'),
-   //      json_encode(["password"=>"petya12345","email"=>"vasyapupkin@gmail.com","id"=>1])
+   //      json_encode(["password"=>"update12345","email"=>"update@gmail.com","id"=>1])
    // );
    //  var_dump($this->client->getResponse());
    //  $this->assertJsonResponse($this->client->getResponse(), 201, false);
@@ -51,11 +51,28 @@ class CreateUserControllerTest extends WebTestCase
    //      array(),
    //      array(),
    //      array('CONTENT_TYPE' => 'application/json'),
-   //      json_encode(["password"=>"vasyaaaaa","email"=>"vasyapupafgsf@gmail.com"])
+   //      json_encode(["id"=>4])
    // );
    //  var_dump($this->client->getResponse());
    //  $this->assertJsonResponse($this->client->getResponse(), 201, false);
    //  }
+   //
+   public function testUserAuthTest()
+   {
+
+        $this->client = static::createClient();
+        $this->client->request(
+        'POST',
+        '/auth',
+        array(),
+        array(),
+        array('CONTENT_TYPE' => 'application/json'),
+        json_encode(["id"=>1])
+        );
+       var_dump($this->client->getResponse());
+       $this->assertJsonResponse($this->client->getResponse(), 201, false);
+
+   }
 
     protected function assertJsonResponse($response, $statusCode = 200)
     {
