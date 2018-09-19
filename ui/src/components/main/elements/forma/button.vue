@@ -1,5 +1,7 @@
 <template>
+  <router-link to='/profile'>
     <input @click="sendData" name="submit" type="button" v-bind:value="nameButton" class="button" />
+  </router-link>
 </template>
 
 <script>

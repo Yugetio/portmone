@@ -1,12 +1,12 @@
 
 <template>
 <div class="nav">
-  <div class="header" v-if="this.$route.path === '/'">
+  <div class="header" v-if="this.$route.path == '/'">
     <Logo></Logo>
     <LoginButton></LoginButton>
   </div>
 
-  <div class="header" v-else="this.$route.path === '/profile', '/workpage' ">
+  <div class="header" v-else="this.$route.path == '/profile','/workpage'">
     <Search></Search>
     <Account></Account>
   </div>

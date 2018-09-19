@@ -3,6 +3,7 @@ import registrationForm from '../components/main/elements/forma/registrationForm
 import workPage from '../components/main/pages/workPage.vue'
 import profilePage from '../components/main/pages/profilePage.vue'
 
+
 export const routes = [
   {
     path: '/',
