@@ -4,7 +4,7 @@
     <div class="back">
       <a href="#"><img src="../../../assets/images/back.png" alt="back"></a>
       <a href="#"><img src="../../../assets/images/social.png" alt="social"></a>
-      <a href="/"><img src="../../../assets/images/exit2.png" alt="exit"></a>
+      <router-link to="/"> <img src="../../../assets/images/exit2.png" alt="exit"></router-link>
     </div>
 
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <router-link to='/profile'>
+  <router-link to='/'>
     <input @click="sendData" name="submit" type="button" v-bind:value="nameButton" class="button" />
   </router-link>
 </template>
