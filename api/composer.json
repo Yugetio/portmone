@@ -13,7 +13,6 @@
         "symfony/flex": "^1.1",
         "symfony/form": "*",
         "symfony/framework-bundle": "*",
-        "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",
         "symfony/phpunit-bridge": "*",
         "symfony/process": "*",

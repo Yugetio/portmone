@@ -20,7 +20,6 @@ class UserController extends Controller
   {
 
     try {
-
         $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
         $user = new UserEntity();
