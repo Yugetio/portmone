@@ -84,30 +84,30 @@ class UserController extends Controller
  }
 
 
-/**
-*@Route("/auth", methods={"POST"})
-*/
- public function userAuth(Request $request) : Response
-  {
-
-    try {
-        $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->find(UserEntity::class, $data['id']);
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '.$data['id']
-            );
-        }
-            return new JsonResponse(['User by id ' => $data['id']], 201);
-        var_dump($data);
-    }catch (Exception $e) {
-          return $this->fail($e);
-    }
-  }
-
-  private function fail(\Exception $e)
-  {
-      return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
-  }
+// /**
+// *@Route("/auth", methods={"POST"})
+// */
+//  public function userAuth(Request $request) : Response
+//   {
+//
+//     try {
+//         $data = json_decode($request->getContent(), true);
+//         $em = $this->getDoctrine()->getManager();
+//         $user = $em->find(UserEntity::class, $data['id']);
+//         if (!$user) {
+//             throw $this->createNotFoundException(
+//                 'No user found for id '.$data['id']
+//             );
+//         }
+//             return new JsonResponse(['User by id ' => $data['id']], 201);
+//         var_dump($data);
+//     }catch (Exception $e) {
+//           return $this->fail($e);
+//     }
+//   }
+//
+//   private function fail(\Exception $e)
+//   {
+//       return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
+//   }
 }
