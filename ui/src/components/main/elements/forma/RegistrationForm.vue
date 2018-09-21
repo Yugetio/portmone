@@ -2,8 +2,10 @@
 <section class="content">
   <section class="forma">
     <div class="wrapper-form">
-
-      <form name="login-form" class="login-form" action="" method="post">
+      <form
+        name="login-form"
+        class="login-form"
+        action="" method="post">
         <div class="content-forms">
           <div class="header-forms">
             <h1>Registration</h1>
@@ -12,7 +14,9 @@
           <Input @sendInputData='receivedInputData' />
         </div>
         <div class="footer-forms">
-          <Login :inputData="inputData" :nameButton="nameButton" />
+          <Login
+            :inputData="inputData"
+            :nameButton="nameButton" />
         </div>
       </form>
     </div>
@@ -25,9 +29,9 @@
 </template>
 
 <script>
-import Login from '../../../main/elements/forma/btnFormComponent.vue';
-import Input from '../../../main/elements/forma/itFormComponent.vue';
-import Description from '../../../main/elements/description/descriptionComponent.vue';
+import Login from '../../../main/elements/forma/FormButton.vue';
+import Input from '../../../main/elements/forma/FormInput.vue';
+import Description from '../../../main/elements/description/Description.vue';
 export default {
   data() {
     return {

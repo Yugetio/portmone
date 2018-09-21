@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import Forma from '../../main/elements/forma/loginForm.vue';
-import Description from '../../main/elements/description/descriptionComponent.vue';
-import Registration from '../../main/elements/forma/registrationForm.vue';
+import Forma from '../../main/elements/forma/LoginForm.vue';
+import Description from '../../main/elements/description/Description.vue';
+import Registration from '../../main/elements/forma/RegistrationForm.vue';
 
 export default {
   components: {

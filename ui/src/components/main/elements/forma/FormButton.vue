@@ -1,6 +1,12 @@
 <template>
 <router-link to='/'>
-  <input @click="sendData" name="submit" type="button" v-bind:value="nameButton" class="button" />
+  <input
+    @click="sendData"
+    name="submit"
+    type="button"
+    v-bind:value="nameButton"
+    class="button"
+   />
 </router-link>
 </template>
 

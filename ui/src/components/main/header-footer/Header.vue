@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import Logo from './btnLogoComponent.vue';
-import LoginButton from './btnRegistrationComponent.vue';
-import Search from './btnSearchComponent.vue';
-import Account from './btnAccountComponent.vue';
+import Logo from './LogoButton.vue';
+import LoginButton from './RegistrationButton.vue';
+import Search from './SearchButton.vue';
+import Account from './AccountButton.vue';
 
 export default {
   components: {

@@ -1,7 +1,7 @@
-import main from '../components/main/pages/main.vue'
-import registrationForm from '../components/main/elements/forma/registrationForm.vue'
-import workPage from '../components/main/pages/workPage.vue'
-import profilePage from '../components/main/pages/profilePage.vue'
+import main from '../components/main/pages/MainPage.vue'
+import registrationForm from '../components/main/elements/forma/RegistrationForm.vue'
+import workPage from '../components/main/pages/WorkPage.vue'
+import profilePage from '../components/main/pages/ProfilePage.vue'
 
 
 export const routes = [{

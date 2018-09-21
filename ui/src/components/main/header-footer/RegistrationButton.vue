@@ -1,11 +1,15 @@
 
 <template>
 <div class="topImages">
-  <div v-if="isRegistration" v-on:click="changTopImg">
+  <div
+    v-if="isRegistration"
+    v-on:click="changTopImg">
     <router-link to="/registration"><img src="./../../../assets/images/user.png" alt="user"> </router-link>
   </div>
 
-  <div v-else v-on:click="changTopImg">
+  <div
+    v-else
+    v-on:click="changTopImg">
     <router-link to="/"><img src="./../../../assets/images/exit.png" alt="exit"> </router-link>
   </div>
 </div>
