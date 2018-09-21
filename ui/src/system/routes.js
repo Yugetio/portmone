@@ -4,12 +4,11 @@ import workPage from '../components/main/pages/workPage.vue'
 import profilePage from '../components/main/pages/profilePage.vue'
 
 
-export const routes = [
-  {
+export const routes = [{
     path: '/',
     component: main
   },
-   {
+  {
     path: '/registration',
     component: registrationForm
   },
@@ -21,4 +20,4 @@ export const routes = [
     path: '/profile',
     component: profilePage
   }
-  ];
+];

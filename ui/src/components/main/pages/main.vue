@@ -12,8 +12,8 @@
 
 <script>
 import Forma from '../../main/elements/forma/loginForm.vue';
-import Description from '../../main/elements/description/description.vue';
-import Registration from '../elements/forma/registrationForm.vue';
+import Description from '../../main/elements/description/descriptionComponent.vue';
+import Registration from '../../main/elements/forma/registrationForm.vue';
 
 export default {
   components: {
@@ -24,18 +24,6 @@ export default {
 }
 </script>
 
-
 <style>
-.content {
-  flex: 1;
-  white-space: pre-line;
-  -ms-flex-preferred-size: auto;
-  background: #eee;
-}
-
-.forma {
-  display: flex;
-  background: url(../../../assets/images/bg.png) repeat;
-  height: 500px;
-}
+@import '../../../assets/style/main.css';
 </style>

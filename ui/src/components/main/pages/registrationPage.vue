@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import Login from '../../../main/elements/forma/btnFormComponent.vue';
-import Input from '../../../main/elements/forma/itFormComponent.vue';
-import Description from '../../../main/elements/description/descriptionComponent.vue';
+import Login from '../../main/elements/forma/btnFormComponent.vue';
+import Input from '../../main/elements/forma/itFormComponent.vue';
+import Description from '../../main/elements/description/description.vue';
 export default {
   data() {
     return {
@@ -49,5 +49,5 @@ export default {
 </script>
 
 <style>
-@import './../../../../assets/style/forma.css';
+@import '../../../assets/style/forma.css';
 </style>

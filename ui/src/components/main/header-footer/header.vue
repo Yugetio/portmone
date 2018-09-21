@@ -1,7 +1,6 @@
-
 <template>
 <div class="nav">
-  <div class="header" >
+  <div class="header">
     <Logo v-show="show"></Logo>
     <LoginButton v-show="show"></LoginButton>
     <Search v-show="!show"></Search>
@@ -11,10 +10,10 @@
 </template>
 
 <script>
-import Logo from './logo.vue';
-import LoginButton from './topImages.vue';
-import Search from './searchImg.vue';
-import Account from './accountImg.vue';
+import Logo from './btnLogoComponent.vue';
+import LoginButton from './btnRegistrationComponent.vue';
+import Search from './btnSearchComponent.vue';
+import Account from './btnAccountComponent.vue';
 
 export default {
   components: {
@@ -24,16 +23,16 @@ export default {
     Account
   },
   data() {
-    return{
+    return {
       show: Boolean
     }
   },
   created() {
-       if(this.$route.path === '/' || this.$route.path === '/registration'){
-        this.show = true;
-      }else{
-        this.show = false;
-      }
+    if (this.$route.path === '/' || this.$route.path === '/registration') {
+      this.show = true;
+    } else {
+      this.show = false;
+    }
   }
 }
 </script>
