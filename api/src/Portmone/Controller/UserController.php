@@ -27,6 +27,7 @@ class UserController extends Controller
         $user->setEmail($data['email']);
         $em->persist($user);
         $em->flush();
+    
         return new JsonResponse(['User created is successfully' => $user->getEmail()], 201);
     }catch (Exception $e) {
         return $this->fail($e);
@@ -52,6 +53,14 @@ class UserController extends Controller
         $user->setPassword($data['password']);
         $user->setPassword($data['email']);
         $em->flush();
+
+        $score->setCategory($card);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($$card);
+        $em->persist($score);
+        $em->flush();
+
         return new JsonResponse(['User update is successfully' => $data['id']], 201);
         var_dump($data);
 
