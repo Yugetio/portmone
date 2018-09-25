@@ -6,9 +6,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Portmone\Security\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use App\Portmone\Entity\UserEntity;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserController extends Controller
 {
@@ -20,6 +22,7 @@ class UserController extends Controller
   {
 
     try {
+
         $data = json_decode($request->getContent(), true);
         $em = $this->getDoctrine()->getManager();
         $user = new UserEntity();
@@ -54,19 +57,10 @@ class UserController extends Controller
         $user->setPassword($data['email']);
         $em->flush();
 
-        $score->setCategory($card);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($$card);
-        $em->persist($score);
-        $em->flush();
-
-        return new JsonResponse(['User update is successfully' => $data['id']], 201);
-        var_dump($data);
-
-    }catch (Exception $e) {
-        return $this->fail($e);
-    }
+            return new JsonResponse(['User update is successfully' => $data['id']], 201);
+        }catch (Exception $e) {
+            return $this->fail($e);
+        }
   }
 
 
@@ -76,47 +70,49 @@ class UserController extends Controller
  public function deleteAction(Request $request) : Response
  {
 
-    try {
-        $data = json_decode($request->getContent(), true);
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->find(UserEntity::class, $data['id']);
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '.[$data['id']]
-            );
+        try {
+
+            $data = json_decode($request->getContent(), true);
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->find(UserEntity::class, $data['id']);
+            if (!$user) {
+                throw $this->createNotFoundException(
+                    'No user found for id '.[$data['id']]
+                );
+            }
+            $em->remove($user);
+            $em->flush();
+        }catch (Exception $e) {
+            return $this->fail($e);
         }
-        $em->remove($user);
-        $em->flush();
-    }catch (Exception $e) {
-        return $this->fail($e);
-    }
  }
 
 
-// /**
-// *@Route("/auth", methods={"POST"})
-// */
-//  public function userAuth(Request $request) : Response
-//   {
-//
-//     try {
-//         $data = json_decode($request->getContent(), true);
-//         $em = $this->getDoctrine()->getManager();
-//         $user = $em->find(UserEntity::class, $data['id']);
-//         if (!$user) {
-//             throw $this->createNotFoundException(
-//                 'No user found for id '.$data['id']
-//             );
-//         }
-//             return new JsonResponse(['User by id ' => $data['id']], 201);
-//         var_dump($data);
-//     }catch (Exception $e) {
-//           return $this->fail($e);
-//     }
-//   }
-//
-//   private function fail(\Exception $e)
-//   {
-//       return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
-//   }
+ /**
+ *@Route("/auth", methods={"POST"})
+ */
+  public function userAuth(Request $request) : Response
+   {
+        try{
+
+            $data = json_decode($request->getContent(), true);
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->find(UserEntity::class, $data['token']);
+            if (!$user) {
+                throw $this->createNotFoundException(
+                    'Token not found' . [$data['token']]
+                );
+            }
+            return new JsonResponse(
+                ['token' => $data['token']], 201);
+
+        }catch (Exception $e) {
+            return $this->fail($e);
+        }
+   }
+
+   private function fail(\Exception $e)
+   {
+       return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
+   }
 }
