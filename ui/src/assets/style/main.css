@@ -2,11 +2,12 @@
   flex: 1;
   white-space: pre-line;
   -ms-flex-preferred-size: auto;
-  background: #eee;
+
 }
 
 .forma {
   display: flex;
-  background: url(./../../assets/images/bg.png) repeat;
-  height: 500px;
+  background: url(./../../assets/images/bg-section-welcome.jpg) repeat;
+  height: 700px;
+  background-size: cover;
 }
