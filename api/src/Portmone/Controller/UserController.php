@@ -28,6 +28,7 @@ class UserController extends Controller
         $user = new UserEntity();
         $user->setPassword($data['password']);
         $user->setEmail($data['email']);
+        $user->setToken();
         $em->persist($user);
         $em->flush();
     
@@ -55,6 +56,7 @@ class UserController extends Controller
         }
         $user->setPassword($data['password']);
         $user->setPassword($data['email']);
+        $user->setToken();
         $em->flush();
 
             return new JsonResponse(['User update is successfully' => $data['id']], 201);
@@ -97,14 +99,22 @@ class UserController extends Controller
 
             $data = json_decode($request->getContent(), true);
             $em = $this->getDoctrine()->getManager();
-            $user = $em->find(UserEntity::class, $data['token']);
+            $user = $em->find(UserEntity::class, $data['email']);
             if (!$user) {
                 throw $this->createNotFoundException(
-                    'Token not found' . [$data['token']]
+                    'User not found' . [$data['email']]
                 );
             }
-            return new JsonResponse(
-                ['token' => $data['token']], 201);
+            if($data['password']!=$em->find(UserEntity::class, $data['password'])){
+                throw $this->Exception(
+                    'Invalid password ' . [$data['email']]
+                );
+            }
+            return new JsonResponse([
+                    'id' => $data['id'],
+                    'email' => $data['email'],
+                    'password' => $data['password'],
+                    'token' => $em->find(UserEntity::class, $data['password'])], 201);
 
         }catch (Exception $e) {
             return $this->fail($e);
