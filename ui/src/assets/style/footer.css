@@ -1,15 +1,22 @@
 footer {
-  height: 110px;
   background: #e0e0e0;
 }
 .footer-security ul li{
   float: left;
    list-style-type: none;
-   margin-right: 10px;
+   margin: -32px 22px 1px -14px
 }
 .footer-security{
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-top: 43px;
+}
+
+.copyright p{
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 5px;
+  color: #777;
 }

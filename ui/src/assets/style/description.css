@@ -2,7 +2,9 @@
   height: 700px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  background: url(./../../assets/images/desk.jpg) no-repeat;
+  background-position: 5% 50%;
 }
 
 .wrapper-description {
@@ -16,13 +18,23 @@
   align-items: center;
 }
 
+.text {
+  margin-left: 3%;
+}
+
 .text h1 {
   font-weight: bold;
   font-size: 36px;
   text-transform: uppercase;
-  line-height: 0.6;
+  line-height: 1.2;
   text-align: left;
   padding-bottom: 20px;
+  width: 80%;
+  margin-right: -52px;
+}
+
+.text p {
+  width: 88%
 }
 
 .secondary-text {
@@ -31,4 +43,9 @@
   line-height: 1;
   font-size: 32px;
   padding-bottom: 20px;
+}
+
+.description-text {
+  font-weight: 200;
+  font-family: -apple-system, ".SFNSText-Regular", "San Francisco", Roboto, "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
 }
