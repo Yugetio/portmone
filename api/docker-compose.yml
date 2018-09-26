@@ -1,62 +1,68 @@
 version: '3'
-
 volumes:
-  elasticsearch:
-
+  elasticsearch: null
 services:
-
-### Composer ##############################################
-    composer:
-      image: composer:latest
-      volumes:
-      - .:/app
-      command: 'true'
-
-### PHP-FPM ##############################################
-    php-fpm:
-      build:
-        context: ./docker/php-fpm
-      volumes:
-        - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini
-        - ./:/var/www
-      expose:
-        - "9000"
-
-### NGINX Server #########################################
-    nginx:
-      build:
-        context: ./docker/nginx
-      volumes:
-        - ./:/var/www
-      ports:
-        - 8080:80
-        - 8442:443
-      depends_on:
-        - php-fpm
-
-#### PostgreSQL ###########################################
-    postgres:
-      build: ./docker/postgres
-      volumes:
-        - ./docker/postgres/entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      ports:
-        - "5432:5432"
-
-#### ElasticSearch ########################################
-    elasticsearch:
-      build: ./docker/elasticsearch
-      volumes:
-        - elasticsearch:/usr/share/elasticsearch/data
-      environment:
-        - cluster.name=portmone
-        - bootstrap.memory_lock=true
-        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      ulimits:
-        memlock:
-          soft: -1
-          hard: -1
-      ports:
-        - "9200:9200"
-        - "9300:9300"
-      depends_on:
-        - php-fpm
+  composer:
+    image: 'composer:latest'
+    volumes:
+      - '.:/app'
+    command: 'true'
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
+    volumes:
+      - './docker/php-fpm/php.ini:/usr/local/etc/php/php.ini'
+      - './:/var/www'
+    expose:
+      - '9000'
+  nginx:
+    build:
+      context: ./docker/nginx
+    volumes:
+      - './:/var/www'
+    ports:
+      - '8080:80'
+      - '8442:443'
+    depends_on:
+      - php-fpm
+  postgres.loc:
+    build: ./docker/postgres
+    volumes:
+      - './docker/postgres/entrypoint-initdb.d:/docker-entrypoint-initdb.d'
+    ports:
+      - '5432'
+    environment:
+      - POSTGRES_DB=portmonea
+      - POSTGRES_USER=api_user
+      - POSTGRES_PASSWORD=1111
+  elasticsearch:
+    build: ./docker/elasticsearch
+    volumes:
+      - 'elasticsearch:/usr/share/elasticsearch/data'
+    environment:
+      - cluster.name=portmone
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    depends_on:
+      - php-fpm
+  phpunit:
+    build:
+      context: ./docker/php-fpm
+    volumes:
+      - './docker/php-fpm/php.ini:/usr/local/etc/php/php.ini'
+      - './:/var/www'
+    command: vendor/bin/phpunit
+  pgadmin4:
+    image: dpage/pgadmin4
+    ports:
+      - '5432'
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=api_user
+      - PGADMIN_DEFAULT_PASSWORD=1111
