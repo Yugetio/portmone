@@ -1,7 +1,7 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        authprovider:
+        my_provider:
             entity:
                 class: App\Portmone\Entity\UserEntity
                 property: email
@@ -13,9 +13,9 @@ security:
             anonymous: true
 
             form_login:
-                login_check: auth
+                #login_check: auth
                 check_path: auth
-                provider: authprovider
+                provider: my_provider
 
 
     # Easy way to control access for large sections of your site
