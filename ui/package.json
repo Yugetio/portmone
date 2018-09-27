@@ -21,7 +21,9 @@
     "object-assign": "^4.1.1",
     "offline-plugin": "^4.8.0",
     "promise-polyfill": "^6.0.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1",
+    "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
     "poi": "^9.0.0",
