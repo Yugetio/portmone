@@ -33,11 +33,19 @@ class UserEntity implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $token;
+    private $refreshToken;
 
+    public function getRefreshToken()
+    {
+        return $this->refreshToken;
+    }
 
+    public function setRefreshToken($refreshToken): ?string
+    {
+        $this->refreshToken = $refreshToken;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -71,16 +79,6 @@ class UserEntity implements UserInterface
         }
         $this->email = $email;
         return $this;
-    }
-
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    public function setToken(): ?string
-    {
-        $this->token = serialize([$this->password,$this->email,$this->id]);
     }
 
     /**
