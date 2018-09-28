@@ -11,12 +11,20 @@
 </template>
 
 <script>
+  // import { mapActions } from 'vuex'
+
 export default {
   props: ['inputData', 'nameButton'],
   data() {
-    return {}
+    return {
+      // model: {
+      //   email: this.inputData.login,
+      //   password: this.inputData.pass
+      // }
+    }
   },
   methods: {
+    // ...mapActions(['auth']),
     sendData() {
       let dataToJson = {
         "login": this.inputData.login,
