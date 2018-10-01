@@ -95,8 +95,6 @@ class UserController extends Controller
   public function userAuth(Request $request) : Response
    {
 
-
-
         try{
             $data = json_decode($request->getContent(), true);
             $entityManager = $this->getDoctrine()->getManager();
@@ -113,22 +111,14 @@ class UserController extends Controller
                     'Invalid password for ' . [$data['email']]
                 );
             }
-            $timeStump = time()+1800;
-            $header = json_encode(["alg" => "HS256", "typ" => "JWT"]);
-            $payload= json_encode(["userId"=> $data['id'], 'expires_in'=>$timeStump]);
 
-            $SECRET_KEY = 'cAtwa1kkEy';
-            $unsignedToken = base64_encode($header). '.' .base64_encode($payload);
-            $signature = hash_hmac('sha256', $unsignedToken,$SECRET_KEY);
+            if($timeStump > time())
+            {
+                $this->refresh();
+            }
 
+            $token = $this->accessToken($data);
 
-
-            //Написати рефреш. За деталями звернутись до столика ліворуч.
-            
-
-            $token = base64_encode($header).
-                '.' .base64_encode($payload).
-                '.' .base64_encode($signature);
             return new JsonResponse(['token' => $token], 201);
 
         }catch (Exception $e) {
@@ -136,8 +126,29 @@ class UserController extends Controller
         }
    }
 
+   public function refreshToken()
+   {
+        //
+   }
+   public function accessToken($data)
+   {
+
+       $header = json_encode(["alg" => "HS256", "typ" => "JWT"]);
+       $payload= json_encode([
+           "userId"=> $data['id'],
+           "iat"=>time(),
+           'expires_in'=>time()+(60 * 60)]);
+
+       $SECRET_KEY = 'EnterSandmanMetallica';
+       $unsignedToken = base64_encode($header). '.' .base64_encode($payload);
+       $signature = hash_hmac('sha256', $unsignedToken,$SECRET_KEY);
 
 
+
+       return $token = base64_encode($header).
+           '.' .base64_encode($payload).
+           '.' .base64_encode($signature);
+   }
    private function fail(\Exception $e)
    {
        return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
