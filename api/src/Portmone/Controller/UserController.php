@@ -23,13 +23,14 @@ class UserController extends Controller
 
     try {
         $data = json_decode($request->getContent(), true);
+        var_dump($data);
         $entityManager = $this->getDoctrine()->getManager();
         $user = new UserEntity();
         $user->setPassword($data['password']);
         $user->setEmail($data['email']);
         $entityManager->persist($user);
         $entityManager->flush();
-    
+
         return new JsonResponse(['User created is successfully' => $user->getEmail()], 201);
     }catch (Exception $e) {
         return $this->fail($e);
@@ -153,5 +154,6 @@ class UserController extends Controller
    {
        return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
    }
+
 }
 
