@@ -24,7 +24,7 @@ export default {
     }
   },
   methods: {
-    // ...mapActions(['auth']),
+
     sendData() {
       let dataToJson = {
         "email": this.inputData.email,
