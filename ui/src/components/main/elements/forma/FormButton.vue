@@ -27,7 +27,7 @@ export default {
     // ...mapActions(['auth']),
     sendData() {
       let dataToJson = {
-        "login": this.inputData.login,
+        "email": this.inputData.email,
         "password": this.inputData.pass
       };
       let xmlhttp = new XMLHttpRequest(); // new HttpRequest instance

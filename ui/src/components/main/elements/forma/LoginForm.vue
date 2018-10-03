@@ -10,7 +10,7 @@
         <h1>Authorization</h1>
         <span>Enter your registration information to enter your personal account.</span>
       </div>
-      <Input @sendInputData='receivedInputData' />
+      <Input @sendInputData='receivedInputData'/>
     </div>
     <div class="footer-forms">
       <Login

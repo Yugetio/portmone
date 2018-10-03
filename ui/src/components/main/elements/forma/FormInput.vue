@@ -1,20 +1,23 @@
 <template>
 <div id="input">
   <input
-    placeholder="Email"
-    v-model="inputData.login"
+
+    required
+    v-model="inputData.email"
     name="username"
     type="text"
     class="input username"
     value="Username"
+    placeholder="Email"
   />
   <input
-    placeholder="Password"
+    required
     v-model="inputData.pass"
     name="password"
     type="password"
     class="input password"
     value="Password"
+    placeholder="Password"
    />
 </div>
 </template>
@@ -24,7 +27,7 @@ export default {
   data() {
     return {
       inputData: {
-        login: '',
+        email: '',
         pass: '',
       },
     }
