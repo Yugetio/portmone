@@ -1,7 +1,7 @@
 <template>
 <router-link to='/'>
   <input
-    @click="sendData"
+    @click="handler"
     name="submit"
     type="button"
     v-bind:value="nameButton"
@@ -17,14 +17,10 @@ export default {
   props: ['inputData', 'nameButton'],
   data() {
     return {
-      // model: {
-      //   email: this.inputData.login,
-      //   password: this.inputData.pass
-      // }
+       info: ''
     }
   },
   methods: {
-
     sendData() {
       let dataToJson = {
         "email": this.inputData.email,
@@ -35,6 +31,21 @@ export default {
       xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       xmlhttp.send(JSON.stringify(dataToJson));
       console.log(JSON.stringify(dataToJson));
+    },
+    getData() {
+      this.$http
+        .get("/user")
+        .then(response => (this.info = response));
+
+    },
+    handler(){
+      this.sendData();
+      this.getData();
+    }
+  },
+  watch: {
+    info(newInfo) {
+      localStorage.info = newInfo;
     }
   }
 }

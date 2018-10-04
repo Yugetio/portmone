@@ -23,7 +23,19 @@
 </template>
 
 <script>
+  export default {
+  data(){
 
+  },
+  methods:{
+    deleteProfile(){
+
+    },
+    updateProfile(){
+
+    }
+  }
+}
 </script>
 
 <style>

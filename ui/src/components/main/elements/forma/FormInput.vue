@@ -1,7 +1,6 @@
 <template>
 <div id="input">
   <input
-
     required
     v-model="inputData.email"
     name="username"

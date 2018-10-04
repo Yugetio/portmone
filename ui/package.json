@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "pocket",
+  "info": "pocket",
   "productName": "pocket",
   "description": "My super-duper Vue project",
   "version": "0.0.0",
@@ -13,8 +13,8 @@
     "test": "tyu"
   },
   "author": {
-    "name": "Vlad Radzymovskyi",
-    "email": "vlad@devtoday.com"
+    "info": "Unskill_Team",
+    "email": "unteam@devtoday.com"
   },
   "dependencies": {
     "axios": "^0.18.0",

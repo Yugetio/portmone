@@ -38,7 +38,19 @@
 </template>
 
 <script>
+  export default {
+    data(){
 
+    },
+    methods:{
+      addFolder(){
+
+      },
+      addCard(){
+
+      }
+    }
+  }
 </script>
 
 <style>
