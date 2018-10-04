@@ -42,7 +42,7 @@ class UserEntity
         return $this->refreshToken;
     }
 
-    public function setRefreshToken($refreshToken): ?string
+    public function setRefreshToken($refreshToken): self
     {
         $this->refreshToken = $refreshToken;
     }

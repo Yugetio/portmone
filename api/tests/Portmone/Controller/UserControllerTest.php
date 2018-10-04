@@ -12,22 +12,22 @@ use App\Portmone\Entity\UserEntity;
 class CreateUserControllerTest extends WebTestCase
 {
 
-     public function testCreateUserControllerTest()
-     {
-         $this->client = static::createClient();
-         $this->client->request(
-         'POST',
-         '/user',
-         array(),
-         array(),
-         array('CONTENT_TYPE' => 'application/json'),
-         json_encode([
-             "password"=>"petya1945",
-             "email"=>"petya1945@gmail.com"])
-    );
-         var_dump($this->client->getResponse());
-         $this->assertJsonResponse($this->client->getResponse(), 201, false);
-         }
+//     public function testCreateUserControllerTest()
+//     {
+//         $this->client = static::createClient();
+//         $this->client->request(
+//         'POST',
+//         '/user',
+//         array(),
+//         array(),
+//         array('CONTENT_TYPE' => 'application/json'),
+//         json_encode([
+//             "password"=>"petya1945",
+//             "email"=>"petya1945@gmail.com"])
+//    );
+//         var_dump($this->client->getResponse());
+//         $this->assertJsonResponse($this->client->getResponse(), 201, false);
+//         }
 
    //  public function testUpdateActionTest()
    //  {
@@ -59,24 +59,24 @@ class CreateUserControllerTest extends WebTestCase
    //  $this->assertJsonResponse($this->client->getResponse(), 201, false);
    //  }
    //
-//   public function testUserAuthTest()
-//   {
-//
-//        $this->client = static::createClient();
-//        $this->client->request(
-//        'POST',
-//        '/auth',
-//        array(),
-//        array(),
-//        array('CONTENT_TYPE' => 'application/json'),
-//        json_encode([
-//            'password' => 'petya1945',
-//            'email'=> 'petya1945@gmail.com'])
-//        );
-//       var_dump($this->client->getResponse());
-//       $this->assertJsonResponse($this->client->getResponse(), 201, false);
-//
-//   }
+   public function testUserAuthTest()
+   {
+
+        $this->client = static::createClient();
+        $this->client->request(
+        'POST',
+        '/auth',
+        array(),
+        array(),
+        array('CONTENT_TYPE' => 'application/json'),
+        json_encode([
+            'password' => 'petya1945',
+            'email'=> 'petya1945@gmail.com'])
+        );
+       var_dump($this->client->getResponse());
+       $this->assertJsonResponse($this->client->getResponse(), 201, false);
+
+   }
 
     protected function assertJsonResponse($response, $statusCode = 200)
     {

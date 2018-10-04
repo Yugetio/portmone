@@ -146,9 +146,11 @@ class UserController extends Controller
 
 
 
-       return $token = base64_encode($header).
+
+       var_dump( $token = base64_encode($header).
            '.' .base64_encode($payload).
-           '.' .base64_encode($signature);
+           '.' .base64_encode($signature)
+       );
    }
    private function fail(\Exception $e)
    {
