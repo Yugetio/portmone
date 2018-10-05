@@ -37,7 +37,12 @@
             password: dataFromToken['token']
           })
         });
-      }else alert("Session is timedown. Back to login page");
+      }else {
+        alert("Session is timedown. Back to login page");
+        window.location.href = "http://localhost:4000/"
+        //this.$router.push('http://')
+
+      }
     },
     updateProfile(){
       if (this.tokenCheck(this.getToken()))
@@ -50,8 +55,12 @@
             password: dataFromToken['token']
           })
         });
-      }else alert("Session is timedown. Back to login page");
-      },
+      }else {
+        alert("Session is timedown. Back to login page");
+        window.location.href = "http://localhost:4000/"
+      }
+
+    },
     getToken(){
       let codeToken = storage.getItem('token');
       let splitToken = codeToken.split('.');
