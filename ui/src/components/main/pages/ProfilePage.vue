@@ -2,22 +2,20 @@
 <section class="content">
   <div class="panel-navigation">
     <div class="back">
-      <a href="#"><img src="../../../assets/images/back.png" alt="back"></a>
-      <a href="#"><img src="../../../assets/images/social.png" alt="social"></a>
-      <router-link to="/"> <img src="../../../assets/images/exit2.png" alt="exit"></router-link>
+        <a href="#"><img src="../../../assets/images/back.png" alt="back"></a>
+        <a href="#"><img src="../../../assets/images/social.png" alt="social"></a>
+        <router-link to="/"> <img src="../../../assets/images/exit2.png" alt="exit"></router-link>
     </div>
-
   </div>
-  <div class="username">
 
-    <img src="./../../../assets/images/user_name.png" alt="user_name">
-    <h1>User Name</h1>
+  <div class="username">
+      <img src="./../../../assets/images/user_name.png" alt="user_name">
+      <h1>User Name</h1>
   </div>
   <div class="delete-profile">
-    <a href="#" class="button7">Delete Profile</a>
-    <a href="#" class="button7">Update Profile</a>
+      <a @click='deleteProfile' class="button7">Delete Profile</a>
+      <a @click='updateProfile' class="button7">Update Profile</a>
   </div>
-
 
 </section>
 </template>
@@ -29,16 +27,51 @@
   },
   methods:{
     deleteProfile(){
-      fetch('/some/url', {
-        method: 'post',
-        body: JSON.stringify({
-          email: document.getElementById('email').value,
-          password: document.getElementById('password').value
-        })
-      });
+      if (this.tokenCheck(this.getToken()))
+      {
+        fetch('/user', {
+          method: 'DELETE',
+          body: JSON.stringify({
+            id: dataFromToken['id'],
+            email: dataFromToken['email'],
+            password: dataFromToken['token']
+          })
+        });
+      }else alert("Session is timedown. Back to login page");
     },
     updateProfile(){
+      if (this.tokenCheck(this.getToken()))
+      {
+      fetch('/user', {
+        method: 'PUT',
+        body: JSON.stringify({
+            id: dataFromToken['id'],
+            email: dataFromToken['email'],
+            password: dataFromToken['token']
+          })
+        });
+      }else alert("Session is timedown. Back to login page");
+      },
+    getToken(){
+      let codeToken = storage.getItem('token');
+      let splitToken = codeToken.split('.');
+      let atobToken = atob(splitToken[1]);
+      let uncodeToken = JSON.parse(atobToken);
 
+      return uncodeToken;
+    },
+    tokenCheck(token){
+      let dbTokenGet=this.$http
+        .get("/user")
+        .then(response => (this.info = response));
+
+      if(token['expires_in']>Date.now()){
+        return true;
+      } else if(storage.getItem('token')===dbTokenGet){
+        return true
+      } else {
+        return false;
+      }
     }
   }
 }

@@ -30,8 +30,8 @@
   </div>
 
   <div class="control-wallet">
-    <img src="./../../../assets/images/add_file.png" alt="Add file">
-    <img src="./../../../assets/images/add-folder.png" alt="Add folder">
+      <img src="./../../../assets/images/add_file.png" alt="Add file">
+      <img src="./../../../assets/images/add-folder.png" alt="Add folder">
   </div>
 
 </section>
@@ -43,16 +43,16 @@
 
     },
     methods:{
-      addFolder(){
+        addFolder(){
 
-      },
-      addCard(){
+        },
+        addCard(){
 
-      }
+        }
     }
   }
 </script>
 
 <style>
-@import '../../../assets/style/workPage.css';
+  @import '../../../assets/style/workPage.css';
 </style>

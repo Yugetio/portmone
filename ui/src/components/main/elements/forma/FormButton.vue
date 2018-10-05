@@ -33,10 +33,10 @@ export default {
       console.log(JSON.stringify(dataToJson));
     },
     getData() {
-      this.$http
+       this.$http
         .get("/user")
         .then(response => (this.info = response));
-        
+
     },
     handler(){
       this.sendData();
