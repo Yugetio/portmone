@@ -36,7 +36,7 @@ export default {
       this.$http
         .get("/user")
         .then(response => (this.info = response));
-
+        
     },
     handler(){
       this.sendData();

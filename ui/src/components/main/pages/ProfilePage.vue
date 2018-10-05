@@ -29,7 +29,13 @@
   },
   methods:{
     deleteProfile(){
-
+      fetch('/some/url', {
+        method: 'post',
+        body: JSON.stringify({
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value
+        })
+      });
     },
     updateProfile(){
 
