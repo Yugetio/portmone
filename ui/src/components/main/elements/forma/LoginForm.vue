@@ -38,6 +38,7 @@ export default {
   methods: {
     receivedInputData(obj) {
       this.inputData = obj;
+      console.log(Data.now())
     }
   }
 }

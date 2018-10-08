@@ -10,7 +10,7 @@
 
   <div class="username">
       <img src="./../../../assets/images/user_name.png" alt="user_name">
-      <h1>User Name</h1>
+      <h1>{{email}}</h1>
   </div>
   <div class="delete-profile">
       <a @click='deleteProfile' class="button7">Delete Profile</a>
@@ -23,7 +23,7 @@
 <script>
   export default {
   data(){
-
+    email: ''
   },
   methods:{
     deleteProfile(){
@@ -38,9 +38,7 @@
           })
         });
       }else {
-        alert("Session is timedown. Back to login page");
-        this.$router.push("http://localhost:4000/");
-        //window.location.href = "http://siwei.me"
+        this.tokenTimeDown();
       }
     },
     updateProfile(){
@@ -55,8 +53,7 @@
           })
         });
       }else {
-        alert("Session is timedown. Back to login page");
-        window.location.href = "http://localhost:4000/"
+        this.tokenTimeDown();
       }
 
     },

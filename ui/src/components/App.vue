@@ -11,7 +11,7 @@ import Header from './main/header-footer/Header.vue'
 import Footer from './main/header-footer/Footer.vue'
 
 export default {
-  props['getToken','tokenCheck'],
+  props:['getToken','tokenCheck','tokenTimeDown'],
   components: {
     Header,
     Footer
@@ -37,6 +37,10 @@ export default {
       } else {
         return false;
       }
+    },
+    tokenTimeDown(){
+        alert("Session is timedown. Back to login page");
+        this.$router.push("http://localhost:4000");
     }
   }
 }
