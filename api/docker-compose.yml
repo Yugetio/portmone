@@ -66,3 +66,9 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=api_user
       - PGADMIN_DEFAULT_PASSWORD=1111
+#  elasticsearch-hq:
+#    image: elastichq/elasticsearch-hqz
+#  elasticsearch-kibana:
+#    image: nshou/elasticsearch-kibana
+#    depends_on:
+#    - php-fpm
