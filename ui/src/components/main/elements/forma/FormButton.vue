@@ -34,8 +34,8 @@ export default {
     },
     getData() {
        this.$http
-        .get("/user")
-        .then(response => (this.info = response));
+       .get("/user")
+       .then(response => (this.info = response));
 
     },
     handler(){

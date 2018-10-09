@@ -7,7 +7,6 @@
         <router-link to="/"> <img src="../../../assets/images/exit2.png" alt="exit"></router-link>
     </div>
   </div>
-
   <div class="username">
       <img src="./../../../assets/images/user_name.png" alt="user_name">
       <h1>{{email}}</h1>
@@ -16,7 +15,6 @@
       <a @click='deleteProfile' class="button7">Delete Profile</a>
       <a @click='updateProfile' class="button7">Update Profile</a>
   </div>
-
 </section>
 </template>
 
