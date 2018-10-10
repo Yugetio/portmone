@@ -22,9 +22,7 @@
 </template>
 
 <script>
-
   export default {
-
     data(){
       fileAndFolderName
       folderList:[]
