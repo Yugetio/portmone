@@ -21,7 +21,9 @@
 <script>
   export default {
   data(){
-    email: ''
+    return{
+      email: ''
+    }
   },
   methods:{
     deleteProfile(){

@@ -1,7 +1,7 @@
 <template>
 <router-link to='/'>
   <input
-    @click="handler"
+    @click="sendData"
     name="submit"
     type="button"
     v-bind:value="nameButton"
@@ -32,16 +32,13 @@ export default {
       xmlhttp.send(JSON.stringify(dataToJson));
       console.log(JSON.stringify(dataToJson));
     },
-    getData() {
-       this.$http
-       .get("/user")
-       .then(response => (this.info = response));
-
-    },
-    handler(){
-      this.sendData();
-      this.getData();
-    }
+    // getData() {
+    //   console.log("Get data")
+    // },
+    // handler(){
+    //   this.sendData();
+    //   this.getData();
+    // }
   },
   watch: {
     info(newInfo) {

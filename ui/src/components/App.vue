@@ -11,37 +11,37 @@ import Header from './main/header-footer/Header.vue'
 import Footer from './main/header-footer/Footer.vue'
 
 export default {
-  props:['getToken','tokenCheck','tokenTimeDown'],
+  // props:['getToken','tokenCheck','tokenTimeDown'],
   components: {
     Header,
     Footer
   },
   methods:{
-    getToken(){
-      let codeToken = storage.getItem('token');
-      let splitToken = codeToken.split('.');
-      let atobToken = atob(splitToken[1]);
-      let uncodeToken = JSON.parse(atobToken);
-
-      return uncodeToken;
-    },
-    tokenCheck(token){
-      let dbTokenGet=this.$http
-        .get("/user")
-        .then(response => (this.info = response));
-
-      if(token['expires_in']>Date.now()){
-        return true;
-      } else if(storage.getItem('token')===dbTokenGet){
-        return true
-      } else {
-        return false;
-      }
-    },
-    tokenTimeDown(){
-        alert("Session is timedown. Back to login page");
-        this.$router.push("http://localhost:4000");
-    }
+    // getToken(){
+    //   let codeToken = storage.getItem('token');
+    //   let splitToken = codeToken.split('.');
+    //   let atobToken = atob(splitToken[1]);
+    //   let uncodeToken = JSON.parse(atobToken);
+    //
+    //   return uncodeToken;
+    // },
+    // tokenCheck(token){
+    //   let dbTokenGet=this.$http
+    //     .get("/user")
+    //     .then(response => (this.info = response));
+    //
+    //   if(token['expires_in']>Date.now()){
+    //     return true;
+    //   } else if(storage.getItem('token')===dbTokenGet){
+    //     return true
+    //   } else {
+    //     return false;
+    //   }
+    // },
+    // tokenTimeDown(){
+    //     alert("Session is timedown. Back to login page");
+    //     this.$router.push("http://localhost:4000");
+    // }
   }
 }
 </script>

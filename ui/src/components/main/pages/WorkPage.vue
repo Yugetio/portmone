@@ -24,11 +24,13 @@
 <script>
   export default {
     data(){
-      fileAndFolderName
-      folderList:[]
+     return{
+       folderList:[]
+     }
     },
     methods:{
       addFolder(){
+        let folderName;
         if (this.tokenCheck(this.getToken()))
         {
           fetch('/folder', {
@@ -42,9 +44,10 @@
         }else {
           this.tokenTimeDown();
         }
-        this.data.push(fileAndFolderName)
+        this.data.push(folderName)
       },
       addCard(){
+        let  fileName;
         if (this.tokenCheck(this.getToken()))
         {
           fetch('/card', {
@@ -58,10 +61,10 @@
         }else {
           this.tokenTimeDown();
         }
-        this.data.push(fileAndFolderName)
+        this.data.push(fileName)
       }
     },
-    props:['fileAndFolderName']
+
   }
   // v-for="component in components"
   //   :is="component.type"
