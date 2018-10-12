@@ -52,17 +52,17 @@ services:
   elasticsearch:
     build: ./docker/elasticsearch
     volumes:
-    - 'elasticsearch:/usr/share/elasticsearch/data'
+      - 'elasticsearch:/usr/share/elasticsearch/data'
     environment:
-    - cluster.name=portmone
-    - bootstrap.memory_lock=true
-    - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - cluster.name=portmone
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
-    - '9200:9200'
-    - '9300:9300'
+      - '9200:9200'
+      - '9300:9300'
     depends_on:
-    - php-fpm
+      - php-fpm
