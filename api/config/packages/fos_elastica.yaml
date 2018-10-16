@@ -1,7 +1,7 @@
 # Read the documentation: https://github.com/FriendsOfSymfony/FOSElasticaBundle/blob/master/Resources/doc/setup.md
 fos_elastica:
     clients:
-        default: { host: 172.25.0.7, port: 9200 }
+        default: { host: elasticsearch, port: 9200 }
     indexes:
         app:
             types:
@@ -16,14 +16,4 @@ fos_elastica:
                         model: App\Portmone\Entity\TokenEntity
                         provider: ~
                         finder: ~
-                transaction:
-                    properties:
-                        username: ~
-                        firstName: ~
-                        lastName: ~
-                        email: ~
-                    persistence:
-                        driver: orm
-                        model: App\Portmone\Entity\TokenEntity
-                        provider: ~
-                        finder: ~
+                        repository: App\Repository\TokenEntityRepository
