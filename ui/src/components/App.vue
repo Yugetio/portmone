@@ -11,7 +11,7 @@ import Header from './main/header-footer/Header.vue'
 import Footer from './main/header-footer/Footer.vue'
 
 export default {
-  // props:['getToken','tokenCheck','tokenTimeDown'],
+  props:['getData'],
   components: {
     Header,
     Footer

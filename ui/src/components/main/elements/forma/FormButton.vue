@@ -4,7 +4,7 @@
     @click="handler"
     name="submit"
     type="button"
-    v-bind:value="nameButton"
+    :value="nameButton"
     class="button"
    />
 </router-link>
@@ -17,7 +17,7 @@ export default {
   props: ['inputData', 'nameButton'],
   data() {
     return {
-       info: ''
+      //getData
     }
   },
   methods: {
@@ -26,10 +26,14 @@ export default {
         "email": this.inputData.email,
         "password": this.inputData.pass
       };
-      let xmlhttp = new XMLHttpRequest(); // new HttpRequest instance
-      xmlhttp.open("GET", "/");
-      xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      xmlhttp.send(JSON.stringify(dataToJson));
+
+      fetch("/", {
+        method: 'GET',
+        headers: {
+          "Content-type": "application/json;charset=UTF-8"
+        },
+        body: JSON.stringify(dataToJson)
+      });
       console.log(JSON.stringify(dataToJson));
     },
     handler(){
@@ -43,6 +47,11 @@ export default {
     }
   }
 }
+  // let xmlhttp = new XMLHttpRequest(); // new HttpRequest instance
+  // xmlhttp.open("GET", "/");
+  // xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  // xmlhttp.send(JSON.stringify(dataToJson));
+  // console.log(JSON.stringify(dataToJson));
 </script>
 
 <style>

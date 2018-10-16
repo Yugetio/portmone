@@ -10,7 +10,10 @@ Vue.use(VueRouter)
 export const router = new VueRouter({
   mode: 'history',
   routes
-})
+});
+Vue.component('get-data', {
+  props: ['getdata'],
+ });
 
  sync(store, router)
 
@@ -18,5 +21,8 @@ new Vue({
   el: '#app',
   store,
   router,
+  data: {
+    getData: ""
+  },
   render: h => h(App)
 })
