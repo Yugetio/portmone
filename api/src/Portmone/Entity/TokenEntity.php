@@ -20,8 +20,15 @@ class TokenEntity
      */
     private $user_id;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 }

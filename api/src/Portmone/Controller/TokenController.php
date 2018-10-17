@@ -3,22 +3,29 @@
 namespace App\Portmone\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use App\Portmone\Entity\TokenEntity;
+use App\Portmone\Form\Forma;
 
 class TokenController extends Controller
 {
-    /**
-     * @Route("/token", name="token")
-     */
-    public function index()
+    public function indexAction(Request $request)
     {
-        return $this->render('token/index.html.twig', [
-            'controller_name' => 'TokenController',
+        $userSearch = new UserModel();
+
+        $form = $this->createForm(UserSearchType::class, $userSearch);
+        $form->handleRequest($request);
+
+        $userSearch = $form->getData();
+
+        $elasticaManager = $this->get('fos_elastica.manager');
+        $results = $elasticaManager->getRepository('AcmeUserBundle:User')->searchUser($userSearch);
+
+        return $this->render('AcmeUserBundle:User:list.html.twig', [
+            'form' => $form->createView(),
+            'users' => $results
         ]);
     }
+
 }

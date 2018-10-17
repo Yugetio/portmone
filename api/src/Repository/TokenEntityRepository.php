@@ -3,12 +3,25 @@
 namespace App\Repository;
 
 use FOS\ElasticaBundle\Repository;
+use App\Portmone\Entity\TokenEntity;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Terms;
+use Elastica\Query;
 
 class TokenEntityRepository extends Repository
 {
-    public function findWithCustomQuery($searchText)
+
+
+    public function searchUser(TokenEntity $search)
     {
-        // build $query with Elastica objects
-        //$this->find($query);
+        $query = new BoolQuery();
+        if ($search->getId() != null && $search->getId() != '') {
+            $query->addMust(new Terms('id', [$search->getId()]));
+        }
+
+
+        $query = Query::create($query);
+
+        return $this->find($query);
     }
 }
