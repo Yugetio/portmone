@@ -1,5 +1,6 @@
 <template>
 <section class="content">
+
   <div class="panel-navigation">
     <div class="back">
         <a href="#"><img src="../../../assets/images/back.png" alt="back"></a>

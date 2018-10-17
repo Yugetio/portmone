@@ -1,5 +1,6 @@
 <template>
 <router-link to='/'>
+  <div id="app">
   <input
     @click="handler"
     name="submit"
@@ -7,8 +8,11 @@
     :value="nameButton"
     class="button"
    />
+  </div>
 </router-link>
 </template>
+
+  <!--<get-data :getdata="getData"></get-data>-->
 
 <script>
   // import { mapActions } from 'vuex'
@@ -32,7 +36,7 @@ export default {
         headers: {
           "Content-type": "application/json;charset=UTF-8"
         },
-        body: JSON.stringify(dataToJson)
+
       });
       console.log(JSON.stringify(dataToJson));
     },

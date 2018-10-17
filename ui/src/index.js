@@ -5,7 +5,7 @@ import { sync } from 'vuex-router-sync'
 import { routes } from './system/routes'
 import store from './store/index'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 export const router = new VueRouter({
   mode: 'history',
@@ -15,7 +15,7 @@ Vue.component('get-data', {
   props: ['getdata'],
  });
 
- sync(store, router)
+ sync(store, router);
 
 new Vue({
   el: '#app',
@@ -25,4 +25,4 @@ new Vue({
     getData: ""
   },
   render: h => h(App)
-})
+});
