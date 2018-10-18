@@ -2,21 +2,18 @@
 <section class="content">
   <div class="wallet-list">
     <form>
-      <input v-model="fileAndFolderName" type="text" placeholder="Type name">
+      <input v-model="folderName" type="text" placeholder="Type name">
     </form>
   </div>
   <div class="wallet-list">
     <ul>
-      <li v-for="folder in folderList">
-        {{ folder.fileAndFolderName }}
+      <li @click="" class="wallet-folder" v-for="folder in folderNameList">
+        {{ folder }}
       </li>
     </ul>
   </div>
-  <!--<li class="wallet-folder">-->
-    <!--<span class="title">User</span>-->
   <div class="control-wallet">
     <a @click='addFolder' class="button7">Add folder</a>
-    <a @click='addCard' class="button7">Add card</a>
   </div>
 </section>
 </template>
@@ -25,45 +22,41 @@
   export default {
     data(){
      return{
-       folderList:[]
+       folderNameList:[],
+       folderName: ''
      }
     },
     methods:{
       addFolder(){
-        let folderName;
-        if (this.tokenCheck(this.getToken()))
-        {
-          fetch('/folder', {
-            method: 'POST',
-            body: JSON.stringify({
-              id: dataFromToken['id'],
-              email: dataFromToken['email'],
-              password: dataFromToken['token']
-            })
-          });
-        }else {
-          this.tokenTimeDown();
-        }
-        this.data.push(folderName)
+        // if (this.tokenCheck(this.getToken()))
+        // {
+        //   fetch('/files', {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //       id: dataFromToken['id'],
+        //       email: dataFromToken['email'],
+        //       password: dataFromToken['token']
+        //     })
+        //   });
+        // }else {
+        //   this.tokenTimeDown();
+        // }
+       if (this.folderName!==''){
+         this.folderNameList.push(this.folderName)
+       }
       },
-      addCard(){
-        let  fileName;
-        if (this.tokenCheck(this.getToken()))
-        {
-          fetch('/card', {
-            method: 'POST',
-            body: JSON.stringify({
-              id: dataFromToken['id'],
-              email: dataFromToken['email'],
-              password: dataFromToken['token']
+    },
+    create:{
+      getData() {
+        fetch('/')
+          .then(function (response) {
+            response.json().then(function (data) {
+              console.log('data', data)
             })
           });
-        }else {
-          this.tokenTimeDown();
-        }
-        this.data.push(fileName)
-      }
-    },
+        localStorage.setItem('data', data)
+      },
+    }
 
   }
   // v-for="component in components"

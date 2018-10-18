@@ -2,7 +2,7 @@
 <router-link to='/'>
   <div id="app">
   <input
-    @click="handler"
+    @click="sendData"
     name="submit"
     type="button"
     :value="nameButton"
@@ -19,9 +19,10 @@
 
 export default {
   props: ['inputData', 'nameButton'],
+
   data() {
     return {
-      //getData
+
     }
   },
   methods: {
@@ -40,10 +41,7 @@ export default {
       });
       console.log(JSON.stringify(dataToJson));
     },
-    handler(){
-      this.sendData();
-      this.getData();
-    }
+
   },
   watch: {
     info(newInfo) {

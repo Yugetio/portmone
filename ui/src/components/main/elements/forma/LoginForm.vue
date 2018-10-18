@@ -40,7 +40,7 @@ export default {
       this.inputData = obj;
     }
   }
-}
+ }
 </script>
 
 <style>
