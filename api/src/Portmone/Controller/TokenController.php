@@ -12,9 +12,9 @@ class TokenController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $userSearch = new UserModel();
+        $userSearch = new TokenEntity();
 
-        $form = $this->createForm(UserSearchType::class, $userSearch);
+        $form = $this->createForm(Forma::class, $userSearch);
         $form->handleRequest($request);
 
         $userSearch = $form->getData();

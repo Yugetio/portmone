@@ -22,8 +22,7 @@ class Forma extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'csrf_protection' => false,
-            'data_class' => 'App\Portmone\Entity\TokenEntity'
+            'data_class' => 'App\Portmone\Entity\TokenEntity'// клас з якого беруться данні для форми
         ]);
     }
 }
