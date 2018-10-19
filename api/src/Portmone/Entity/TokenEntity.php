@@ -2,11 +2,13 @@
 namespace App\Portmone\Entity;
 
 
-use FOS\ElasticaBundle\Configuration\Search;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table()
- * @Search(repositoryClass="App/Repository/Portmone/TokenEntityRepository")
+
  *
  */
 class TokenEntity
