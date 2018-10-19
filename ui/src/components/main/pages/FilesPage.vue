@@ -3,7 +3,7 @@
     <h1>{{folderName}}</h1>
     <div class="wallet-list">
       <form>
-        <input v-model="fileName" type="text" placeholder="Type name">
+        <input v-model="fileName" type="text" placeholder="Type name" @keydown.prevent.enter="addFile">
       </form>
     </div>
     <div class="wallet-list">

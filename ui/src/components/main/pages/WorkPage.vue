@@ -2,13 +2,13 @@
 <section class="content">
   <div class="wallet-list">
     <form>
-      <input v-model="folderName" type="text" placeholder="Type name">
+      <input v-model="folderName" type="text" placeholder="Type name" @keydown.prevent.enter="addFolder">
     </form>
   </div>
   <div class="wallet-list">
     <ul>
-      <li @click="" class="wallet-folder" v-for="folder in folderNameList">
-        {{ folder }}
+      <li class="wallet-folder" v-for="folder in folderNameList">
+        <button @click="goIntoFolder">{{folder}}</button>
       </li>
     </ul>
   </div>
@@ -28,23 +28,14 @@
     },
     methods:{
       addFolder(){
-        // if (this.tokenCheck(this.getToken()))
-        // {
-        //   fetch('/files', {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //       id: dataFromToken['id'],
-        //       email: dataFromToken['email'],
-        //       password: dataFromToken['token']
-        //     })
-        //   });
-        // }else {
-        //   this.tokenTimeDown();
-        // }
+
        if (this.folderName!==''){
          this.folderNameList.push(this.folderName)
        }
       },
+      goIntoFolder(){
+
+      }
     },
     create:{
       getData() {
@@ -63,7 +54,18 @@
   //   :is="component.type"
 </script>
 
-<style>
+<style scoped>
   @import '../../../assets/style/workPage.css';
   @import '../../../assets/style/profilePage.css';
+  button {
+    display: block;
+    width: 100%;
+    height: 28px;
+    line-height: 28px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #FFFFFF;
+    border-radius: 3px;
+  }
 </style>
