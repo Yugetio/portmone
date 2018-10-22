@@ -1,6 +1,7 @@
 <template>
+
   <section class="content">
-    <h1>{{folderName}}</h1>
+    <h1>{{folder}}</h1>
     <div class="wallet-list">
       <form>
         <input v-model="fileName" type="text" placeholder="Type name" @keydown.prevent.enter="addFile">
@@ -19,9 +20,12 @@
 
     </div>
   </section>
+
 </template>
 
 <script>
+    import { bus } from '../../bus.js';
+
     export default {
       props:{
         folderName:'Vasyua'
@@ -33,26 +37,13 @@
           fileName: ''
         }
       },
+      created: function () {
+        bus.$on(this.folder);
+      },
       methods:{
         addFile(){
-          // if (this.tokenCheck(this.getToken()))
-          // {
-          let dataFromToken = this.getToken();
-            // fetch('/', {
-            //   method: 'POST',
-            //   body: JSON.stringify({
-            //     id: dataFromToken['id'],
-            //     email: dataFromToken['email'],
-            //     password: dataFromToken['token']
-            //   })
-            // });
-          // }else {
-          //   this.tokenTimeDown();
-          // }
-          console.table(dataFromToken);
-          if (this.fileName!==''){
-            this.fileNameList.push(this.fileName)
-          }
+            this.fileNameList.push(this.fileName);
+
         },
         getToken(){
           let codeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
@@ -61,7 +52,7 @@
           let uncodeToken = JSON.parse(atobToken);
           //  JSON.parse(atob(storage.getItem('token').split('.')[1])) - головоломич. Кєк
           return uncodeToken;
-        },
+        }
       }
     }
 </script>

@@ -1,4 +1,5 @@
 <template>
+
 <section class="content">
   <div class="wallet-list">
     <form>
@@ -7,9 +8,11 @@
   </div>
   <div class="wallet-list">
     <ul>
+      <router-link to='/filepage'>
       <li class="wallet-folder" v-for="folder in folderNameList">
         <button @click="goIntoFolder">{{folder}}</button>
       </li>
+      </router-link>
     </ul>
   </div>
   <div class="control-wallet">
@@ -19,6 +22,8 @@
 </template>
 
 <script>
+  import { bus } from '../../bus.js';
+
   export default {
     data(){
      return{
@@ -28,17 +33,15 @@
     },
     methods:{
       addFolder(){
-
        if (this.folderName!==''){
          this.folderNameList.push(this.folderName)
        }
       },
       goIntoFolder(){
-
+        bus.$emit('titleShow',this.folder);
       }
     },
-    create:{
-      getData() {
+    created: function () {
         fetch('/')
           .then(function (response) {
             response.json().then(function (data) {
@@ -46,9 +49,7 @@
             })
           });
         localStorage.setItem('data', data)
-      },
     }
-
   }
   // v-for="component in components"
   //   :is="component.type"
