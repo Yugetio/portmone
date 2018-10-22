@@ -71,3 +71,5 @@
 ###> phpunit/phpunit ###
 /phpunit.xml
 ###< phpunit/phpunit ###
+###< script commit ###
+/script.sh

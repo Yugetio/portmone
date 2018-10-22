@@ -59,34 +59,34 @@ class CreateUserControllerTest extends WebTestCase
    //  $this->assertJsonResponse($this->client->getResponse(), 201, false);
    //  }
    //
-   public function testUserAuthTest()
-   {
-
-        $this->client = static::createClient();
-        $this->client->request(
-        'POST',
-        '/auth',
-        array(),
-        array(),
-        array('CONTENT_TYPE' => 'application/json'),
-        json_encode([
-            'password' => 'petya1945',
-            'email'=> 'petya1945@gmail.com'])
-        );
-       var_dump($this->client->getResponse());
-       $this->assertJsonResponse($this->client->getResponse(), 201, false);
-
-   }
-
-    protected function assertJsonResponse($response, $statusCode = 200)
-    {
-        $this->assertEquals(
-            $statusCode, $response->getStatusCode(),
-            $response->getContent()
-        );
-        $this->assertTrue(
-            $response->headers->contains('Content-Type', 'application/json'),
-            $response->headers
-        );
-    }
+//   public function testUserAuthTest()
+//   {
+//
+//        $this->client = static::createClient();
+//        $this->client->request(
+//        'POST',
+//        '/auth',
+//        array(),
+//        array(),
+//        array('CONTENT_TYPE' => 'application/json'),
+//        json_encode([
+//            'password' => 'petya1945',
+//            'email'=> 'petya1945@gmail.com'])
+//        );
+//       var_dump($this->client->getResponse());
+//       $this->assertJsonResponse($this->client->getResponse(), 201, false);
+//
+//   }
+//
+//    protected function assertJsonResponse($response, $statusCode = 200)
+//    {
+//        $this->assertEquals(
+//            $statusCode, $response->getStatusCode(),
+//            $response->getContent()
+//        );
+//        $this->assertTrue(
+//            $response->headers->contains('Content-Type', 'application/json'),
+//            $response->headers
+//        );
+//    }
 }

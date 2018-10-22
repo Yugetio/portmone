@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method TokenModel[]    findAll()
  * @method TokenModel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserModelRepository extends ServiceEntityRepository
+class TokenModelRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {

@@ -7,13 +7,13 @@ fos_elastica:
             types:
                 token:
                     properties:
-                        username: ~
-                        firstName: ~
-                        lastName: ~
-                        email: ~
+                        id: ~
+                        refreshToken: ~
+                        accessToken: ~
+                        expirationTime: { type: date, format: "yyyy-MM-dd" }
                     persistence:
                         driver: orm
-                        model: App\Portmone\Entity\TokenEntity
+                        model: App\Portmone\Entity\TokenModel
                         provider: ~
                         finder: ~
-                        repository: App\Repository\TokenEntityRepository
+                        repository: App\Repository\UserModelRepository
