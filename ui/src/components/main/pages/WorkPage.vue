@@ -1,5 +1,4 @@
 <template>
-
 <section class="content">
   <div class="wallet-list">
     <form>
@@ -9,8 +8,8 @@
   <div class="wallet-list">
     <ul>
       <router-link to='/filepage'>
-      <li class="wallet-folder" v-for="folder in folderNameList">
-        <button @click="goIntoFolder">{{folder}}</button>
+      <li class="wallet-folder" v-for="(folders, i) in folderNameList">
+        <button  @click="setFolder">{{folder}}</button>
       </li>
       </router-link>
     </ul>
@@ -20,15 +19,14 @@
   </div>
 </section>
 </template>
-
+<!--v-for="(element, index) in array"-->
 <script>
-  import { bus } from '../../bus.js';
-
   export default {
     data(){
      return{
        folderNameList:[],
-       folderName: ''
+       folderName: '',
+       folderSelect: ''
      }
     },
     methods:{
@@ -37,22 +35,21 @@
          this.folderNameList.push(this.folderName)
        }
       },
-      goIntoFolder(){
-        bus.$emit('titleShow',this.folder);
+      setFolder(){
+        console.log('fanya');
       }
     },
-    created: function () {
-        fetch('/')
-          .then(function (response) {
-            response.json().then(function (data) {
-              console.log('data', data)
-            })
-          });
-        localStorage.setItem('data', data)
-    }
+
+    // created: function () {
+    //     fetch('/')
+    //       .then(function (response) {
+    //         response.json().then(function (data) {
+    //           console.log('data', data)
+    //         })
+    //       });
+    //     localStorage.setItem('data', data)
+    // }
   }
-  // v-for="component in components"
-  //   :is="component.type"
 </script>
 
 <style scoped>

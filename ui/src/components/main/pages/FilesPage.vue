@@ -1,7 +1,6 @@
 <template>
-
   <section class="content">
-    <h1>{{folder}}</h1>
+    <h1>{{folderName}}</h1>
     <div class="wallet-list">
       <form>
         <input v-model="fileName" type="text" placeholder="Type name" @keydown.prevent.enter="addFile">
@@ -14,36 +13,29 @@
         </li>
       </ul>
     </div>
-
     <div class="control-wallet">
       <a @click='addFile' class="button7">Add file</a>
-
     </div>
   </section>
-
 </template>
 
 <script>
-    import { bus } from '../../bus.js';
-
     export default {
       props:{
         folderName:'Vasyua'
       },
-
       data(){
         return{
           fileNameList:[],
           fileName: ''
         }
       },
-      created: function () {
-        bus.$on(this.folder);
+      created() {
+
       },
       methods:{
         addFile(){
             this.fileNameList.push(this.fileName);
-
         },
         getToken(){
           let codeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';

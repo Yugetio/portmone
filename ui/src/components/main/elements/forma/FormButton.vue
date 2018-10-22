@@ -12,11 +12,7 @@
 </router-link>
 </template>
 
-  <!--<get-data :getdata="getData"></get-data>-->
-
 <script>
-  // import { mapActions } from 'vuex'
-
 export default {
   props: ['inputData', 'nameButton'],
 
