@@ -21,17 +21,16 @@
 
 <script>
     export default {
-      props:{
-        folderName:'Vasyua'
-      },
+
       data(){
         return{
           fileNameList:[],
-          fileName: ''
+          fileName: '',
+          folderName:''
         }
       },
       created() {
-
+        this.folderName = localStorage.getItem('foldername')
       },
       methods:{
         addFile(){

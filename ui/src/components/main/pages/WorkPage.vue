@@ -8,8 +8,8 @@
   <div class="wallet-list">
     <ul>
       <router-link to='/filepage'>
-      <li class="wallet-folder" v-for="(folders, i) in folderNameList">
-        <button  @click="setFolder">{{folder}}</button>
+      <li class="wallet-folder" v-for="folder in folderNameList">
+        <button @click="setFolder(folder)">{{folder}}</button>
       </li>
       </router-link>
     </ul>
@@ -26,29 +26,30 @@
      return{
        folderNameList:[],
        folderName: '',
-       folderSelect: ''
      }
     },
     methods:{
       addFolder(){
-       if (this.folderName!==''){
-         this.folderNameList.push(this.folderName)
-       }
+        fetch('/user', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({'foldername':this.folderName})
+        }).then((res) => {
+          let statusCode = JSON.parse(res);
+          if(statusCode.status == 201){
+            this.folderNameList.push(this.folderName)
+          }
+        });
       },
-      setFolder(){
-        console.log('fanya');
+      setFolder(folderS){
+        console.log(folderS);
+        localStorage.setItem('foldername',folderS)
       }
-    },
 
-    // created: function () {
-    //     fetch('/')
-    //       .then(function (response) {
-    //         response.json().then(function (data) {
-    //           console.log('data', data)
-    //         })
-    //       });
-    //     localStorage.setItem('data', data)
-    // }
+    },
   }
 </script>
 

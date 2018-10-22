@@ -4,7 +4,7 @@ const pkg = require('./package')
 module.exports = {
   // devServer: {
   //   proxy: {
-  //     '/api': 'http://localhost:3000'
+  //     '/api': 'fot ex: http://localhost:3000'
   //   }
   // },
   entry: [
