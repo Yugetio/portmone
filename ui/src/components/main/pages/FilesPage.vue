@@ -21,7 +21,6 @@
 
 <script>
     export default {
-
       data(){
         return{
           fileNameList:[],
@@ -29,12 +28,33 @@
           folderName:''
         }
       },
-      created() {
-        this.folderName = localStorage.getItem('foldername')
+      created(){
+        this.folderName = sessionStorage.getItem('foldername');
+        fetch('/card',{
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }).then((res) => {
+          console.log(res);
+          this.fileNameList=JSON.parse(res);
+          this.showFiles();
+        })
       },
       methods:{
         addFile(){
-            this.fileNameList.push(this.fileName);
+          fetch('/card', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'filename':this.fileName})
+          }).then((res) => {
+            console.log(res);
+          });
+          this.showFiles();
         },
         getToken(){
           let codeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
@@ -43,6 +63,9 @@
           let uncodeToken = JSON.parse(atobToken);
           //  JSON.parse(atob(storage.getItem('token').split('.')[1])) - головоломич. Кєк
           return uncodeToken;
+        },
+        showFiles(){
+          this.fileNameList.push(this.fileName)
         }
       }
     }

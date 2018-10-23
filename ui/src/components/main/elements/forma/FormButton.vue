@@ -27,7 +27,6 @@ export default {
         "email": this.inputData.email,
         "password": this.inputData.pass
       };
-
       fetch("/", {
         method: 'GET',
         headers: {

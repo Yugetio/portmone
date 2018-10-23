@@ -19,7 +19,7 @@
   </div>
 </section>
 </template>
-<!--v-for="(element, index) in array"-->
+
 <script>
   export default {
     data(){
@@ -28,9 +28,22 @@
        folderName: '',
      }
     },
+    created(){
+      fetch('/folder',{
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => {
+        console.log(res);
+        this.folderNameList=JSON.parse(res);
+        this.showFolders();
+      })
+    },
     methods:{
       addFolder(){
-        fetch('/user', {
+        fetch('/folder', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -38,15 +51,16 @@
           },
           body: JSON.stringify({'foldername':this.folderName})
         }).then((res) => {
-          let statusCode = JSON.parse(res);
-          if(statusCode.status == 201){
-            this.folderNameList.push(this.folderName)
-          }
+          console.log(res);
         });
+        this.showFolders();
+      },
+      showFolders(){
+        this.folderNameList.push(this.folderName)
       },
       setFolder(folderS){
         console.log(folderS);
-        localStorage.setItem('foldername',folderS)
+        sessionStorage.setItem('foldername',folderS)
       }
 
     },

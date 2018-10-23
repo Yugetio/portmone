@@ -15,9 +15,6 @@ export default {
     Header,
     Footer
   },
-  // data(){
-  //   data: ''
-  // },
   methods:{
     getToken(){
       let codeToken = localStorage.getItem('token');
@@ -43,7 +40,7 @@ export default {
     },
     tokenTimeDown(){
         alert("Session is timedown. Back to login page");
-        this.$router.push("http://localhost:4000");
+        this.$router.push("/");
     }
   }
 }
