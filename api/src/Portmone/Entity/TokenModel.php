@@ -5,17 +5,20 @@ use App\Portmone\Exception\InvalidSignUpException;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Gesdinet\JWTRefreshTokenBundle\Entity\AbstractRefreshToken;
 
 
-class TokenModel
+class TokenModel extends AbstractRefreshToken
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
 
-    private $id;
+    protected $id;
     private $refreshToken;
     private $time;
     private $accessToken;
@@ -26,33 +29,11 @@ class TokenModel
         return $this->id;
     }
 
-//    public function setId($id)
-//    {
-//        $this->id = $id;
-//        return $this;
-//    }
-
     public function getRefreshToken()
     {
         return $this->refreshToken;
     }
 
-    public function setRefreshToken($refreshToken): self
-    {
-        $this->refreshToken = $refreshToken;
-        return $this;
-    }
-
-    public function getTime()
-    {
-        return $this->time;
-    }
-
-    public function setTime($time): self
-    {
-        $this->time = $time;
-        return $this;
-    }
 
     public function getAccessToken()
     {

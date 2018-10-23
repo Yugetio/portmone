@@ -10,6 +10,7 @@ use App\Portmone\Security\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use App\Portmone\Entity\UserEntity;
+use Gesdinet\JWTRefreshTokenBundle\Entity\AbstractRefreshToken;
 
 
 class UserController extends Controller
