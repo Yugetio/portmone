@@ -11,8 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Terms;
 use Elastica\Query;
+use FOS\ElasticaBundle\Repository;
 
-class TokenController extends Controller
+class TokenController extends Repository
 {
     /**
      *@Route("/user", methods={"POST"})
@@ -29,26 +30,4 @@ class TokenController extends Controller
 
         return $this->find($query);
     }
-
-
-//    public function indexAction(Request $request)
-//    {
-////        $userSearch = new TokenModel();
-////
-////        $form = $this->createForm(Forma::class, $userSearch);
-////        $form->handleRequest($request);
-//        var_dump($request);
-//
-////        $userSearch = $form->getData();
-////
-////        $elasticaManager = $this->get('fos_elastica.manager');
-////        $results = $elasticaManager->getRepository('Portmone:TokenEntity')->searchUser($userSearch);
-//        return $request;
-//
-//    }
-
-
-
-
-
 }

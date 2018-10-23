@@ -14,7 +14,6 @@ class CreateTokenControllerTest extends WebTestCase
 
     public function testTokenAuthTest()
     {
-//
         $this->client = static::createClient();
         $this->client->request(
             'POST',
@@ -26,8 +25,8 @@ class CreateTokenControllerTest extends WebTestCase
                 'accessToken' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
                 ])
         );
-        var_dump($this->client->getResponse());
-        $this->assertJsonResponse($this->client->getResponse(), 201, false);
+          $this->client->getResponse();
+          $this->assertJsonResponse($this->client->getResponse(), 201, false);
 
     }
     protected function assertJsonResponse($response, $statusCode = 200)
