@@ -27,10 +27,10 @@ class UserController extends Controller
         var_dump($data);
         $entityManager = $this->getDoctrine()->getManager();
         $user = new UserEntity();
-        $user->setPassword($data['password']);
-        $user->setEmail($data['email']);
-        $entityManager->persist($user);
-        $entityManager->flush();
+//        $user->setPassword($data['password']);
+//        $user->setEmail($data['email']);
+//        $entityManager->persist($user);
+//        $entityManager->flush();
 
         return new JsonResponse(['User created is successfully' => $user->getEmail()], 201);
     }catch (Exception $e) {
