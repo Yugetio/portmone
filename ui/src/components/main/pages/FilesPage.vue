@@ -25,11 +25,11 @@
         return{
           fileNameList:[],
           fileName: '',
-          folderName:''
+          fName:''
         }
       },
       created(){
-        this.folderName = sessionStorage.getItem('foldername');
+        this.folderName = localStorage.getItem('foldername');
         fetch('/',{
           method: 'GET',
           headers: {
@@ -55,14 +55,6 @@
             console.log(res);
           });
           this.showFiles();
-        },
-        getToken(){
-          let codeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-          let splitToken = codeToken.split('.');
-          let atobToken = atob(splitToken[1]);
-          let uncodeToken = JSON.parse(atobToken);
-          //  JSON.parse(atob(storage.getItem('token').split('.')[1])) - головоломич. Кєк
-          return uncodeToken;
         },
         showFiles(){
           this.fileNameList.push(this.fileName)

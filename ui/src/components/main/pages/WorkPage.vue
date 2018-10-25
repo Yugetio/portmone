@@ -2,20 +2,29 @@
 <section class="content">
   <div class="wallet-list">
     <form>
-      <input v-model="folderName" type="text" placeholder="Type name" @keydown.prevent.enter="addFolder">
+      <input v-model="fName" type="text" placeholder="Type name">
     </form>
   </div>
   <div class="wallet-list">
+    <h3>Folders:</h3>
     <ul>
       <router-link to='/filepage'>
-      <li class="wallet-folder" v-for="folder in folderNameList">
+      <li class="folder" v-for="folder in folderNameList">
         <button @click="setFolder(folder)">{{folder}}</button>
       </li>
       </router-link>
     </ul>
+    <hr>
+    <h3>Files:</h3>
+    <ul>
+      <li class="folder" v-for="file in fileNameList">
+        <button >{{file}}</button>
+      </li>
+    </ul>
   </div>
   <div class="control-wallet">
     <a @click='addFolder' class="button7">Add folder</a>
+    <a v-if="isIncludeFolders==true" @click='addFile' class="button7">Add file</a>
   </div>
 </section>
 </template>
@@ -25,9 +34,9 @@
     data(){
      return{
        folderNameList:[],
-       folderName: '',
-       isIncludeFolders: false,
-       insertFoldersName:[],
+       fileNameList:[],
+       fName: '',
+       isIncludeFolders: true,
      }
     },
     created(){
@@ -39,7 +48,8 @@
         }
       }).then( response => response.json() )
         .then((data) =>{
-          this.folderNameList = data;
+          this.folderNameList = data.folders;
+          this.fileNameList = data.files;
         })
         .catch( error => console.error(error) );
     },
@@ -54,18 +64,34 @@
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({'foldername':this.folderName})
+          body: JSON.stringify({'foldername':this.fName})
         })
           .catch( error => console.error(error) );
         this.showFolders();
       },
+      addFile(){
+          fetch('/', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'filename':this.fName})
+          })
+            .catch( error => console.error(error) );
+        this.showFiles();
+      },
       showFolders(){
         console.log('ShowM');
-        this.folderNameList.push(this.folderName)
+        this.folderNameList.push(this.fName)
+      },
+      showFiles(){
+        console.log('ShowM');
+        this.fileNameList.push(this.fName)
       },
       setFolder(folderS){
         console.log(folderS);
-        sessionStorage.setItem('foldername',folderS)
+        localStorage.setItem('foldername',folderS)
       }
 
     },
@@ -85,5 +111,15 @@
     cursor: pointer;
     border: 2px solid #FFFFFF;
     border-radius: 3px;
+  }
+  .folder{
+    background-color: #84AAB6;
+    padding: 20px 30px 20px 80px;
+    border-bottom: 2px solid #eee;
+  }
+  h3{
+    background-color: #84AAB6;
+    bottom: 30px;
+    border: #eee;
   }
 </style>
