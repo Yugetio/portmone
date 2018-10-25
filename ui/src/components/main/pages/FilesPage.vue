@@ -30,7 +30,7 @@
       },
       created(){
         this.folderName = sessionStorage.getItem('foldername');
-        fetch('/card',{
+        fetch('/',{
           method: 'GET',
           headers: {
             'Accept': 'application/json',
@@ -44,7 +44,7 @@
       },
       methods:{
         addFile(){
-          fetch('/card', {
+          fetch('/', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',

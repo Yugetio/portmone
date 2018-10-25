@@ -28,40 +28,35 @@
        folderName: '',
        isIncludeFolders: false,
        insertFoldersName:[],
-       route: ''
      }
     },
     created(){
-      // fetch('/folder',{
-      //   method: 'GET',
-      //   headers: {
-      //     'Accept': 'application/json',
-      //     'Content-Type': 'application/json'
-      //   }
-      // }).then( response => response.json() )
-      //   .then((data) =>{
-      //     this.folderNameList = data;
-      //   })
-      //   .catch( error => console.error(error) );
+      fetch('/',{
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }).then( response => response.json() )
+        .then((data) =>{
+          this.folderNameList = data;
+        })
+        .catch( error => console.error(error) );
     },
     watch: {
 
       },
     methods:{
       addFolder(){
-        // fetch('/folder', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Accept': 'application/json',
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify({'foldername':this.folderName})
-        // }).then( response => response.json() )
-        //   .then((data) =>{
-        //     this.folderNameList = data;
-        //   })
-        //   .catch( error => console.error(error) );
-        //
+        fetch('/', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({'foldername':this.folderName})
+        })
+          .catch( error => console.error(error) );
         this.showFolders();
       },
       showFolders(){
