@@ -1,35 +1,54 @@
 <template>
 <router-link to='/'>
+  <div id="app">
   <input
     @click="sendData"
     name="submit"
     type="button"
-    v-bind:value="nameButton"
+    :value="nameButton"
     class="button"
    />
+  </div>
 </router-link>
 </template>
 
 <script>
 export default {
   props: ['inputData', 'nameButton'],
+
   data() {
-    return {}
+    return {
+
+    }
   },
   methods: {
     sendData() {
       let dataToJson = {
-        "login": this.inputData.login,
+        "email": this.inputData.email,
         "password": this.inputData.pass
       };
-      let xmlhttp = new XMLHttpRequest(); // new HttpRequest instance
-      xmlhttp.open("GET", "/");
-      xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      xmlhttp.send(JSON.stringify(dataToJson));
+      fetch("/", {
+        method: 'GET',
+        headers: {
+          "Content-type": "application/json;charset=UTF-8"
+        },
+
+      });
       console.log(JSON.stringify(dataToJson));
+    },
+
+  },
+  watch: {
+    info(newInfo) {
+      localStorage.info = newInfo;
     }
   }
 }
+  // let xmlhttp = new XMLHttpRequest(); // new HttpRequest instance
+  // xmlhttp.open("GET", "/");
+  // xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  // xmlhttp.send(JSON.stringify(dataToJson));
+  // console.log(JSON.stringify(dataToJson));
 </script>
 
 <style>

@@ -2,6 +2,11 @@ const path = require('path')
 const pkg = require('./package')
 
 module.exports = {
+  // devServer: {
+  //   proxy: {
+  //     '/api': 'fot ex: http://localhost:3000'
+  //   }
+  // },
   entry: [
     'src/polyfills.js',
     'src/index.js'
