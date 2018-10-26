@@ -4,6 +4,7 @@ fos_elastica:
         default: { host: elasticsearch, port: 9200 }
     indexes:
         app:
+            finder: ~
             types:
                 token:
                     properties:
