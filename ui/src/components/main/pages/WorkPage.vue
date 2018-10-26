@@ -23,7 +23,7 @@
     </ul>
   </div>
   <div class="control-wallet">
-    <a @click='addFolder' class="button7">Add folder</a>
+    <a @click='testJsonSend' class="button7">Add folder</a>
     <a v-if="isIncludeFolders==true" @click='addFile' class="button7">Add file</a>
   </div>
 </section>
@@ -65,9 +65,9 @@
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({'foldername':this.fName})
-        })
+        }).then(this.showFolders())
           .catch( error => console.error(error) );
-        this.showFolders();
+
       },
       addFile(){
           fetch('/', {
@@ -77,9 +77,9 @@
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({'filename':this.fName})
-          })
+          }).then(this.showFolders() )
             .catch( error => console.error(error) );
-        this.showFiles();
+
       },
       showFolders(){
         console.log('ShowM');
@@ -92,8 +92,12 @@
       setFolder(folderS){
         console.log(folderS);
         localStorage.setItem('foldername',folderS)
-      }
-
+      },
+      testJsonSend(){
+        if (function f(){}) {
+          alert(typeof f);
+        }
+      },
     },
   }
 </script>
