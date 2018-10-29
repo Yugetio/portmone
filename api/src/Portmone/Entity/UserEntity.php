@@ -5,6 +5,10 @@ namespace App\Portmone\Entity;
 use App\Portmone\Exception\InvalidSignUpException;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -28,6 +32,20 @@ class UserEntity
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $refreshToken;
+
+    public function getRefreshToken()
+    {
+        return $this->refreshToken;
+    }
+
+    public function setRefreshToken($refreshToken): self
+    {
+        $this->refreshToken = $refreshToken;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -44,9 +62,7 @@ class UserEntity
         if($passwordSize < 5 || $passwordSize > 32){
             throw new InvalidSignUpException();
         }
-
         $this->password = $password;
-
         return $this;
     }
 
@@ -62,7 +78,30 @@ class UserEntity
             throw new InvalidSignUpException();
         }
         $this->email = $email;
-
         return $this;
     }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+        return [
+          'ROLE_USER'
+        ];
+    }
+
 }

@@ -66,3 +66,14 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+
+
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###
+###< script commit ###
+/script.sh
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###

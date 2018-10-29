@@ -35,6 +35,20 @@ services:
       - POSTGRES_DB=portmonea
       - POSTGRES_USER=api_user
       - POSTGRES_PASSWORD=1111
+  phpunit:
+    build:
+      context: ./docker/php-fpm
+    volumes:
+      - './docker/php-fpm/php.ini:/usr/local/etc/php/php.ini'
+      - './:/var/www'
+    command: vendor/bin/phpunit
+  pgadmin4:
+    image: dpage/pgadmin4
+    ports:
+      - '5432'
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=api_user
+      - PGADMIN_DEFAULT_PASSWORD=1111
   elasticsearch:
     build: ./docker/elasticsearch
     volumes:
@@ -52,17 +66,3 @@ services:
       - '9300:9300'
     depends_on:
       - php-fpm
-  phpunit:
-    build:
-      context: ./docker/php-fpm
-    volumes:
-      - './docker/php-fpm/php.ini:/usr/local/etc/php/php.ini'
-      - './:/var/www'
-    command: vendor/bin/phpunit
-  pgadmin4:
-    image: dpage/pgadmin4
-    ports:
-      - '5432'
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=api_user
-      - PGADMIN_DEFAULT_PASSWORD=1111

@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Portmone\Entity\UserEntity;
+use App\Portmone\Entity\TokenModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method UserEntity|null find($id, $lockMode = null, $lockVersion = null)
- * @method UserEntity|null findOneBy(array $criteria, array $orderBy = null)
- * @method UserEntity[]    findAll()
- * @method UserEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TokenModel|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TokenModel|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TokenModel[]    findAll()
+ * @method TokenModel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository
+class TokenModelRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, UserEntity::class);
+        parent::__construct($registry, TokenModel::class);
     }
 
 //    /**
-//     * @return User[] Returns an array of User objects
+//     * @return UserModel[] Returns an array of UserModel objects
 //     */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class UserRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?User
+    public function findOneBySomeField($value): ?UserModel
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.exampleField = :val')
