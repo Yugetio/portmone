@@ -3,7 +3,7 @@ import registrationForm from '../components/main/elements/forma/RegistrationForm
 import workPage from '../components/main/pages/WorkPage.vue'
 import profilePage from '../components/main/pages/ProfilePage.vue'
 import filePage from  '../components/main/pages/FilesPage.vue'
-
+import foldersPage from '../components/main/pages/FoldersPage.vue'
 export const routes = [{
     path: '/',
     component: main
@@ -19,6 +19,10 @@ export const routes = [{
   {
     path: '/profile',
     component: profilePage
+  },
+  {
+    path: '/folders',
+    component: foldersPage
   },
   {
     path: '/filepage',

@@ -23,13 +23,14 @@
     </ul>
   </div>
   <div class="control-wallet">
-    <a @click='testJsonSend' class="button7">Add folder</a>
+    <a @click='addFolder' class="button7">Add folder</a>
     <a v-if="isIncludeFolders==true" @click='addFile' class="button7">Add file</a>
   </div>
 </section>
 </template>
 
 <script>
+
   export default {
     data(){
      return{
@@ -95,7 +96,6 @@
       },
       testJsonSend(){
         "use strict";
-
         a = null + undefined;
         alert(a);
       },
@@ -120,7 +120,6 @@
   .folder{
     background-color: #84AAB6;
     padding: 20px 30px 20px 80px;
-    border-bottom: 2px solid #eee;
   }
   h3{
     background-color: #84AAB6;
