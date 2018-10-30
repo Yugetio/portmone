@@ -55,4 +55,9 @@ class TokenController extends Repository
 
         return $this->find($query);
     }
+
+    private function fail(\Exception $e)
+    {
+        return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
+    }
 }

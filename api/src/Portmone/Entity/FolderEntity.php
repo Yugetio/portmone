@@ -20,4 +20,21 @@ class FolderEntity
     {
         return $this->id;
     }
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nameFolder;
+
+
+    public function getName(): ?string
+    {
+        return $this->nameFolder;
+    }
+
+    public function setName(string $nameFolder): self
+    {
+        $this->nameFolder = $nameFolder;
+        return $this;
+    }
 }
