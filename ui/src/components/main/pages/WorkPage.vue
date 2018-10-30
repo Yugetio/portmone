@@ -15,7 +15,7 @@
       </router-link>
     </ul>
     <hr>
-    <h3>Files:</h3>
+    <h3 v-if="isHighLvl==true">Files:</h3>
     <ul>
       <li class="folder" v-for="file in fileNameList">
         <button >{{file}}</button>
@@ -24,7 +24,7 @@
   </div>
   <div class="control-wallet">
     <a @click='addFolder' class="button7">Add folder</a>
-    <a v-if="isIncludeFolders==true" @click='addFile' class="button7">Add file</a>
+    <a v-if="isHighLvl==true" @click='addFile' class="button7">Add file</a>
   </div>
 </section>
 </template>
@@ -35,9 +35,9 @@
     data(){
      return{
        folderNameList:[],
-       fileNameList:[],
+       cardNameList:[],
        fName: '',
-       isIncludeFolders: true,
+       isHighLvl: false,
      }
     },
     created(){
@@ -70,7 +70,7 @@
           .catch( error => console.error(error) );
 
       },
-      addFile(){
+      addCard(){
           fetch('/', {
             method: 'POST',
             headers: {
@@ -78,7 +78,7 @@
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({'filename':this.fName})
-          }).then(this.showFiles() )
+          }).then(this.showCards() )
             .catch( error => console.error(error) );
 
       },
@@ -86,9 +86,9 @@
         console.log('ShowM');
         this.folderNameList.push(this.fName)
       },
-      showFiles(){
+      showCards(){
         console.log('ShowM');
-        this.fileNameList.push(this.fName)
+        this.cardNameList.push(this.fName)
       },
       setFolder(folderS){
         console.log(folderS);
@@ -126,4 +126,9 @@
     bottom: 30px;
     border: #eee;
   }
+  input{
+    width: 100%;
+    border: 1px solid black ;
+  }
 </style>
+1

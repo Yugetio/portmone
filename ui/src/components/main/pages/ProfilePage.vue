@@ -23,40 +23,32 @@
   export default {
   data(){
     return{
-      email: ''
+      email: 'user@mail.com'
     }
   },
   methods:{
     deleteProfile(){
-      if (this.tokenCheck(this.getToken()))
-      {
-        fetch('/user', {
-          method: 'DELETE',
-          body: JSON.stringify({
-            id: dataFromToken['id'],
-            email: dataFromToken['email'],
-            password: dataFromToken['token']
-          })
-        });
-      }else {
-        this.tokenTimeDown();
-      }
+      fetch('/user', {
+        method: 'DELETE',
+        body: JSON.stringify({
+          id: dataFromToken['id'],
+          email: dataFromToken['email'],
+          password: dataFromToken['token']
+        }).then( response => console.log(response) )
+          .catch( error => console.error(error) )
+      });
+
     },
     updateProfile(){
-      if (this.tokenCheck(this.getToken()))
-      {
       fetch('/user', {
         method: 'PUT',
         body: JSON.stringify({
             id: dataFromToken['id'],
             email: dataFromToken['email'],
             password: dataFromToken['token']
-          })
+          }).then( response => console.log(response) )
+            .catch( error => console.error(error) )
         });
-      }else {
-        this.tokenTimeDown();
-      }
-
     },
 
   }

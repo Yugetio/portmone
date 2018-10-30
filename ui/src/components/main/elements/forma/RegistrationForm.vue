@@ -54,4 +54,6 @@ export default {
 
 <style>
 @import './../../../../assets/style/forma.css';
+@import './../../../../assets/style/main.css';
+
 </style>

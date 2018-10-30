@@ -3,18 +3,18 @@
     <h1>{{folderName}}</h1>
     <div class="wallet-list">
       <form>
-        <input v-model="fileName" type="text" placeholder="Type name" @keydown.prevent.enter="addFile">
+        <input v-model="cardName" type="text" placeholder="Type name" @keydown.prevent.enter="addCard">
       </form>
     </div>
     <div class="wallet-list">
       <ul>
-        <li class="wallet-folder" v-for="file in fileNameList">
+        <li class="wallet-folder" v-for="file in cardNameList">
           {{ file }}
         </li>
       </ul>
     </div>
-    <div class="control-wallet">
-      <a @click='addFile' class="button7">Add file</a>
+    <div class="control-wallet">f
+      <a @click='addCard' class="button7">Add card</a>
     </div>
   </section>
 </template>
@@ -23,8 +23,8 @@
     export default {
       data(){
         return{
-          fileNameList:[],
-          fileName: '',
+          cardNameList:[],
+          cardName: '',
           fName:''
         }
       },
@@ -38,26 +38,26 @@
           }
         }).then((res) => {
           console.log(res);
-          this.fileNameList=JSON.parse(res);
-          this.showFiles();
+          this.cardNameList=JSON.parse(res);
+          this.showCards();
         })
       },
       methods:{
-        addFile(){
+        addCard(){
           fetch('/', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({'filename':this.fileName})
+            body: JSON.stringify({'filename':this.cardName})
           }).then((res) => {
             console.log(res);
           });
-          this.showFiles();
+          this.showCards();
         },
-        showFiles(){
-          this.fileNameList.push(this.fileName)
+        showCards(){
+          this.cardNameList.push(this.cardName)
         }
       }
     }
