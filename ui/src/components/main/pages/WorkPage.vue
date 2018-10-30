@@ -9,10 +9,10 @@
     <h3>Folders:</h3>
     <ul>
       <router-link to='/filepage'>
-      <li class="folder" v-for="folder in folderNameList">
+      <li class="folder" v-for="folder in folderNameList" :keydown.enter="addFolder">
         <button @click="setFolder(folder)">{{folder}}</button>
       </li>
-      </router-link>
+      </router-link>  
     </ul>
     <hr>
     <h3 v-if="isHighLvl==true">Files:</h3>

@@ -13,7 +13,7 @@
         </li>
       </ul>
     </div>
-    <div class="control-wallet">f
+    <div class="control-wallet">
       <a @click='addCard' class="button7">Add card</a>
     </div>
   </section>
