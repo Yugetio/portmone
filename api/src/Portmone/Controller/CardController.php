@@ -18,7 +18,7 @@ use App\Portmone\Entity\CardEntity;
 class CardController extends Controller
 {
     /**
-     *@Route("/file", methods={"POST"})
+     *@Route("/card ", methods={"POST"})
      */
     public function createCard(Request $request)
     {
@@ -29,6 +29,7 @@ class CardController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $user = new CardEntity();
             $user->setName($data['nameCard']);
+            $user->setCash($data['cashMoney']);
             $entityManager->persist($user);
             $entityManager->flush();
 

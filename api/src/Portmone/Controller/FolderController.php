@@ -25,7 +25,7 @@ class FolderController extends Controller
             var_dump($data);
             $entityManager = $this->getDoctrine()->getManager();
             $folder = new FolderEntity();
-            $folder->setName($data['id']);
+            $folder->setName($data['nameFolder']);
             $entityManager->persist($folder);
             $entityManager->flush();
 
@@ -52,7 +52,7 @@ class FolderController extends Controller
                     'No folder found for id '.$folder['id']
                 );
             }
-            $folder->setName($data['nameCard']);
+            $folder->setName($data['nameFolder']);
             $entityManager->flush();
 
             return new JsonResponse(['folder update is successfully' => $folder['id']], 201);
