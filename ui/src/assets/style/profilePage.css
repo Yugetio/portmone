@@ -11,22 +11,22 @@
   display: block;
   margin: 2px auto;
   padding: 22px;
-  height: 300px;
+  max-width: 300px;
+  width: 80%;
 }
 
-.back img {
+.panel-navigation img {
   width: 25px;
   height: 25px;
-  margin: -7px 95px;
 }
 
 .panel-navigation {
-  height: 30px;
+  height: 35px;
   background: #b0bec5;
   display: flex;
   align-items: center;
   align-content: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .content {

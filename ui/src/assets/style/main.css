@@ -2,6 +2,7 @@
   flex: 1;
   white-space: pre-line;
   -ms-flex-preferred-size: auto;
+  background: none;
 }
 
 .forma {

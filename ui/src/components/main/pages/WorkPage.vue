@@ -2,7 +2,7 @@
 <section class="content">
   <div class="wallet-list">
     <form>
-      <input v-model="fName" type="text" placeholder="Type name">
+      <input v-model="fName" type="text" placeholder="Type name" @keydown.prevent.enter="addFolder">
     </form>
   </div>
   <div class="wallet-list">

@@ -2,11 +2,11 @@
 <section class="content">
 
   <div class="panel-navigation">
-    <div class="back">
+    <!-- <div class="back"> -->
         <a href="#"><img src="../../../assets/images/back.png" alt="back"></a>
         <a href="#"><img src="../../../assets/images/social.png" alt="social"></a>
         <router-link to="/"> <img src="../../../assets/images/exit2.png" alt="exit"></router-link>
-    </div>
+    <!-- </div> -->
   </div>
   <div class="username">
       <img src="./../../../assets/images/user_name.png" alt="user_name">
