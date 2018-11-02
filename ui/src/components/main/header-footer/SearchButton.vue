@@ -1,7 +1,7 @@
 <template>
 <div class="search">
   <form>
-    <input type="search"  @keydown.enter="search">
+    <input type="search" placeholder="Search..." @keydown.enter="search">
   </form>
 </div>
 </template>

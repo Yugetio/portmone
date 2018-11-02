@@ -5,7 +5,7 @@
     v-model="inputData.email"
     name="username"
     type="text"
-    class="input username"
+    class="input email"
     value="Username"
     placeholder="Email"
   />

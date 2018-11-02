@@ -49,6 +49,7 @@ a.button7 {
 
 a.button7:hover {
   background: rgb(210, 7, 7);
+  cursor: pointer;
 }
 
 a.button7:active {
@@ -57,7 +58,16 @@ a.button7:active {
 }
 
 .delete-profile {
-  text-align: center;
-  padding: 45px;
-  margin-top: 75px;
+  display: flex;
+  flex-wrap: wrap;
+  counter-reset: flex-item-counter;
+  justify-content: center;
+
+  margin: 45px;
 }
+
+.delete-profile a {
+  width: 109px;
+  margin: 5px;
+}
+

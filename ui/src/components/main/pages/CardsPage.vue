@@ -1,6 +1,6 @@
 <template>
   <section class="content">
-    <h1>{{folderName}}</h1>
+    <h1 class="name-folder">{{folderName}}</h1>
     <div class="wallet-list">
       <form>
         <input v-model="cardName" type="text" placeholder="Type name" @keydown.prevent.enter="addCard">

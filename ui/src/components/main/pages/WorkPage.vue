@@ -106,29 +106,5 @@
 <style scoped>
   @import '../../../assets/style/workPage.css';
   @import '../../../assets/style/profilePage.css';
-  button {
-    display: block;
-    width: 100%;
-    height: 28px;
-    line-height: 28px;
-    font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
-    border: 2px solid #FFFFFF;
-    border-radius: 3px;
-  }
-  .folder{
-    background-color: #84AAB6;
-    padding: 20px 30px 20px 80px;
-  }
-  h3{
-    background-color: #84AAB6;
-    bottom: 30px;
-    border: #eee;
-  }
-  input{
-    width: 100%;
-    border: 1px solid black ;
-  }
 </style>
 1
