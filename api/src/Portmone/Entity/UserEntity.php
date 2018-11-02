@@ -17,7 +17,7 @@ class UserEntity
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -32,20 +32,21 @@ class UserEntity
      */
     private $email;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
-    private $refreshToken;
-
-    public function getRefreshToken()
-    {
-        return $this->refreshToken;
-    }
-
-    public function setRefreshToken($refreshToken): self
-    {
-        $this->refreshToken = $refreshToken;
-    }
+//    /**
+//     * @ORM\Column(type="string", length=255, unique=true)
+//     */
+//    private $refreshToken;
+//
+//    public function getRefreshToken()
+//    {
+//        return $this->refreshToken;
+//    }
+//
+//    public function setRefreshToken($refreshToken): self
+//    {
+//        $this->refreshToken = $refreshToken;
+//        return $this;
+//    }
     public function getId(): ?int
     {
         return $this->id;

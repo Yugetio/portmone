@@ -16,114 +16,90 @@ use Gesdinet\JWTRefreshTokenBundle\Entity\AbstractRefreshToken;
 class UserController extends Controller
 {
 
-/**
-*@Route("/user", methods={"POST"})
-*/
+    /**
+     * @Route("/user", methods="POST")
+     * @param Request $request
+     * @return Response
+     */
  public function createAction(Request $request) : Response
   {
-
-    try {
-        $data = json_decode($request->getContent(), true);
-        var_dump($data);
-        $entityManager = $this->getDoctrine()->getManager();
-        $user = new UserEntity();
-        $user->setPassword($data['password']);
-        $user->setEmail($data['email']);
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        return new JsonResponse(['User created is successfully' => $user->getEmail()], 201);
-    }catch (Exception $e) {
-        return $this->fail($e);
-    }
+      try {
+          $entityManager = $this->getDoctrine()->getManager();
+          $user = new UserEntity();
+          $user->setPassword($request->get('password'));
+          $user->setEmail($request->get('email'));
+          $entityManager->persist($user);
+          $entityManager->flush();
+          return new JsonResponse('User has created successfully', 201);
+      } catch (\Exception $e) {
+          return new JsonResponse($e);
+      }
   }
 
-
-/**
-*@Route("/user", methods={"PUT"})
-*/
- public function updateAction(Request $request) : Response
+    /**
+     * @Route("/user/{id}", methods="PUT")
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+ public function updateAction(Request $request, int $id) : Response
   {
-
-    try {
-        $data = json_decode($request->getContent(), true);
-        $entityManager = $this->getDoctrine()->getManager();
-        $user = $entityManager->find(UserEntity::class, $data['id']);
-        if (!$user) {
-            throw $this->createNotFoundException(
-               'No user found for id '.$data['id']
-            );
-        }
-        $user->setPassword($data['password']);
-        $user->setPassword($data['email']);
-        $entityManager->flush();
-
-            return new JsonResponse(['User update is successfully' => $data['id']], 201);
-        }catch (Exception $e) {
-            return $this->fail($e);
-        }
+      try {
+          $entityManager = $this->getDoctrine()->getManager();
+          $myUser = $entityManager->find(UserEntity::class, $id);
+          if (!$myUser) {
+              throw $this->createNotFoundException('No user found for id');
+          }
+          $myUser->setPassword($request->get('password'));
+          $myUser->setEmail($request->get('email'));
+          $entityManager->flush();
+          return new JsonResponse('User has updated successfully', 200);
+      } catch (Exception $e) {
+          return $this->fail($e);
+      }
   }
 
 
-/**
-*@Route("/user", methods={"DELETE"})
-*/
- public function deleteAction(Request $request) : Response
+    /**
+     * @Route("/user/{id}", methods="DELETE")
+     * @param int $id
+     * @return Response
+     */
+ public function deleteAction(int $id) : Response
  {
-
-        try {
-
-            $data = json_decode($request->getContent(), true);
-            $entityManager = $this->getDoctrine()->getManager();
-            $user = $entityManager->find(UserEntity::class, $data['id']);
-            if (!$user) {
-                throw $this->createNotFoundException(
-                    'No user found for id '.[$data['id']]
-                );
-            }
-            $entityManager->remove($user);
-            $entityManager->flush();
-
-            return new JsonResponse(['User deleted is successfully' => $data['id']], 201);
-        }catch (Exception $e) {
-            return $this->fail($e);
-        }
+     try {
+         $entityManager = $this->getDoctrine()->getManager();
+         $myUser = $entityManager->find(UserEntity::class, $id);
+         if (!$myUser) {
+             throw $this->createNotFoundException('No user found for id');
+         }
+         $entityManager->remove($myUser);
+         $entityManager->flush();
+         return new JsonResponse('User has deleted successfully', 200);
+     } catch (Exception $e) {
+         return $this->fail($e);
+     }
  }
 
 
- /**
- *@Route("/auth", methods={"POST"})
- */
+    /**
+     * @Route("/auth", methods="POST")
+     * @param Request $request
+     * @return Response
+     */
   public function userAuth(Request $request) : Response
    {
 
         try{
-            $data = json_decode($request->getContent(), true);
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $user = $entityManager->find(UserEntity::class, $data['email']);
-
-            if (!$user) {
-                throw $this->createNotFoundException(
-                    'User not found' . [$data['email']]
-                );
-            }
-            if(!$entityManager->find(UserEntity::class, $data['password'])) {
-                throw $this->createNotFoundException(
-                    'Invalid password for ' . [$data['email']]
-                );
-            }
-
-            if($timeStump > time())
-            {
-                $this->refresh();
-            }
-
-            $token = $this->accessToken($data);
-
-            return new JsonResponse(['token' => $token], 201);
-
-        }catch (Exception $e) {
+            $repository = $this->getDoctrine()->getManager()->getRepository(UserEntity::class);
+            $myUser = $repository->findOneBy(['password' => $request->get('password')]);
+            return new JsonResponse($myUser);
+//            if ( $myUser !== $request->get('email') || $myUser !== $request->get('password')) {
+//                throw $this->createNotFoundException('User not found');
+//            }
+//            $token = $this->accessToken($myUser->id);
+//            return new JsonResponse(['token' => $token], 200);
+        } catch (Exception $e) {
             return $this->fail($e);
         }
    }
