@@ -35,7 +35,7 @@
     data(){
      return{
        folderNameList:[],
-       cardNameList:[],
+       fileNameList:[],
        fName: '',
        isHighLvl: false,
      }
@@ -83,23 +83,18 @@
 
       },
       showFolders(){
-        console.log('ShowM');
+        console.log('showFolders');
         this.folderNameList.push(this.fName)
       },
       showCards(){
-        console.log('ShowM');
-        this.cardNameList.push(this.fName)
+        console.log('showCards');
+        this.fileNameList.push(this.fName)
       },
       setFolder(folderS){
         console.log(folderS);
         localStorage.setItem('foldername',folderS)
-      },
-      testJsonSend(){
-        "use strict";
-        a = null + undefined;
-        alert(a);
-      },
-    },
+      }
+    }
   }
 </script>
 

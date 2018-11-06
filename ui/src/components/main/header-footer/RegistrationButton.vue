@@ -19,16 +19,12 @@
 export default {
   data() {
     return {
-      isRegistration: true
+      isRegistration: this.$route.path === '/' ? true : false
     }
   },
   methods: {
     changTopImg() {
-      if (this.isRegistration) {
-        this.isRegistration = false;
-      } else {
-        this.isRegistration = true;
-      }
+      this.isRegistration = !this.isRegistration;
     }
   }
 }

@@ -3,7 +3,7 @@
 
   <div class="panel-navigation">
     <!-- <div class="back"> -->
-        <a @click="$router.go(-1)"><img src="../../../assets/images/back.png" alt="back"></a>
+        <a href="#" @click="$router.go(-1)"><img src="../../../assets/images/back.png" alt="back"></a>
         <a href="#"><img src="../../../assets/images/social.png" alt="social"></a>
         <router-link to="/workpage"><img src="../../../assets/images/exit2.png" alt="exit"></router-link>
     <!-- </div> -->
