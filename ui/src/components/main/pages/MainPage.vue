@@ -1,7 +1,8 @@
 <template>
 <section class="content">
   <section class="forma">
-    <Forma></Forma>
+    <Forma v-if="this.$route.path === '/'"></Forma>
+    <Registration v-else></Registration>
   </section>
 
   <section class="description">

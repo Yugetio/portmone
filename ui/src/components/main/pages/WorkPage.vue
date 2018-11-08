@@ -9,8 +9,8 @@
     <h3>Folders:</h3>
     <ul>
       <router-link to='/filepage'>
-      <li class="folder" v-for="folder in folderNameList" :keydown.enter="addFolder">
-        <button @click="setFolder(folder)">{{folder}}</button>
+      <li class="folder" v-for="folder in folderNameList">
+        <button @click="setFolder(folder)"> {{ folder }} </button>
       </li>
       </router-link>  
     </ul>
@@ -24,7 +24,7 @@
   </div>
   <div class="control-wallet">
     <a @click='addFolder' class="button7">Add folder</a>
-    <a v-if="isHighLvl==true" @click='addFile' class="button7">Add file</a>
+    <a v-if="isHighLvl" @click='addFile' class="button7">Add file</a>
   </div>
 </section>
 </template>

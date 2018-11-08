@@ -32,11 +32,17 @@
   margin-bottom: 10px;
 }
 
-.login-form .header-forms span {
+.login-form .header-forms span, .errorMessage {
   font-size: 11px;
   line-height: 16px;
   color: #678889;
   text-shadow: 1px 1px 0 rgba(256, 256, 256, 1.0);
+}
+
+.header-forms .errorMessage ul {
+  padding-left: 10px;
+  margin-top: 10px;
+  color: red;
 }
 
 /*CONTENT*/
