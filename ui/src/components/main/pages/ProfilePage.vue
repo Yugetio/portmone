@@ -1,10 +1,9 @@
 <template>
 <section class="content">
-
   <div class="panel-navigation">
-        <a href="#" @click="$router.go(-1)"><img src="../../../assets/images/back.png" alt="back"></a>
-        <a href="#"><img src="../../../assets/images/social.png" alt="social"></a>
-        <router-link to="/workpage"><img src="../../../assets/images/exit2.png" alt="exit"></router-link>
+    <a href="#" @click="$router.go(-1)"><img src="../../../assets/images/back.png" alt="back"></a>
+    <a href="#"><img src="../../../assets/images/social.png" alt="social"></a>
+    <router-link to="/workpage"><img src="../../../assets/images/exit2.png" alt="exit"></router-link>
   </div>
   <div class="username">
       <img src="./../../../assets/images/user_name.png" alt="user_name">
