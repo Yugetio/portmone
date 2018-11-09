@@ -3,6 +3,9 @@ const state = {
 }
 
 const mutations = {
+  addCard(state, playload) {
+    state.cards.push(playload);
+  }
 }
 
 const actions = {
@@ -10,7 +13,9 @@ const actions = {
 }
 
 const getters = {
-
+  getCard(state) {
+    return state.cards;
+  }
 }
 
 export default {

@@ -61,20 +61,6 @@ export default {
     }
   },
   methods: {
-    sendData() {
-      let dataToJson = {
-        "email": this.inputData.email,
-        "password": this.inputData.pass
-      };
-      console.log(dataToJson, this.nameButton)
-
-      
-        // fetch("/user", {
-        //  method: 'post',
-        //   body: dataToJson
-        // });
-      
-    }
   }
 }
 </script>

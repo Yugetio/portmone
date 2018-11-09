@@ -5,7 +5,7 @@
       <Logo></Logo>
       <LoginButton></LoginButton>
     </template>
-    <template v-else>
+    <template v-else-if="this.$route.path === '/profile' || this.$route.path === '/workpage' || this.$route.path === '/filepage'">
       <Search></Search>
       <Account></Account>
     </template>

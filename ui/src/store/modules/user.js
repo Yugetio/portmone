@@ -1,5 +1,5 @@
 const state = {
-  user: null
+  user: 'null'
 }
 
 const mutations = {
@@ -25,3 +25,26 @@ export default {
   actions,
   getters
 }
+
+  //   getToken(){
+  //     let codeToken = localStorage.getItem('token');
+  //     let splitToken = codeToken.split('.');
+  //     let atobToken = atob(splitToken[1]);
+  //     let uncodeToken = JSON.parse(atobToken);
+  //     return uncodeToken;
+  //   }
+
+  //   tokenCheck(token){
+  //     if(token['expires_in']>Date.now()){
+  //       return true;
+  //     } else if(localStorage.getItem('token')===dbTokenGet){
+  //       return true
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+
+  //   tokenTimeDown(){
+  //       alert("Session is timedown. Back to login page");
+  //       this.$router.push("/");
+  //   }

@@ -1,0 +1,19 @@
+.content {
+  flex: 1;
+  white-space: pre-line;
+  -ms-flex-preferred-size: auto;
+  background: url(./../../assets/images/bg.png) repeat;
+}
+
+.error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.error h1 {
+  color: red;
+  font-size: 1.8rem;
+  text-shadow: 1px 1px 0 rgba(256, 256, 256, 1.0);
+}
