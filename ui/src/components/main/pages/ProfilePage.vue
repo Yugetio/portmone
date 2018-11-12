@@ -7,11 +7,11 @@
   </div>
   <div class="username">
       <img src="./../../../assets/images/user_name.png" alt="user_name">
-      <h1>{{email}}</h1>
+      <h1>{{ this.$store.getters.getUser }}</h1>
   </div>
   <div class="delete-profile">
-      <a @click='updateProfile' class="button7">Update Profile</a>
-      <a @click='deleteProfile' class="button7">Delete Profile</a>
+      <!-- <a @click='updateProfile' class="button7">Update Profile</a>
+      <a @click='deleteProfile' class="button7">Delete Profile</a> -->
   </div>
 </section>
 </template>
@@ -20,34 +20,9 @@
   export default {
   data(){
     return{
-      email: 'user@mail.com'
     }
   },
   methods:{
-    deleteProfile(){
-      fetch('/user', {
-        method: 'DELETE',
-        body: JSON.stringify({
-          id: dataFromToken['id'],
-          email: dataFromToken['email'],
-          password: dataFromToken['token']
-        }).then( response => console.log(response) )
-          .catch( error => console.error(error) )
-      });
-
-    },
-    updateProfile(){
-      fetch('/user', {
-        method: 'PUT',
-        body: JSON.stringify({
-            id: dataFromToken['id'],
-            email: dataFromToken['email'],
-            password: dataFromToken['token']
-          }).then( response => console.log(response) )
-            .catch( error => console.error(error) )
-        });
-    },
-
   }
 }
 </script>

@@ -1,14 +1,12 @@
 const state = {
   folders: [],
-  perentID: null,
-  current: '',
-  new: ''
+  parentID: 1,
+  current: 'folder 1'
 }
 
 const mutations = {
   setCurrentFolder(state, payload) {
     state.current = payload;
-    console.log('setCurrentFolder');
   },
   addFolder(state, payload) {
     state.folders.push(payload);

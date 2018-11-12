@@ -1,5 +1,5 @@
 const state = {
-  user: 'null'
+  email: 'email@email.com'
 }
 
 const mutations = {
@@ -16,7 +16,9 @@ const actions = {
 }
 
 const getters = {
-
+  getUser(state) {
+    return state.email;
+  }
 }
 
 export default {

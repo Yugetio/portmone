@@ -1,45 +1,39 @@
 <template>
 <section class="content">
+  <newElem></newElem>
+  <h1 v-if="this.$store.state.folder.parentID" class="name-folder">{{ this.$store.getters.getCurrentFolder }}</h1>  
   <div class="wallet-list">
-    <form>
-      <input v-model="newFolder" type="text" placeholder="Type name" @keydown.prevent.enter="addFolder">
-    </form>
-  </div>
-    <div class="control-wallet">
-    <a @click="addFolder" class="button7">Add folder</a>
-  </div>
-  <div class="wallet-list">
-    <h3>Folders:</h3>
     <ul>
-      <router-link to='/filepage'>
       <li class="folder" v-for="folder in folders">
-        <button @click="setCurrentFolder(folder)"> {{ folder }} </button>
+        <router-link :to="`/workpage/${1}`">
+          <button @click="setCurrentFolder(folder)"> {{ folder }} </button>
+        </router-link>  
       </li>
-      </router-link>  
+      <li class="wallet-folder" v-for="card in cards">
+        {{ card }}
+      </li>
     </ul>
   </div>
 </section>
 </template>
 
 <script>
+import newElem from '../../main/elements/popUp/createEl.vue';
+
 export default {
   data() {
     return {
-      newFolder: '',
-      folders: this.$store.getters.getFolders
+      folders: this.$store.getters.getFolders,
+      cards: this.$store.getters.getCard
     }
   },
   methods: {
-    addFolder() {
-      this.$store.commit('addFolder', this.newFolder); 
-      this.updateFolders();
-    },
-    updateFolders() {
-      this.folders = this.$store.getters.getFolders
-    },
     setCurrentFolder(folder) {
       this.$store.commit('setCurrentFolder', folder)
     }
+  },
+  components: {
+    newElem
   }
 }
 </script>

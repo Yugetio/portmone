@@ -5,7 +5,7 @@
       <Logo></Logo>
       <LoginButton></LoginButton>
     </template>
-    <template v-else-if="this.$route.path === '/profile' || this.$route.path === '/workpage' || this.$route.path === '/filepage'">
+    <template v-else-if="checkPath">
       <Search></Search>
       <Account></Account>
     </template>
@@ -25,6 +25,11 @@ export default {
     Logo,
     Search,
     Account
+  },
+  methods: {
+    checkPath() {
+      return this.$route.path == '/profile' || /\/workpage?\/\d/.test(this.$route.path);
+    }
   }
 }
 </script>
