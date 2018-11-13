@@ -36,10 +36,10 @@
       <router-link to='/'>
         <div id="app">
           <input
-            @click="sendData"
+            @click="login"
             name="submit"
             type="button"
-            :value="nameButton"
+            value="Login"
             class="button"
           />
          </div>
@@ -55,12 +55,19 @@ export default {
     return {
       inputData: {
         "email": '',
-        "pass": ''
-      },
-      nameButton: "Login"
+        "password": ''
+      }
     }
   },
   methods: {
+    async login() {
+      await this.$store.dispatch('auth', this.inputData);
+      if(this.$store.state.user.isAuth) {
+        this.$router.push('/workpage');
+      } else {
+        console.error('error login');
+      }
+    }
   }
  }
 </script>

@@ -13,7 +13,7 @@ const actions = {
 }
 
 const getters = {
-  getCard(state) {
+  getCards(state) {
     return state.cards;
   }
 }

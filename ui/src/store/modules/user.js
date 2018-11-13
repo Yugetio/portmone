@@ -1,23 +1,61 @@
 const state = {
-  email: 'email@email.com'
+  email: '',
+  isAuth: false
 }
 
 const mutations = {
-
+  setToken(state, playload){
+    localStorage.auth = playload;
+  }
 }
 
 const actions = {
-  auth({commit}, {email, password}) {
-    // console.log('email, password =', email, password)
-    axios.post ('/api/auth',{
-      email, password
+  async auth({ commit }, playload) {
+   await fetch("/auth", {
+      method: "POST",
+      body: JSON.stringify(playload)
     })
+    .then(res => {
+      if(res.ok) {
+        return res.json()
+      } else {
+        throw new Error('Network response was not ok.')
+      }
+    })
+    .then(res =>
+      commit('setToken', res)
+    )
+    .catch(error => {
+      console.log('Error: ' + error.message)
+    });
+  },
+  async reg({ commit }, playload) {
+    await fetch("/user", {
+      method: "POST",
+      body: JSON.stringify(playload)
+    })
+    .then( res => {
+      if(res.ok) {
+        return res.json()
+      } else {
+        throw new Error('Network response was not ok.')
+      }
+    })
+    .then(res =>
+      commit('setToken', res)
+    )
+    .catch(error =>
+      console.log('Error: ' + error.message)
+    );
   }
 }
 
 const getters = {
   getUser(state) {
-    return state.email;
+    return state.email
+  },
+  getToken() {
+    return localStorage.auth
   }
 }
 
@@ -27,26 +65,3 @@ export default {
   actions,
   getters
 }
-
-  //   getToken(){
-  //     let codeToken = localStorage.getItem('token');
-  //     let splitToken = codeToken.split('.');
-  //     let atobToken = atob(splitToken[1]);
-  //     let uncodeToken = JSON.parse(atobToken);
-  //     return uncodeToken;
-  //   }
-
-  //   tokenCheck(token){
-  //     if(token['expires_in']>Date.now()){
-  //       return true;
-  //     } else if(localStorage.getItem('token')===dbTokenGet){
-  //       return true
-  //     } else {
-  //       return false;
-  //     }
-  //   }
-
-  //   tokenTimeDown(){
-  //       alert("Session is timedown. Back to login page");
-  //       this.$router.push("/");
-  //   }

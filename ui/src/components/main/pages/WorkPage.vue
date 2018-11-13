@@ -5,7 +5,7 @@
   <div class="wallet-list">
     <ul>
       <li class="folder" v-for="folder in folders">
-        <router-link :to="`/workpage/${1}`">
+        <router-link :to="`/workpage/${folder.parentID}`">
           <button @click="setCurrentFolder(folder)"> {{ folder }} </button>
         </router-link>  
       </li>
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       folders: this.$store.getters.getFolders,
-      cards: this.$store.getters.getCard
+      cards: this.$store.getters.getCards
     }
   },
   methods: {
