@@ -27,7 +27,7 @@ class FolderController extends Controller
             $folder->setName($request->get('nameFolder'));
             $entityManager->persist($folder);
             $entityManager->flush();
-            return new JsonResponse('Folder created is successfully', 201);
+            return new JsonResponse('Folder has been created successfully', 201);
         } catch (Exception $e) {
             return $this->fail($e);
         }
@@ -43,43 +43,42 @@ class FolderController extends Controller
     {
 
         try {
-            $data = json_decode($request->getContent(), true);
             $entityManager = $this->getDoctrine()->getManager();
-            $folder = $entityManager->find(FolderEntity::class, $data['id']);
+            $folder = $entityManager->find(FolderEntity::class, $request->get('id'));
             if (!$folder) {
                 throw $this->createNotFoundException(
                     'No folder found for id '.$folder['id']
                 );
             }
-            $folder->setName($data['nameFolder']);
+            $folder->setName($request->get('nameFolder'));
             $entityManager->flush();
 
-            return new JsonResponse(['folder update is successfully' => $folder['id']], 201);
+            return new JsonResponse('Folder has been updated successfully', 200);
         }catch (Exception $e) {
             return $this->fail($e);
         }
     }
 
     /**
-     *@Route("/folder", methods={"DELETE"})
+     * @Route("/folder", methods={"DELETE"})
+     * @param Request $request
+     * @return Response
      */
     public function deleteFolder(Request $request) : Response
     {
 
         try {
-
-            $data = json_decode($request->getContent(), true);
             $entityManager = $this->getDoctrine()->getManager();
-            $folder = $entityManager->find(FolderEntity::class, $data['id']);
+            $folder = $entityManager->find(FolderEntity::class, $request->get('id'));
             if (!$folder) {
                 throw $this->createNotFoundException(
-                    'No folder found for id '.[$data['id']]
+                    'No folder found with id '.$request->get('id')
                 );
             }
             $entityManager->remove($folder);
             $entityManager->flush();
 
-            return new JsonResponse(['Card deleted is successfully' => $data['id']], 201);
+            return new JsonResponse('Folder has been deleted successfully', 200);
         }catch (Exception $e) {
             return $this->fail($e);
         }

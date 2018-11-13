@@ -43,7 +43,7 @@ class TransactionEntity
         return $this->transferredMoney;
     }
 
-    public function setTransferredMoney($transferredMoney)
+    public function setTransferredMoney(float $transferredMoney): self
     {
         $this->transferredMoney = $transferredMoney;
         return $this;
@@ -54,7 +54,7 @@ class TransactionEntity
      */
     private $transactionDate;
 
-    public function getTransactionDate(): ?\DateTime
+    public function getTransactionDate()
     {
         return $this->transactionDate;
     }
