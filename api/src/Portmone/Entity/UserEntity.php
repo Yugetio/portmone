@@ -48,7 +48,6 @@ class UserEntity
 //        $this->refreshToken = $refreshToken;
 //        return $this;
 //    }
-
     public function getId(): ?int
     {
         return $this->id;
