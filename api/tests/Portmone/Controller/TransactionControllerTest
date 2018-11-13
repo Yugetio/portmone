@@ -7,28 +7,25 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Portmone\Entity\TokenModel;
+use App\Portmone\Entity\UserEntity;
 
-class CreateTokenControllerTest extends WebTestCase
+class TransactionControllerTest extends WebTestCase
 {
-/*
-    public function testTokenAuthTest()
+    public function testCreateTransaction()
     {
-        $this->client = static::createClient();
-        $this->client->request(
-            'POST',
-            '/user',
+        $client = static::createClient();
+        $client->request(
+            'PUT',
+            '/transaction',
             array(),
             array(),
-            array('CONTENT_TYPE' => 'application/json'),
-            json_encode([
-                'accessToken' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
-                ])
+            array('CONTENT_TYPE' => 'application/json')
+//            json_encode(["password"=>"stepan14213","email"=>"stepan@gmail.com"])
         );
-          $this->client->getResponse();
-          $this->assertJsonResponse($this->client->getResponse(), 201, false);
-
+        var_dump($client->getResponse());
+        $this->assertJsonResponse($client->getResponse(), 200);
     }
+
     protected function assertJsonResponse($response, $statusCode = 200)
     {
         $this->assertEquals(
@@ -40,5 +37,4 @@ class CreateTokenControllerTest extends WebTestCase
             $response->headers
         );
     }
-*/
 }

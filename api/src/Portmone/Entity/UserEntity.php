@@ -4,10 +4,11 @@ namespace App\Portmone\Entity;
 
 use App\Portmone\Exception\InvalidSignUpException;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Annotations\DocLexer;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-
-
 
 
 /**
@@ -17,7 +18,7 @@ class UserEntity
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -32,20 +33,21 @@ class UserEntity
      */
     private $email;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
-    private $refreshToken;
-
-    public function getRefreshToken()
-    {
-        return $this->refreshToken;
-    }
-
-    public function setRefreshToken($refreshToken): self
-    {
-        $this->refreshToken = $refreshToken;
-    }
+//    /**
+//     * @ORM\Column(type="string", length=255, unique=true)
+//     */
+//    private $refreshToken;
+//
+//    public function getRefreshToken()
+//    {
+//        return $this->refreshToken;
+//    }
+//
+//    public function setRefreshToken($refreshToken): self
+//    {
+//        $this->refreshToken = $refreshToken;
+//        return $this;
+//    }
     public function getId(): ?int
     {
         return $this->id;
@@ -79,6 +81,23 @@ class UserEntity
         }
         $this->email = $email;
         return $this;
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Portmone\Entity\FolderEntity", mappedBy="userId")
+     */
+    private $folders;
+
+    public function __construct()
+    {
+        $this->folders = new ArrayCollection();
+    }
+    /**
+     * @return Collection|FolderEntity[]
+     */
+    public function getFolders(): Collection
+    {
+        return $this->folders;
     }
 
     /**

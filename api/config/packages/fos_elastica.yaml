@@ -1,20 +1,23 @@
 # Read the documentation: https://github.com/FriendsOfSymfony/FOSElasticaBundle/blob/master/Resources/doc/setup.md
 fos_elastica:
-    clients:
-        default: { host: elasticsearch, port: 9200 }
-    indexes:
-        app:
+  clients:
+    default: { host: elasticsearch, port: 9200 }
+  indexes:
+    app:
+      types:
+        transaction:
+          properties:
+            id:
+              type: integer
+            folderId:
+              type: integer
+            transferredMoney:
+              type: float
+            date:
+              type: date
+              #format: "yyyy-mm-dd"
+          persistence:
+            driver: orm
+            model: App\Portmone\Entity\TransactionEntity
+            provider: ~
             finder: ~
-            types:
-                token:
-                    properties:
-                        id: ~
-                        refreshToken: ~
-                        accessToken: ~
-                        expirationTime: { type: date, format: "yyyy-MM-dd" }
-                    persistence:
-                        driver: orm
-                        model: App\Portmone\Entity\TokenModel
-                        provider: ~
-                        finder: ~
-                        repository: App\Repository\UserModelRepository

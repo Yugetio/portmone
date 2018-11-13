@@ -24,16 +24,14 @@ class CardController extends Controller
     {
 
         try {
-            $data = json_decode($request->getContent(), true);
-            var_dump($data);
             $entityManager = $this->getDoctrine()->getManager();
             $user = new CardEntity();
-            $user->setName($data['nameCard']);
-            $user->setCash($data['cashMoney']);
+            $user->setNumber($request->get('number'));
+            $user->setCash($request->get('cash'));
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return new JsonResponse(['Card created is successfully' => $user->getId()], 201);
+            return new JsonResponse(['msg' => 'Card has been created successfully'],201);
         }catch (Exception $e) {
             return $this->fail($e);
         }
@@ -58,7 +56,7 @@ class CardController extends Controller
             $card->setCash($data['cashMoney']);
             $entityManager->flush();
 
-            return new JsonResponse(['Card update is successfully' => $card['id']], 201);
+            return new JsonResponse(['msg' =>'Card update is successfully'],201);
         }catch (Exception $e) {
             return $this->fail($e);
         }
@@ -83,7 +81,7 @@ class CardController extends Controller
             $entityManager->remove($card);
             $entityManager->flush();
 
-            return new JsonResponse(['Card deleted is successfully' => $data['id']], 201);
+            return new JsonResponse(['msg' => 'Card deleted is successfully'],201);
         }catch (Exception $e) {
             return $this->fail($e);
         }

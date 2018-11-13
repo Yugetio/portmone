@@ -11,50 +11,49 @@ use App\Portmone\Entity\UserEntity;
 
 class CreateUserControllerTest extends WebTestCase
 {
-     public function testCreateUserControllerTest()
-     {
-         $this->client = static::createClient();
-         $this->client->request(
-         'POST',
-         '/user',
-         array(),
-         array(),
-         array('CONTENT_TYPE' => 'application/json'),
-         json_encode(["password"=>"stepan14213","email"=>"stepan@gmail.com"])
-    );
-    var_dump($this->client->getResponse());
-     $this->assertJsonResponse($this->client->getResponse(), 201, false);
-     }
-   //  public function testUpdateActionTest()
-   //  {
-   //      $this->client = static::createClient();
-   //      $this->client->request(
-   //      'PUT',
-   //      '/user',
-   //      array(),
-   //      array(),
-   //      array('CONTENT_TYPE' => 'application/json'),
-   //      json_encode(["password"=>"update12345","email"=>"update@gmail.com","id"=>1])
-   // );
-   //  var_dump($this->client->getResponse());
-   //  $this->assertJsonResponse($this->client->getResponse(), 201, false);
-   //  }
-   //
-   //  public function testDeleteActionTest()
-   //  {
-   //      $this->client = static::createClient();
-   //      $this->client->request(
-   //      'DELETE',
-   //      '/user',
-   //      array(),
-   //      array(),
-   //      array('CONTENT_TYPE' => 'application/json'),
-   //      json_encode(["id"=>1])
-   // );
-   //  var_dump($this->client->getResponse());
-   //  $this->assertJsonResponse($this->client->getResponse(), 201, false);
-   //  }
-   //
+//    public function testCreateUserControllerTest()
+//    {
+//        $client = static::createClient();
+//        $client->request(
+//            'POST',
+//            '/user',
+//            array(),
+//            array(),
+//            array('CONTENT_TYPE' => 'application/json'),
+//            json_encode(["password"=>"stepan14213","email"=>"stepan@gmail.com"])
+//        );
+//        var_dump($client->getResponse());
+//        $this->assertJsonResponse($client->getResponse(), 201);
+//    }
+//     public function testUpdateActionTest()
+//     {
+//         $client = static::createClient();
+//         $client->request(
+//         'PUT',
+//         '/user/6',
+//         array(),
+//         array(),
+//         array('CONTENT_TYPE' => 'application/json'),
+//         json_encode(["password"=>"update12345","email"=>"update@gmail.com"])
+//    );
+//     var_dump($client->getResponse());
+//     $this->assertJsonResponse($client->getResponse(), 200);
+//     }
+
+//     public function testDeleteActionTest()
+//     {
+//         $client = static::createClient();
+//         $client->request(
+//         'DELETE',
+//         '/user/6',
+//         array(),
+//         array(),
+//         array('CONTENT_TYPE' => 'application/json')
+//    );
+//     var_dump($client->getResponse());
+//     $this->assertJsonResponse($client->getResponse(), 200);
+//     }
+
 //   public function testUserAuthTest()
 //   {
 //
@@ -68,7 +67,7 @@ class CreateUserControllerTest extends WebTestCase
 //        json_encode(["id"=>1])
 //        );
 //       var_dump($this->client->getResponse());
-//       $this->assertJsonResponse($this->client->getResponse(), 201, false);
+//       $this->assertJsonResponse($this->client->getResponse(), 200);
 //
 //   }
     protected function assertJsonResponse($response, $statusCode = 200)

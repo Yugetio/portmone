@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Portmone\Entity;
-use App\Portmone\Exception\InvalidCardException;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use phpDocumentor\Reflection\Types\This;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FileEntityRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CardEntityRepository")
  */
 class CardEntity
 {
@@ -17,46 +19,69 @@ class CardEntity
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nameCard;
-
-    /**
-     * @ORM\Column(type="integer", length=255)
-     */
-    private $cashMoney;
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @ORM\Column(type="integer");
+     */
+    private $folderId;
 
-    public function getName(): ?string
+    public function getFolderId(): ?FolderEntity
     {
-        return $this->nameCard;
+        return $this->folderId;
     }
 
-    public function setName(string $nameCard): self
+    /**
+     * @ORM\Column(type="integer", length=255)
+     */
+    private $cardNumber;
+
+    public function getNumber(): ?int
     {
-        $nameSize = strlen($nameCard);
-        if($nameSize < 5 || $nameSize > 10){
-            throw new InvalidCardException();
-        }
-        $this->nameCard = $nameCard;
+        return $this->cardNumber;
+    }
+
+    public function setNumber(int $cardNumber): self
+    {
+        $this->cardNumber = $cardNumber;
         return $this;
     }
 
-    public function getCash(): ?int
+    /**
+     * @ORM\Column(type="float", length=255)
+     */
+    private $cash;
+
+    public function getCash(): ?float
     {
-        return $this->cashMoney;
+        return $this->cash;
     }
 
-    public function setCash($cashMoney): self
+    public function setCash(float $cash): self
     {
-        $this->cashMoney = $cashMoney;
+        $this->cash = $cash;
         return $this;
+    }
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Portmone\Entity\TransactionEntity", mappedBy="cardID")
+     */
+    private $transactions;
+
+    public function __construct()
+    {
+        $this->transactions = new ArrayCollection();
+    }
+    /**
+     * @return Collection|TransactionEntity[]
+     */
+    public function getTransactions(): Collection
+    {
+        return $this->transactions;
     }
 
 }

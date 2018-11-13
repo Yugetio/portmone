@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\FolderEntity;
+use App\Portmone\Entity\FolderEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
