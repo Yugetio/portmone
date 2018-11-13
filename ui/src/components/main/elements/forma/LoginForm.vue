@@ -13,7 +13,7 @@
       <div id="input">
         <input
           required
-          v-model="inputData.email"
+          v-model="email"
           name="username"
           type="email"
           class="input email"
@@ -22,7 +22,7 @@
         />
         <input
           required
-          v-model="inputData.pass"
+          v-model="password"
           name="password"
           type="password"
           class="input password"
@@ -53,15 +53,16 @@
 export default {
   data() {
     return {
-      inputData: {
-        "email": '',
-        "password": ''
-      }
+      "email": '',
+      "password": ''
     }
   },
   methods: {
     async login() {
-      await this.$store.dispatch('auth', this.inputData);
+      await this.$store.dispatch('auth', {
+        email: this.email,
+        password: this.password
+      });
       if(this.$store.state.user.isAuth) {
         this.$router.push('/workpage');
       } else {
