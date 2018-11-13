@@ -18,10 +18,17 @@ class TransactionEntity
      */
     private $id;
 
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
 
     /**
      * @ORM\Column(type="integer")
@@ -63,6 +70,28 @@ class TransactionEntity
     {
         $this->transactionDate = $transactionDate;
         return $this;
+    }
+
+    public function serialize($id)
+    {
+        $serializedArray = [
+            'id' => $id,
+            'folderId' => $this->folderId,
+            'transferredMoney' => $this->transferredMoney,
+            'date' => $this->transactionDate
+        ];
+        return $serializedArray;
+    }
+
+    static function deserialize(array $data)
+    {
+        $transactionEntity = new TransactionEntity();
+        $transactionEntity->setId($data['id']);
+        $transactionEntity->getFolderId();
+        $transactionEntity->setTransferredMoney($data['transferredMoney']);
+        $transactionEntity->setTransactionDate($data['date']);
+
+        return $transactionEntity;
     }
 
 
