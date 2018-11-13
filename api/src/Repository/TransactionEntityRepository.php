@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Portmone\Entity\TransactionEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\EntityManager;
 
 /**
  * @method TransactionEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,10 +15,54 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class TransactionEntityRepository extends ServiceEntityRepository
 {
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, TransactionEntity::class);
     }
+
+    public function ConnectToDB()
+    {
+        $elasticaClient = new \Elastica\Client(
+            [
+                'servers' => [
+                    [
+                        'host' => 'elasticsearch',
+                        'port' => 9200
+                    ],
+                ]
+            ]);
+
+        // Load index
+        $elasticaIndex = $elasticaClient->getIndex('portmone');
+        if (!$elasticaIndex->exists()){
+            $elasticaIndex->create();
+        }
+        //Create a type
+        $elasticaType = $elasticaIndex->getType('transaction');
+
+        $mapping = new \Elastica\Type\Mapping();
+        $mapping->setType($elasticaType);
+
+        $mapping->setProperties([
+            'id' => [
+                'type' => 'integer'
+            ],
+            'folderId' => [
+                'type' => 'integer'
+            ],
+            'transferredMoney' => [
+                'type' => 'float'
+            ],
+            'date' => [
+                'type' => 'date'
+            ]
+        ]);
+        $mapping->send();
+
+        return $elasticaType;
+    }
+
 
 //    /**
 //     * @return TransactionEntity[] Returns an array of TransactionEntity objects

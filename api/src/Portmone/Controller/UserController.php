@@ -30,7 +30,7 @@ class UserController extends Controller
           $user->setEmail($request->get('email'));
           $entityManager->persist($user);
           $entityManager->flush();
-          return new JsonResponse('User has been created successfully', 201);
+          return new JsonResponse(['msg' => 'User has been created successfully'], 201);
       } catch (\Exception $e) {
           return new JsonResponse($e);
       }
@@ -53,7 +53,7 @@ class UserController extends Controller
           $myUser->setPassword($request->get('password'));
           $myUser->setEmail($request->get('email'));
           $entityManager->flush();
-          return new JsonResponse('User has been updated successfully', 200);
+          return new JsonResponse(['msg' => 'User has been updated successfully'], 200);
       } catch (Exception $e) {
           return $this->fail($e);
       }
@@ -75,7 +75,7 @@ class UserController extends Controller
          }
          $entityManager->remove($myUser);
          $entityManager->flush();
-         return new JsonResponse('User has been deleted successfully', 200);
+         return new JsonResponse(['msg' => 'User has been deleted successfully'], 200);
      } catch (Exception $e) {
          return $this->fail($e);
      }

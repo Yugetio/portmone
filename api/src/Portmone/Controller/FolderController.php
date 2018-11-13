@@ -27,7 +27,7 @@ class FolderController extends Controller
             $folder->setName($request->get('nameFolder'));
             $entityManager->persist($folder);
             $entityManager->flush();
-            return new JsonResponse('Folder has been created successfully', 201);
+            return new JsonResponse(['msg' => 'Folder has been created successfully'], 201);
         } catch (Exception $e) {
             return $this->fail($e);
         }
@@ -41,7 +41,6 @@ class FolderController extends Controller
      */
     public function updateFolder(Request $request) : Response
     {
-
         try {
             $entityManager = $this->getDoctrine()->getManager();
             $folder = $entityManager->find(FolderEntity::class, $request->get('id'));
@@ -53,7 +52,7 @@ class FolderController extends Controller
             $folder->setName($request->get('nameFolder'));
             $entityManager->flush();
 
-            return new JsonResponse('Folder has been updated successfully', 200);
+            return new JsonResponse(['msg' =>'Folder has been updated successfully'], 200);
         }catch (Exception $e) {
             return $this->fail($e);
         }
@@ -78,7 +77,7 @@ class FolderController extends Controller
             $entityManager->remove($folder);
             $entityManager->flush();
 
-            return new JsonResponse('Folder has been deleted successfully', 200);
+            return new JsonResponse(['msg' => 'Folder has been deleted successfully'], 200);
         }catch (Exception $e) {
             return $this->fail($e);
         }

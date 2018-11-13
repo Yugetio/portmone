@@ -10,11 +10,22 @@ use App\Portmone\Entity\TransactionEntity;
 use Symfony\Component\Routing\Annotation\Route;
 use Elasticsearch\ClientBuilder;
 use Symfony\Component\Config\Definition\Exception\Exception;
-//use Elastica\Document;
+use App\Repository\TransactionEntityRepository;
 
 
 class TransactionController extends Controller
 {
+
+    /**
+     * @var TransactionEntityRepository
+     */
+    private $transactionEntityRepository;
+
+    public function __construct(TransactionEntityRepository $transactionEntityRepository)
+    {
+        $this->transactionEntityRepository = $transactionEntityRepository;
+    }
+
     /**
      * @Route("/transaction", methods="POST")
      * @param Request $request
@@ -23,48 +34,15 @@ class TransactionController extends Controller
     public function createTransaction(Request $request)
     {
         try {
-            $elasticaClient = new \Elastica\Client(
-                [
-                'servers' => [
-                    [
-                        'host' => 'elasticsearch',
-                        'port' => 9200
-                    ],
-                ]
-            ]);
-
-            // Load index
-            $elasticaIndex = $elasticaClient->getIndex('portmone');
-            if (!$elasticaIndex->exists()){
-                $elasticaIndex->create();
-            }
-            //Create a type
-            $elasticaType = $elasticaIndex->getType('transaction');
-
-            $mapping = new \Elastica\Type\Mapping();
-            $mapping->setType($elasticaType);
-
-            $mapping->setProperties([
-                'id' => [
-                    'type' => 'integer'
-                ],
-                'folderId' => [
-                    'type' => 'integer'
-                ],
-                'transferredMoney' => [
-                    'type' => 'float'
-                ],
-                'date' => [
-                    'type' => 'date'
-                ]
-            ]);
-            $mapping->send();
+            $elasticaType = $this->transactionEntityRepository->ConnectToDB();
 
             $transactionId = substr(uniqid('', true), -6);
 
             $transaction = [
                 'id' => $transactionId,
-                'transferredMoney' => $request->get("money"),
+                'sourceCardId' => $request->get('sourceCardId'),
+                'destinationCardId' => $request->get('destinationCardId'),
+                'transferredMoney' => $request->get('money'),
                 'date' => time()
             ];
             $transactionEntity = TransactionEntity::deserialize($transaction);
@@ -72,7 +50,7 @@ class TransactionController extends Controller
             $elasticaType->addDocument($transactionDocument);
             $elasticaType->getIndex()->refresh();
 
-            return new JsonResponse('Transaction has been created successfully', 201);
+            return new JsonResponse(['msg' => 'Transaction has been created successfully'], 201);
         } catch (Exception $e) {
             return $this->fail($e);
         }

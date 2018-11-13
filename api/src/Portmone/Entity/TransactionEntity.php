@@ -7,7 +7,7 @@ use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\VarDumper\Cloner\Data;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FolderEntityRepository")
+ * @ORM\Entity
  */
 class TransactionEntity
 {
@@ -33,11 +33,31 @@ class TransactionEntity
     /**
      * @ORM\Column(type="integer")
      */
-    private $folderId;
+    private $sourceCardId;
 
-    public function getFolderId(): ?FolderEntity
+    public function getSourceCardId()
     {
-        return $this->folderId;
+        return $this->sourceCardId;
+    }
+    public function setSourceCardId(int $sourceCardId)
+    {
+        $this->sourceCardId = $sourceCardId;
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $destinationCardId;
+
+    public function getDestinationCardId()
+    {
+        return $this->sourceCardId;
+    }
+    public function setDestinationCardId(int $destinationCardId)
+    {
+        $this->destinationCardId = $destinationCardId;
+        return $this;
     }
 
     /**
@@ -76,7 +96,8 @@ class TransactionEntity
     {
         $serializedArray = [
             'id' => $id,
-            'folderId' => $this->folderId,
+            'sourceCardId' => $this->sourceCardId,
+            'destinationCardId' => $this->destinationCardId,
             'transferredMoney' => $this->transferredMoney,
             'date' => $this->transactionDate
         ];
@@ -86,8 +107,8 @@ class TransactionEntity
     static function deserialize(array $data)
     {
         $transactionEntity = new TransactionEntity();
-        $transactionEntity->setId($data['id']);
-        $transactionEntity->getFolderId();
+        $transactionEntity->setSourceCardId($data['sourceCardId']);
+        $transactionEntity->setDestinationCardId($data['destinationCardId']);
         $transactionEntity->setTransferredMoney($data['transferredMoney']);
         $transactionEntity->setTransactionDate($data['date']);
 

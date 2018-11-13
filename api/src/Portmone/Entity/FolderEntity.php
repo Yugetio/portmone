@@ -67,20 +67,20 @@ class FolderEntity
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Portmone\Entity\TransactionEntity", mappedBy="folderId")
+     * @ORM\OneToMany(targetEntity="App\Portmone\Entity\CardEntity", mappedBy="folderId")
      */
-    private $transactions;
+    private $cards;
 
     public function __construct()
     {
-        $this->transactions = new ArrayCollection();
+        $this->cards = new ArrayCollection();
     }
     /**
-     * @return Collection|TransactionEntity[]
+     * @return Collection|CardEntity[]
      */
-    public function getTransactions(): Collection
+    public function getCards(): Collection
     {
-        return $this->transactions;
+        return $this->cards;
     }
 
 }
