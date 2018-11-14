@@ -1,29 +1,29 @@
 <?php
 namespace App\Portmone\Controller;
 
-use Elastica\Processor\Date;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Portmone\Entity\TransactionEntity;
 use Symfony\Component\Routing\Annotation\Route;
-use Elasticsearch\ClientBuilder;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use App\Repository\TransactionEntityRepository;
+use Elastica\Client;
+use Elastica\Document;
 
 
-class TransactionController extends Controller
+class TransactionController
 {
 
     /**
-     * @var TransactionEntityRepository
+     * @var Client
      */
-    private $transactionEntityRepository;
+    private $client;
 
-    public function __construct(TransactionEntityRepository $transactionEntityRepository)
+    public function __construct(Client $client)
     {
-        $this->transactionEntityRepository = $transactionEntityRepository;
+        $this->client = $client;
     }
 
     /**
@@ -34,8 +34,6 @@ class TransactionController extends Controller
     public function createTransaction(Request $request)
     {
         try {
-            $elasticaType = $this->transactionEntityRepository->ConnectToDB();
-
             $transactionId = substr(uniqid('', true), -6);
 
             $transaction = [
@@ -46,7 +44,8 @@ class TransactionController extends Controller
                 'date' => time()
             ];
             $transactionEntity = TransactionEntity::deserialize($transaction);
-            $transactionDocument = new \Elastica\Document($id = '', $transactionEntity->serialize($transactionId));
+            $transactionDocument = new Document($id = '', $transactionEntity->serialize($transactionId));
+            $elasticaType = $this->client->getIndex('portmone')->getType('transaction');
             $elasticaType->addDocument($transactionDocument);
             $elasticaType->getIndex()->refresh();
 
