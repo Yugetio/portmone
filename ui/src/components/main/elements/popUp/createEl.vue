@@ -4,10 +4,14 @@
     <CreateFolder v-if="this.$store.state.popUp.show === 'folder'"></CreateFolder>
     <CreateCard v-if="this.$store.state.popUp.show === 'card'"></CreateCard>
   </div>
-   <div class="btnPanel">
-     <div v-if="this.$store.state.folder.parentID" @click=""><<<</div> <!-- click -->
-     <div @click="setShowBlock('folder')">Create Folder</div>
-     <div @click="setShowBlock('card')">Create Card</div>
+  <div class="btnPanel">
+    <!-- add @click | call menthod setCurrentFolder ...-->
+    <router-link  v-if="this.$store.state.folder.currentFolder.id" :to="this.$store.state.folder.currentFolder.parentID === null ? '/workpage' : `/workpage/${ this.$store.state.folder.currentFolder.id }`">
+      <div><<<</div>
+    </router-link>  
+
+    <div @click="setShowBlock('folder')">Create Folder</div>
+    <div @click="setShowBlock('card')">Create Card</div>
   </div>
 </div> 
 </template>
@@ -19,6 +23,7 @@ import CreateCard from './elements/createCard.vue';
 export default {
   methods: {
     setShowBlock(name) {
+      this.$store.dispatch('createFolder')
       this.$store.commit('showCreateBlock', name)
     }
   },

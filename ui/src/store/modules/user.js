@@ -26,7 +26,7 @@ const actions = {
       commit('setToken', res)
     )
     .catch(error => {
-      console.log('Error: ' + error.message)
+      console.error('Error: ' + error.message)
     });
   },
   async reg({ commit }, playload) {
