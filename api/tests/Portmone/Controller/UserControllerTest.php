@@ -2,7 +2,6 @@
 
 namespace App\Portmone\Controller;
 
-use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -20,11 +19,12 @@ class CreateUserControllerTest extends WebTestCase
 //            array(),
 //            array(),
 //            array('CONTENT_TYPE' => 'application/json'),
-//            json_encode(["password"=>"stepan14213","email"=>"stepan@gmail.com"])
+//            json_encode(["password"=>"dimon123","email"=>"dimon@gmail12.com"])
 //        );
 //        var_dump($client->getResponse());
 //        $this->assertJsonResponse($client->getResponse(), 201);
 //    }
+
 //     public function testUpdateActionTest()
 //     {
 //         $client = static::createClient();

@@ -3318,7 +3318,6 @@
                 "shasum": ""
             },
             "require": {
-                "doctrine/common": "^2.2",
                 "symfony/config": "^3.3|^4.0",
                 "symfony/dependency-injection": "^3.3|^4.0",
                 "symfony/framework-bundle": "^3.4|^4.0",

@@ -32,7 +32,7 @@ class TransactionController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function createTransaction(Request $request)
+    public function createTransactionDocument(Request $request)
     {
         try {
             $transactionId = substr(uniqid('', true), -6);

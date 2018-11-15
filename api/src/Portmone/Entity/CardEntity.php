@@ -33,6 +33,11 @@ class CardEntity
     {
         return $this->folderId;
     }
+    public function setFolderId(int $folderId)
+    {
+        $this->folderId = $folderId;
+        return $this;
+    }
 
     /**
      * @ORM\Column(type="integer", length=255)

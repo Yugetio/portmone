@@ -18,17 +18,20 @@ use App\Portmone\Entity\CardEntity;
 class CardController extends Controller
 {
     /**
-     *@Route("/card ", methods={"POST"})
+     * @Route("/card ", methods="POST")
+     * @param Request $request
+     * @return JsonResponse
      */
     public function createCard(Request $request)
     {
 
         try {
             $entityManager = $this->getDoctrine()->getManager();
-            $user = new CardEntity();
-            $user->setNumber($request->get('number'));
-            $user->setCash($request->get('cash'));
-            $entityManager->persist($user);
+            $card = new CardEntity();
+            $card->setFolderId($request->get('folderId'));
+            $card->setNumber($request->get('number'));
+            $card->setCash($request->get('cash'));
+            $entityManager->persist($card);
             $entityManager->flush();
 
             return new JsonResponse(['msg' => 'Card has been created successfully'],201);
@@ -38,50 +41,50 @@ class CardController extends Controller
     }
 
     /**
-     *@Route("/file", methods={"PUT"})
+     * @Route("/card", methods="PUT")
+     * @param Request $request
+     * @return Response
      */
     public function updateCard(Request $request) : Response
     {
 
         try {
-            $data = json_decode($request->getContent(), true);
             $entityManager = $this->getDoctrine()->getManager();
-            $card = $entityManager->find(CardEntity::class, $data['id']);
+            $card = $entityManager->find(CardEntity::class, $request->get('id'));
             if (!$card) {
                 throw $this->createNotFoundException(
-                    'No card found for id '.$card['id']
+                    'No card found for id '.$request->get('id')
                 );
             }
-            $card->setName($data['nameCard']);
-            $card->setCash($data['cashMoney']);
+            $card->setCash($request->get('cash'));
             $entityManager->flush();
 
-            return new JsonResponse(['msg' =>'Card update is successfully'],201);
+            return new JsonResponse(['msg' =>'Card has been updated successfully'],200);
         }catch (Exception $e) {
             return $this->fail($e);
         }
     }
 
     /**
-     *@Route("/file", methods={"DELETE"})
+     * @Route("/card", methods="DELETE")
+     * @param Request $request
+     * @return Response
      */
     public function deleteCard(Request $request) : Response
     {
 
         try {
-
-            $data = json_decode($request->getContent(), true);
             $entityManager = $this->getDoctrine()->getManager();
-            $card = $entityManager->find(CardEntity::class, $data['id']);
+            $card = $entityManager->find(CardEntity::class, $request->get('id'));
             if (!$card) {
                 throw $this->createNotFoundException(
-                    'No card found for id '.[$data['id']]
+                    'No card found for id '.$request->get('id')
                 );
             }
             $entityManager->remove($card);
             $entityManager->flush();
 
-            return new JsonResponse(['msg' => 'Card deleted is successfully'],201);
+            return new JsonResponse(['msg' => 'Card has been deleted successfully'],200);
         }catch (Exception $e) {
             return $this->fail($e);
         }
