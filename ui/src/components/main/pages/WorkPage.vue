@@ -22,8 +22,6 @@
 <script>
 import newElem from '../../main/elements/popUp/createEl.vue';
 
-
-
 export default {
   data() {
     return {
@@ -32,22 +30,32 @@ export default {
     }
   },
   methods: {
+    currentDataUpdate(id) {
+      this.$store.dispatch('getFolders', id);
+      this.$store.dispatch('getCards', id);
+    },
     setCurrentFolder(folder) {
-      this.$store.commit('setCurrentFolder', folder)
+      this.$store.commit('setCurrentFolder', folder);
+      this.currentDataUpdate(folder.id);
     }
   },
   components: {
     newElem
   },
-  // created: function () {
-  //   console.log(this.$route.params);
-  // },
-  // beforeUpdate: function () {
-  //   console.log(this.$route.params);
-  // }
+  created: function () {
+    const id = Object.keys( this.$route.params ).length ? this.$route.params.id : null;
+
+    //sync get current folder -  this.$store.dispatch('getCurrentFolder', id);
+    //if - res = true 
+      //call currentDataUpdate - this.currentDataUpdate(id);
+    //else 
+      // this.$router.push('/error');
+
+    this.$store.dispatch('getCurrentFolder', id);
+    this.currentDataUpdate(id);
+  }
 }
 
-// Object.keys( $route.params ).length;
 </script>
 
 <style scoped>

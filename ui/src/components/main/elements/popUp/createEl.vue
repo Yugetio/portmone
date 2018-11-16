@@ -6,8 +6,8 @@
   </div>
   <div class="btnPanel">
     <!-- add @click | call menthod setCurrentFolder ...-->
-    <router-link  v-if="this.$store.state.folder.currentFolder.id" :to="this.$store.state.folder.currentFolder.parentID === null ? '/workpage' : `/workpage/${ this.$store.state.folder.currentFolder.id }`">
-      <div><<<</div>
+    <router-link  tag="div" @click.native="updateFolder" v-if="this.$store.state.folder.currentFolder.id" :to="toBackFolder()">
+      <span><<<</span>
     </router-link>  
 
     <div @click="setShowBlock('folder')">Create Folder</div>
@@ -25,6 +25,26 @@ export default {
     setShowBlock(name) {
       this.$store.dispatch('createFolder')
       this.$store.commit('showCreateBlock', name)
+    },
+    updateFolder() {
+      const parentID = this.$store.state.folder.currentFolder.parentID;
+
+      //update current folde
+      //update folders
+      //update cards
+      this.$store.dispatch('getCurrentFolder', parentID)
+      this.$store.dispatch('getFolders', parentID)
+      this.$store.dispatch('getCards', parentID)
+    },
+    toBackFolder(){
+      const parentID = this.$store.state.folder.currentFolder.parentID;
+      const workdir = '/workpage';
+
+      //set new path
+      if (parentID) {
+        return `${workdir}/${parentID}`        
+      }      
+      return workdir
     }
   },
   components: {
