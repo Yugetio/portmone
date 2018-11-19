@@ -5,8 +5,7 @@
     <CreateCard v-if="this.$store.state.popUp.show === 'card'"></CreateCard>
   </div>
   <div class="btnPanel">
-    <!-- add @click | call menthod setCurrentFolder ...-->
-    <router-link  tag="div" @click.native="updateFolder" v-if="this.$store.state.folder.currentFolder.id" :to="toBackFolder()">
+    <router-link  tag="div"  v-if="this.$store.state.folder.currentFolder.id" @click.native="updateFolder" :to="toBackFolder()">
       <span><<<</span>
     </router-link>  
 
@@ -19,19 +18,22 @@
 <script>
 import CreateFolder from './elements/createFolder.vue';
 import CreateCard from './elements/createCard.vue';
+import { SHOW_CREATED_BLOCK } from '../../../../store/names/popUp'
+import { GET_CURRENT_FOLDER, GET_FOLDERS, CREATE_FOLDER } from '../../../../store/names/folder'
+import { GET_CARDS } from '../../../../store/names/card'
 
 export default {
   methods: {
     setShowBlock(name) {
-      this.$store.dispatch('createFolder')
-      this.$store.commit('showCreateBlock', name)
+      // this.$store.dispatch(CREATE_FOLDER)
+      this.$store.commit(SHOW_CREATED_BLOCK, name)
     },
     updateFolder() {
       const parentID = this.$store.state.folder.currentFolder.parentID;
 
-      this.$store.dispatch('getCurrentFolder', parentID)
-      this.$store.dispatch('getFolders', parentID)
-      this.$store.dispatch('getCards', parentID)
+      this.$store.dispatch(GET_CURRENT_FOLDER, parentID)
+      this.$store.dispatch(GET_FOLDERS, parentID)
+      this.$store.dispatch(GET_CARDS, parentID)
     },
     toBackFolder(){
       const parentID = this.$store.state.folder.currentFolder.parentID;

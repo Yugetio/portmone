@@ -32,17 +32,11 @@
   margin-bottom: 10px;
 }
 
-.login-form .header-forms span, .errorMessage {
+.login-form .header-forms span {
   font-size: 11px;
   line-height: 16px;
   color: #678889;
   text-shadow: 1px 1px 0 rgba(256, 256, 256, 1.0);
-}
-
-.header-forms .errorMessage ul {
-  padding-left: 10px;
-  margin-top: 10px;
-  color: red;
 }
 
 /*CONTENT*/
@@ -53,7 +47,7 @@
 
 /* Input field */
 
-.login-form .content-forms .input {
+.login-form .content-forms input {
   width: 188px;
   padding: 15px 25px;
   
@@ -72,12 +66,12 @@
   margin-top: 25px;
 }
 
-.login-form .content-forms .input:hover {
+.login-form .content-forms input:hover {
   background: #dfe9ec;
   color: #414848;
 }
 
-.login-form .content-forms .input:focus {
+.login-form .content-forms input:focus {
   background: #dfe9ec;
   color: #414848;
 }

@@ -21,6 +21,8 @@
 
 <script>
 import newElem from '../../main/elements/popUp/createEl.vue';
+import { GET_CURRENT_FOLDER, SET_CURRENT_FOLDER, GET_FOLDERS } from '../../../store/names/folder'
+import { GET_CARDS } from '../../../store/names/card'
 
 export default {
   data() {
@@ -31,11 +33,11 @@ export default {
   },
   methods: {
     currentDataUpdate(id) {
-      this.$store.dispatch('getFolders', id);
-      this.$store.dispatch('getCards', id);
+      this.$store.dispatch(GET_FOLDERS, id);
+      this.$store.dispatch(GET_CARDS, id);
     },
     setCurrentFolder(folder) {
-      this.$store.commit('setCurrentFolder', folder);
+      this.$store.commit(SET_CURRENT_FOLDER, folder);
       this.currentDataUpdate(folder.id);
     }
   },
@@ -51,7 +53,7 @@ export default {
     //else 
       // this.$router.push('/error');
 
-    this.$store.dispatch('getCurrentFolder', id);
+    // this.$store.dispatch(GET_CURRENT_FOLDER, id);
     this.currentDataUpdate(id);
   }
 }

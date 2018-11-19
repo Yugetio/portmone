@@ -10,8 +10,9 @@
       <h1>{{ this.$store.getters.getUser }}</h1>
   </div>
   <div class="delete-profile">
-      <!-- <a @click='updateProfile' class="button7">Update Profile</a>
-      <a @click='deleteProfile' class="button7">Delete Profile</a> -->
+      <a @click='editUser' class="button7">Edit</a>
+      <a @click='logout' class="button7">Logout</a>
+      <a @click='deleteUser' class="button7">Delete</a>
   </div>
 </section>
 </template>
@@ -23,6 +24,15 @@
     }
   },
   methods:{
+    editUser() {
+
+    },
+    logout() {
+
+    },
+    deleteUser() {
+      
+    }
   }
 }
 </script>

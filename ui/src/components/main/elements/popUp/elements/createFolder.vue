@@ -14,6 +14,9 @@
 </template>
 
 <script>
+import { HIDE_CREATED_BLOCK } from '../../../../../store/names/popUp'
+import {  } from '../../../../../store/names/folder'
+
 export default {
   data() {
     return {
@@ -21,11 +24,12 @@ export default {
     }
   },
   methods: {
+    //this.$store.dispatch(CREATE_FOLDER)
     addFolder() {
       this.$store.commit('addFolder', this.newFolder);      
     },
     hideBlock(){
-      this.$store.commit('hideCreateBlock')
+      this.$store.commit(HIDE_CREATED_BLOCK)
     }
   }
  }

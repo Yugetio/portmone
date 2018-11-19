@@ -1,10 +1,8 @@
 <template>
 <div class="wrapper-form">
   <form
-    name="login-form"
     class="login-form"
-    action="/api/user"
-    method="post">
+    >
     <div class="content-forms">
       <div class="header-forms">
         <h1>Authorization</h1>
@@ -14,19 +12,15 @@
         <input
           required
           v-model="email"
-          name="username"
           type="email"
-          class="input email"
-          value="Username"
+          class="email"
           placeholder="Email"
         />
         <input
           required
           v-model="password"
-          name="password"
           type="password"
-          class="input password"
-          value="Password"
+          class="password"
           min="6"
           placeholder="Password"
         />
@@ -50,6 +44,8 @@
 </template>
 
 <script>
+import { LOGIN } from '../../../../store/names/user'
+
 export default {
   data() {
     return {
@@ -58,16 +54,17 @@ export default {
     }
   },
   methods: {
-    async login() {
-      await this.$store.dispatch('auth', {
+    login() {
+      this.$store.dispatch(LOGIN, {
         email: this.email,
         password: this.password
-      });
-      if(this.$store.state.user.isAuth) {
-        this.$router.push('/workpage');
-      } else {
-        console.error('error login');
-      }
+      })
+      .then((res) => {  
+        this.$store.commit('setToken', res)
+        this.$router.push('/workpage')
+      }).catch(error => {
+        console.error('Error: ' + error.message)
+      })
     }
   }
  }

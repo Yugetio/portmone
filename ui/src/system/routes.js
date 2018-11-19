@@ -2,33 +2,30 @@ import main from '../components/main/pages/MainPage.vue'
 import workPage from '../components/main/pages/WorkPage.vue'
 import profilePage from '../components/main/pages/ProfilePage.vue'
 import ErrorPage from '../components/main/pages/Error.vue'
+import {ifNotAuthenticated, ifAuthenticated } from './redirect';
+
 export const routes = [{
     path: '/',
     component: main,
-    meta: {
-      notAuth: true
-    }
+    beforeEnter: ifNotAuthenticated,
   },
   {
     path: '/registration',
     component: main,
-    meta: {
-      notAuth: true
-    }
+    beforeEnter: ifNotAuthenticated,
+
   },
   {
     path: '/workpage/:id?',
     component: workPage,
-    meta: {
-      requiresAuth: true
-    }
+    beforeEnter: ifAuthenticated,
+
   },
   {
     path: '/profile',
     component: profilePage,
-    meta: {
-      requiresAuth: true
-    }
+    beforeEnter: ifAuthenticated,
+
   },
   {
     path: '*',

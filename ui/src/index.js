@@ -12,28 +12,6 @@ export const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.state.user.isAuth) {
-      next({
-        path: '/'
-      })
-    } else {
-      next()
-    }
-  } else if (to.matched.some(record => record.meta.notAuth)) {
-    if (store.state.user.isAuth) {
-      next({
-        path: '/workpage'
-      })
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
-
  sync(store, router);
 
 new Vue({

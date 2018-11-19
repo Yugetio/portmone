@@ -1,67 +1,59 @@
+import { LOGIN, REG, LOGOUT, DELETE } from '../names/user';
+
 const state = {
   email: '',
-  isAuth: true
+  isAuth: true //переробити
 }
 
 const mutations = {
-  setToken(state, playload){
+  setToken(state, playload){ //перенести в другий модуль
     localStorage.auth = playload;
   },
   /**
    * 
    * @param { Boolean } playload 
    */
-  setIsAuth(state, playload) {
+  setIsAuth(state, playload) { //переробити
     state.isAuth = playload;
   }
 }
 
 const actions = {
-  async auth({ commit }, playload) {
-   await fetch("/auth", {
+  [LOGIN]: ({}, playload) => {
+    return fetch("/auth", {
       method: "POST",
       body: JSON.stringify(playload)
     })
     .then(res => {
-      if(res.ok) {
         return res.json()
-      } else {
-        throw new Error('Network response was not ok.')
-      }
     })
-    .then(res =>
-      commit('setToken', res)
-    )
-    .catch(error => {
-      console.error('Error: ' + error.message)
+    .catch(() => {
+      throw new Error('Network response was not ok.')
     });
   },
-  async reg({ commit }, playload) {
-    await fetch("/user", {
+  [REG]: ({}, playload) => {
+    return fetch("/user", {
       method: "POST",
       body: JSON.stringify(playload)
     })
     .then( res => {
-      if(res.ok) {
-        return res.json()
-      } else {
-        throw new Error('Network response was not ok.')
-      }
+      return res.json()
     })
-    .then(res =>
-      commit('setToken', res)
-    )
-    .catch(error =>
-      console.log('Error: ' + error.message)
-    );
-  }
+    .catch(() => {
+      throw new Error('Network response was not ok.')
+    });
+  }, //створити методи: виход та удалити
+  [LOGOUT]: () => {
+
+  },
+  [DELETE]: () => {}
 }
 
 const getters = {
   getUser(state) {
     return state.email
   },
-  getToken() {
+  getToken() {//перенести в другий модуль
     return localStorage.auth
   }
 }

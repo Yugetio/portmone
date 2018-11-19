@@ -14,6 +14,9 @@
 </template>
 
 <script>
+import { HIDE_CREATED_BLOCK } from '../../../../../store/names/popUp'
+import {  } from '../../../../../store/names/card'
+
 export default {
   data() {
     return {
@@ -25,7 +28,7 @@ export default {
       this.$store.commit('addCard', this.newCard)
     },
     hideBlock(){
-      this.$store.commit('hideCreateBlock')
+      this.$store.commit(HIDE_CREATED_BLOCK)
     }
   }
  }

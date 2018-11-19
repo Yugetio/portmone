@@ -1,3 +1,5 @@
+import { SET_CURRENT_FOLDER, SET_FOLDERS, GET_CURRENT_FOLDER, GET_FOLDERS, CREATE_FOLDER, DELETE_FOLDER, RENAME_FOLDER } from '../names/folder';
+
 const state = {
   folders: [{
     id: 1,
@@ -23,19 +25,27 @@ const state = {
 
 
 const mutations = {
-  setCurrentFolder(state, payload) {
+
+  /**
+   * @param { Object } playload
+   * 
+   */
+  [SET_CURRENT_FOLDER]: (state, payload) => {
     state.currentFolder = payload;
   },
   addFolder(state, payload) { // delete this method
     state.folders.push(payload);
   },
-  setFolders(stage, playload) {
+  /**
+   * @param { Array } playload
+   */
+  [SET_FOLDERS]: (stage, playload) => {
     stage.folders = playload;
   }
 }
 
 const actions = {
-   getCurrentFolder({ commit }, playload = null) {
+   [GET_CURRENT_FOLDER]: ({ commit }, playload = null) => {
      fetch("/currentFolder", {
        method: "POST",
        body: playload //id
@@ -54,7 +64,7 @@ const actions = {
        console.error('Error: ' + error.message)
      });
    },
-   getFolders({ commit }, playload = null) {
+   [GET_FOLDERS]: ({ commit }, playload = null) => {
     fetch("/folders", {
       method: "POST",
       body: playload //id
@@ -73,7 +83,7 @@ const actions = {
       console.error('Error: ' + error.message)
     });
   },
-  createFolder({ dispatch }, playload = '') {
+  [CREATE_FOLDER]: ({ dispatch }, playload = '') => {
     fetch("/createFolder", {
       method: "POST",
       body: playload //name
@@ -88,7 +98,9 @@ const actions = {
     .catch(error => {
       console.error('Error: ' + error.message)
     });
-  }
+  }, //додати на методи: удалити та редагувати назву папки
+  [DELETE_FOLDER]: () => {},
+  [RENAME_FOLDER]: () => {}
 }
 
 const getters = {

@@ -1,3 +1,5 @@
+import { SET_CARDS, GET_CARDS, CREATE_CARD, EDIT_CARD, DELETE_CARD } from '../names/card';
+
 const state = {
   cards: []
 }
@@ -7,10 +9,10 @@ const mutations = {
    * 
    * @param {Object} playload
    */
-  addCard(state, playload) {
+  addCard(state, playload) {//переробити
     state.cards.push(playload);
   },
-  setCards(state, playload) {
+  [SET_CARDS]: (state, playload) => {
     state.cards = playload;
   }
 }
@@ -20,7 +22,7 @@ const actions = {
    * 
    * @param {Integer} playload, get folder id
    */
-  getCards({ commit }, playload = null) {
+  [GET_CARDS]: ({ commit }, playload = null) => {
     fetch("/cards", {
       method: "POST",
       body: playload
@@ -39,7 +41,7 @@ const actions = {
       console.error('Error: ' + error.message)
     });
   },
-  createCard({ dispatch }, playload) {
+  [CREATE_CARD]: ({ dispatch }, playload) => {
     fetch("/createCard", {
       method: "POST",
       body: playload //name, $
@@ -54,7 +56,9 @@ const actions = {
     .catch(error => {
       console.error('Error: ' + error.message)
     });
-  }
+  },//додати методи: удалити та редагувати
+  [EDIT_CARD]: () => {},
+  [DELETE_CARD]: () => {}
 }
 
 const getters = {
