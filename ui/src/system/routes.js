@@ -4,23 +4,31 @@ import profilePage from '../components/main/pages/ProfilePage.vue'
 import ErrorPage from '../components/main/pages/Error.vue'
 export const routes = [{
     path: '/',
-    component: main
+    component: main,
+    meta: {
+      notAuth: true
+    }
   },
   {
     path: '/registration',
-    component: main
+    component: main,
+    meta: {
+      notAuth: true
+    }
   },
   {
     path: '/workpage/:id?',
-    component: workPage
+    component: workPage,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/profile',
-    component: profilePage
-  },
-  {
-    path: '/index',
-    redirect: '/'
+    component: profilePage,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '*',

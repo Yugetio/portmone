@@ -1,7 +1,7 @@
 <template>
 <div class="nav">
   <div class="header">
-    <template v-if="this.$route.path === '/' || this.$route.path === '/registration'">
+    <template v-if="!this.$store.state.user.isAuth">
       <Logo></Logo>
       <LoginButton></LoginButton>
     </template>

@@ -29,9 +29,6 @@ export default {
     updateFolder() {
       const parentID = this.$store.state.folder.currentFolder.parentID;
 
-      //update current folde
-      //update folders
-      //update cards
       this.$store.dispatch('getCurrentFolder', parentID)
       this.$store.dispatch('getFolders', parentID)
       this.$store.dispatch('getCards', parentID)
@@ -40,7 +37,6 @@ export default {
       const parentID = this.$store.state.folder.currentFolder.parentID;
       const workdir = '/workpage';
 
-      //set new path
       if (parentID) {
         return `${workdir}/${parentID}`        
       }      

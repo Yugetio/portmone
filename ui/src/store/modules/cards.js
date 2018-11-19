@@ -3,6 +3,10 @@ const state = {
 }
 
 const mutations = {
+  /**
+   * 
+   * @param {Object} playload
+   */
   addCard(state, playload) {
     state.cards.push(playload);
   },
@@ -12,10 +16,14 @@ const mutations = {
 }
 
 const actions = {
+  /**
+   * 
+   * @param {Integer} playload, get folder id
+   */
   getCards({ commit }, playload = null) {
     fetch("/cards", {
       method: "POST",
-      body: playload //folder id
+      body: playload
     })
     .then(res => {
       if(res.ok) {

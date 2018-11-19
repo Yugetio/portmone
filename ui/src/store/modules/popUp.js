@@ -3,6 +3,10 @@ const state = {
 }
 
 const mutations = {
+  /**
+   * 
+   * @param { String  } playload, get 'folder' or 'card'
+   */
   showCreateBlock(state, playload) {
     state.show = playload
   },

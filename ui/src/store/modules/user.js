@@ -1,11 +1,18 @@
 const state = {
   email: '',
-  isAuth: false
+  isAuth: true
 }
 
 const mutations = {
   setToken(state, playload){
     localStorage.auth = playload;
+  },
+  /**
+   * 
+   * @param { Boolean } playload 
+   */
+  setIsAuth(state, playload) {
+    state.isAuth = playload;
   }
 }
 
