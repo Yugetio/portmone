@@ -1,4 +1,4 @@
-import { LOGIN, REG, LOGOUT, DELETE, SET_TOKEN } from '../names/user';
+import { LOGIN, REG, LOGOUT, DELETE_USER, SET_TOKEN } from '../names/user';
 import axios from 'axios';
 
 const state = {
@@ -60,7 +60,7 @@ const actions = {
       resolve()
     })
   },
-  [DELETE]: ({ dispatch }) => {
+  [DELETE_USER]: ({ dispatch }) => {
     return new Promise((resolve, reject) => {
       axios.delete('/user')
         .then(() => {
@@ -68,7 +68,7 @@ const actions = {
           resolve()
         })
       .catch(err => {
-        reject(err)
+        console.error(err.message)
       })
     })
   }

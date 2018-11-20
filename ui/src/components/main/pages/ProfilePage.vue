@@ -18,6 +18,8 @@
 </template>
 
 <script>
+  import { LOGOUT, DELETE_USER } from '../../../store/names/user';
+
   export default {
   data(){
     return{
@@ -28,10 +30,16 @@
 
     },
     logout() {
-
+      this.$store.dispatch(LOGOUT)
+      .then(() => {
+        this.$router.push('/')        
+      })
     },
     deleteUser() {
-      
+      this.$store.dispatch(DELETE_USER)
+      .then(() => {
+        this.$router.push('/')        
+      })
     }
   }
 }
