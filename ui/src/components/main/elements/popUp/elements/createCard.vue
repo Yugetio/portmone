@@ -15,7 +15,7 @@
 
 <script>
 import { HIDE_CREATED_BLOCK } from '../../../../../store/names/popUp'
-import {  } from '../../../../../store/names/card'
+import { CREATE_CARD } from '../../../../../store/names/card'
 
 export default {
   data() {
@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     addCard() {
-      this.$store.commit('addCard', this.newCard)
+      this.$store.dispatch(CREATE_CARD, this.newCard)    
     },
     hideBlock(){
       this.$store.commit(HIDE_CREATED_BLOCK)

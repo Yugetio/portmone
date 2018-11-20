@@ -47,14 +47,14 @@ export default {
   created: function () {
     const id = Object.keys( this.$route.params ).length ? this.$route.params.id : null;
 
-    //sync get current folder -  this.$store.dispatch('getCurrentFolder', id);
-    //if - res = true 
-      //call currentDataUpdate - this.currentDataUpdate(id);
-    //else 
+    this.$store.dispatch(GET_CURRENT_FOLDER, id)
+    .then(() => {
+      this.currentDataUpdate(id);
+    })
+    .catch(error => {
+      console.error(error.message);
       // this.$router.push('/error');
-
-    // this.$store.dispatch(GET_CURRENT_FOLDER, id);
-    this.currentDataUpdate(id);
+    })   
   }
 }
 

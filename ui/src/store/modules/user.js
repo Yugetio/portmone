@@ -53,7 +53,7 @@ const actions = {
     })
   },
   [LOGOUT]: ({ commit }) => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       delete axios.defaults.headers.common['Authorization']
       commit(LOGOUT)
       localStorage.removeItem('auth')

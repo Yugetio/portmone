@@ -15,7 +15,7 @@
 
 <script>
 import { HIDE_CREATED_BLOCK } from '../../../../../store/names/popUp'
-import {  } from '../../../../../store/names/folder'
+import { CREATE_FOLDER } from '../../../../../store/names/folder'
 
 export default {
   data() {
@@ -24,9 +24,8 @@ export default {
     }
   },
   methods: {
-    //this.$store.dispatch(CREATE_FOLDER)
     addFolder() {
-      this.$store.commit('addFolder', this.newFolder);      
+      this.$store.dispatch(CREATE_FOLDER, this.newFolder)    
     },
     hideBlock(){
       this.$store.commit(HIDE_CREATED_BLOCK)

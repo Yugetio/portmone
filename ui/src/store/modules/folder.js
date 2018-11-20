@@ -2,21 +2,7 @@ import { SET_CURRENT_FOLDER, SET_FOLDERS, GET_CURRENT_FOLDER, GET_FOLDERS, CREAT
 import axios from 'axios';
 
 const state = {
-  folders: [{
-    id: 1,
-    name: 'a',
-    parentID: null
-  },
-  {
-    id: 2,
-    name: 'b',
-    parentID: null
-  },
-  {
-    id: 3,
-    name: 'c',
-    parentID: null
-  }],
+  folders: [],
    currentFolder: {
      id: null,
      parentID: 1,
@@ -34,9 +20,6 @@ const mutations = {
   [SET_CURRENT_FOLDER]: (state, payload) => {
     state.currentFolder = payload;
   },
-  addFolder(state, payload) { // delete this method
-    state.folders.push(payload);
-  },
   /**
    * @param { Array } playload
    */
@@ -47,18 +30,21 @@ const mutations = {
 
 const actions = {
   [GET_CURRENT_FOLDER]: ({ commit }, parentID = null) => {
-    axios.post('/currentFolder', parentID)
-    .then(res => {
-      commit('setCurrentFolder', res.data)
-    })
-    .catch(error => {
-      console.error('Error: ' + error.message)
+    return new Promise((resolve, reject) => {
+      axios.post('/currentFolder', parentID)
+      .then(res => {
+        commit(SET_CURRENT_FOLDER, res.data)
+        resolve()
+      })
+      .catch(error => {
+        reject(error)
+      });
     });
   },
   [GET_FOLDERS]: ({ commit }, parentID = null) => {
     axios.post('/folders', parentID)
     .then(res => {
-      commit('setFolders', res.data)
+      commit(SET_FOLDERS, res.data)
     })
     .catch(error => {
       console.error('Error: ' + error.message)
@@ -67,7 +53,7 @@ const actions = {
   [CREATE_FOLDER]: ({ dispatch }, nameFolder = '') => {
     axios.post('/createFolder', nameFolder)
     .then(() => {
-      dispatch('getFolders')
+      dispatch(GET_FOLDERS)
     })
     .catch(error => {
       console.error('Error: ' + error.message)

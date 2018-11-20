@@ -26,7 +26,7 @@ const actions = {
   [GET_CARDS]: ({ commit }, playload = null) => {
      axios.post('/cards', playload)
     .then(res => {
-      commit('setCards', res.data)
+      commit(SET_CARDS, res.data)
       resolve()
     })
     .catch(error => {
@@ -35,8 +35,8 @@ const actions = {
   },
   [CREATE_CARD]: ({ dispatch }, playload) => {
     axios.post('/createCard', playload)
-    .then(res => {
-      dispatch('getCards')
+    .then(() => {
+      dispatch(GET_CARDS)
       resolve()
     })
     .catch(error => {
