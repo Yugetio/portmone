@@ -1,61 +1,83 @@
-import { LOGIN, REG, LOGOUT, DELETE } from '../names/user';
+import { LOGIN, REG, LOGOUT, DELETE, SET_TOKEN } from '../names/user';
+import axios from 'axios';
 
 const state = {
-  email: '',
-  isAuth: true //переробити
+  user: '',
+  token: localStorage.auth || ''
 }
 
 const mutations = {
-  setToken(state, playload){ //перенести в другий модуль
-    localStorage.auth = playload;
+  [SET_TOKEN]: (state, token) => {
+    state.token = token
   },
-  /**
-   * 
-   * @param { Boolean } playload 
-   */
-  setIsAuth(state, playload) { //переробити
-    state.isAuth = playload;
+  [LOGOUT]: (state) => {
+    state.token = ''
   }
 }
 
 const actions = {
-  [LOGIN]: ({}, playload) => {
-    return fetch("/auth", {
-      method: "POST",
-      body: JSON.stringify(playload)
-    })
-    .then(res => {
-        return res.json()
-    })
-    .catch(() => {
-      throw new Error('Network response was not ok.')
-    });
-  },
-  [REG]: ({}, playload) => {
-    return fetch("/user", {
-      method: "POST",
-      body: JSON.stringify(playload)
-    })
-    .then( res => {
-      return res.json()
-    })
-    .catch(() => {
-      throw new Error('Network response was not ok.')
-    });
-  }, //створити методи: виход та удалити
-  [LOGOUT]: () => {
+  [LOGIN]: ({ commit }, playload) => {
+    return new Promise((resolve, reject) => {
+      axios.post('/auth', playload)
+        .then(res => {
+          const token = res.data.token
 
+          axios.defaults.headers.common['Authorization'] = token
+          localStorage.auth = token    
+          commit(SET_TOKEN, token)
+
+          resolve()
+        })
+      .catch(err => {
+        localStorage.removeItem('auth')
+        reject(err)
+      })
+    })
   },
-  [DELETE]: () => {}
+  [REG]: ({ commit }, playload) => {
+    return new Promise((resolve, reject) => {
+      axios.post('/user', playload)
+        .then(res => {
+          const token = res.data.token
+
+          axios.defaults.headers.common['Authorization'] = token
+          localStorage.auth = token    
+          commit(SET_TOKEN, token)
+
+          resolve()
+        })
+      .catch(err => {
+        localStorage.removeItem('auth')
+        reject(err)
+      })
+    })
+  },
+  [LOGOUT]: ({ commit }) => {
+    return new Promise(resolve => {
+      delete axios.defaults.headers.common['Authorization']
+      commit(LOGOUT)
+      localStorage.removeItem('auth')
+      resolve()
+    })
+  },
+  [DELETE]: ({ dispatch }) => {
+    return new Promise((resolve, reject) => {
+      axios.delete('/user')
+        .then(() => {
+          dispatch(LOGOUT)
+          resolve()
+        })
+      .catch(err => {
+        reject(err)
+      })
+    })
+  }
 }
 
 const getters = {
-  getUser(state) {
-    return state.email
-  },
-  getToken() {//перенести в другий модуль
-    return localStorage.auth
-  }
+  getUser: state => state.user,
+  getToken: () => localStorage.auth,
+  isAuthenticated: state => !!state.token
 }
 
 export default {

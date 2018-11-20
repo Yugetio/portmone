@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { REG } from '../../../../store/names/user'
+import { REG, SET_TOKEN } from '../../../../store/names/user'
 
 export default {
   data() {
@@ -59,10 +59,10 @@ export default {
         email: this.email,
         password: this.password
       })
-      .then((res) => {  
-        this.$store.commit('setToken', res)
+      .then(res => {
         this.$router.push('/workpage')
-      }).catch(error => {
+      })
+      .catch(error => {
         console.error('Error: ' + error.message)
       })
     }

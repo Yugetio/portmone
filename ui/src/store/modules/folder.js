@@ -1,4 +1,5 @@
 import { SET_CURRENT_FOLDER, SET_FOLDERS, GET_CURRENT_FOLDER, GET_FOLDERS, CREATE_FOLDER, DELETE_FOLDER, RENAME_FOLDER } from '../names/folder';
+import axios from 'axios';
 
 const state = {
   folders: [{
@@ -45,60 +46,33 @@ const mutations = {
 }
 
 const actions = {
-   [GET_CURRENT_FOLDER]: ({ commit }, playload = null) => {
-     fetch("/currentFolder", {
-       method: "POST",
-       body: playload //id
-     })
-     .then(res => {
-       if(res.ok) {
-         return res.json()
-       } else {
-         throw new Error('Network response was not ok.')
-       }
-     })
-     .then(res =>
-       commit('setCurrentFolder', res)
-     )
-     .catch(error => {
-       console.error('Error: ' + error.message)
-     });
-   },
-   [GET_FOLDERS]: ({ commit }, playload = null) => {
-    fetch("/folders", {
-      method: "POST",
-      body: playload //id
-    })
+  [GET_CURRENT_FOLDER]: ({ commit }, parentID = null) => {
+    axios.post('/currentFolder', parentID)
     .then(res => {
-      if(res.ok) {
-        return res.json()
-      } else {
-        throw new Error('Network response was not ok.')
-      }
+      commit('setCurrentFolder', res.data)
     })
-    .then(res =>
-      commit('setFolders', res)
-    )
     .catch(error => {
       console.error('Error: ' + error.message)
     });
   },
-  [CREATE_FOLDER]: ({ dispatch }, playload = '') => {
-    fetch("/createFolder", {
-      method: "POST",
-      body: playload //name
-    })
+  [GET_FOLDERS]: ({ commit }, parentID = null) => {
+    axios.post('/folders', parentID)
     .then(res => {
-      if(res.ok) {
-        dispatch('getFolders')
-      } else {
-        throw new Error('Network response was not ok.')
-      }
+      commit('setFolders', res.data)
     })
     .catch(error => {
       console.error('Error: ' + error.message)
     });
-  }, //додати на методи: удалити та редагувати назву папки
+  },
+  [CREATE_FOLDER]: ({ dispatch }, nameFolder = '') => {
+    axios.post('/createFolder', nameFolder)
+    .then(() => {
+      dispatch('getFolders')
+    })
+    .catch(error => {
+      console.error('Error: ' + error.message)
+    });
+  },
   [DELETE_FOLDER]: () => {},
   [RENAME_FOLDER]: () => {}
 }

@@ -1,7 +1,7 @@
 <template>
 <div class="nav">
   <div class="header">
-    <template v-if="!this.$store.state.user.isAuth">
+    <template v-if="!this.$store.getters.isAuthenticated">
       <Logo></Logo>
       <LoginButton></LoginButton>
     </template>
