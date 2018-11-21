@@ -2,54 +2,79 @@
 
 namespace App\Portmone\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use FOS\ElasticaBundle\Manager\RepositoryManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Portmone\Entity\FolderEntity;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class FolderController extends Controller
 {
+    public function validateFolderCredentials(FolderEntity $folder, ValidatorInterface $validator)
+    {
+        $folderErrors = $validator->validate($folder);
+        $errors = [];
+        if(count($folderErrors) > 0) {
+            $errors['folderError'] = $folderErrors[0]->getMessage();
+        }
+        return $errors;
+    }
+
+
     /**
      * @Route("/folder", methods="POST")
      * @param Request $request
+     * @param ValidatorInterface $validator
      * @return JsonResponse
      */
-    public function createFolder(Request $request)
+    public function createFolder(Request $request, ValidatorInterface $validator)
     {
         try {
             $entityManager = $this->getDoctrine()->getManager();
+
             $folder = new FolderEntity();
-            $folder->setName($request->get('nameFolder'));
+            $folder->setUserId($request->get('userId') ?? 0);
+            $folder->setParentId($request->get('parentId') ?? 0);
+            $folder->setName($request->get('nameFolder') ?? '');
+
+            if($errors = $this->validateFolderCredentials($folder, $validator)) {
+                return new JsonResponse($errors, 400);
+            }
+
             $entityManager->persist($folder);
             $entityManager->flush();
             return new JsonResponse(['msg' => 'Folder has been created successfully'], 201);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->fail($e);
         }
 
     }
 
     /**
-     * @Route("/folder", methods={"PUT"})
+     * @Route("/folder/{id}", methods={"PUT"})
      * @param Request $request
-     * @return Response
+     * @param int $id
+     * @param ValidatorInterface $validator
+     * @return JsonResponse
      */
-    public function updateFolder(Request $request) : Response
+    public function updateFolder(Request $request, int $id, ValidatorInterface $validator) : Response
     {
         try {
             $entityManager = $this->getDoctrine()->getManager();
-            $folder = $entityManager->find(FolderEntity::class, $request->get('id'));
+            $folder = $entityManager->find(FolderEntity::class, $id);
             if (!$folder) {
                 throw $this->createNotFoundException(
-                    'No folder found for id '.$folder['id']
+                    'No folder found for id '.$id
                 );
             }
             $folder->setName($request->get('nameFolder'));
+
+            if($errors = $this->validateFolderCredentials($folder, $validator)) {
+                return new JsonResponse($errors, 400);
+            }
             $entityManager->flush();
 
             return new JsonResponse(['msg' =>'Folder has been updated successfully'], 200);
@@ -59,19 +84,19 @@ class FolderController extends Controller
     }
 
     /**
-     * @Route("/folder", methods={"DELETE"})
-     * @param Request $request
+     * @Route("/folder/{id}", methods={"DELETE"})
+     * @param int $id
      * @return Response
      */
-    public function deleteFolder(Request $request) : Response
+    public function deleteFolder(int $id) : Response
     {
 
         try {
             $entityManager = $this->getDoctrine()->getManager();
-            $folder = $entityManager->find(FolderEntity::class, $request->get('id'));
+            $folder = $entityManager->find(FolderEntity::class, $id);
             if (!$folder) {
                 throw $this->createNotFoundException(
-                    'No folder found with id '.$request->get('id')
+                    'No folder found with id '.$id
                 );
             }
             $entityManager->remove($folder);

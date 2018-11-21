@@ -2,15 +2,14 @@
 
 namespace App\Portmone\Entity;
 
-use App\Portmone\Exception\InvalidSignUpException;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Annotations\DocLexer;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
-
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Email;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
@@ -24,30 +23,75 @@ class UserEntity
     private $id;
 
     /**
+     * @Assert\Length(
+     *     min = 5,
+     *     minMessage="The password should be at least 5 characters long",
+     * )
+     * @Assert\NotBlank(message="The password is required")
      * @ORM\Column(type="string", length=255)
      */
     private $password;
 
+
     /**
+     * @Assert\Email(message = "The email is not a valid.")
+     * @Assert\NotBlank(message="The email is required")
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
-//    /**
-//     * @ORM\Column(type="string", length=255, unique=true)
-//     */
-//    private $refreshToken;
-//
-//    public function getRefreshToken()
-//    {
-//        return $this->refreshToken;
-//    }
-//
-//    public function setRefreshToken($refreshToken): self
-//    {
-//        $this->refreshToken = $refreshToken;
-//        return $this;
-//    }
+
+    /**
+     * @var DateTime $created
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    protected $createdAt;
+
+
+    /**
+     * @var DateTime $updated
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    protected $updatedAt;
+
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps(): void
+    {
+        $dateTimeNow = new DateTime('now');
+        $this->setUpdatedAt($dateTimeNow);
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt($dateTimeNow);
+        }
+    }
+    public function getCreatedAt() :?DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+    public function getUpdatedAt() :?DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,10 +104,6 @@ class UserEntity
 
     public function setPassword(string $password): self
     {
-        $passwordSize = strlen($password);
-        if($passwordSize < 5 || $passwordSize > 32){
-            throw new InvalidSignUpException();
-        }
         $this->password = $password;
         return $this;
     }
@@ -73,12 +113,8 @@ class UserEntity
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email)
     {
-        $emailSize = strlen($email);
-        if($emailSize < 5 || $emailSize > 32){
-            throw new InvalidSignUpException();
-        }
         $this->email = $email;
         return $this;
     }

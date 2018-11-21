@@ -8,6 +8,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class TransactionControllerTest extends WebTestCase
 {
+    public function testSucces()
+    {
+        $this->assertTrue(true);
+    }
 //    public function testCreateTransaction()
 //    {
 //        $client = static::createClient();
@@ -28,7 +32,7 @@ class TransactionControllerTest extends WebTestCase
 //    }
 //
 //
-//    protected function assertJsonResponse($response, $statusCode = 200)
+//    protected function assertJsonResponse(Response $response, $statusCode = 200)
 //    {
 //        $this->assertEquals(
 //            $statusCode, $response->getStatusCode(),

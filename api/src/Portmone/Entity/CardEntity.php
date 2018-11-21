@@ -40,7 +40,7 @@ class CardEntity
     }
 
     /**
-     * @ORM\Column(type="integer", length=255)
+     * @ORM\Column(type="integer", length=255, unique=true)
      */
     private $cardNumber;
 

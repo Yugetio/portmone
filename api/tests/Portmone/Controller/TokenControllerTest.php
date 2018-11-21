@@ -11,6 +11,10 @@ use App\Portmone\Entity\TokenModel;
 
 class CreateTokenControllerTest extends WebTestCase
 {
+    public function testSucces()
+    {
+        $this->assertTrue(true);
+    }
 /*
     public function testTokenAuthTest()
     {
