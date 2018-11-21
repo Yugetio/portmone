@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div>Create card</div>
+    <div>Edit card</div>
     <div>
       <form class="input-from-card">
-        <input v-model="namber" type="text" placeholder="Number">
+        <input v-model="number" type="text" placeholder="Number">
         <input v-model="cash" type="text" placeholder="Cash">
       </form>
       <div class="control-wallet">
-        <a @click="addCard" class="button7">Add card</a>
+        <a @click="editCard" class="button7">Edit</a>
         <a @click="hideBlock" class="button7">Cancel</a>
       </div>
     </div>
@@ -16,18 +16,18 @@
 
 <script>
 import { HIDE_CREATE_OR_EDIT_BLOCK } from '../../../../../store/names/popUp'
-import { CREATE_CARD } from '../../../../../store/names/card'
+import { EDIT_CARD } from '../../../../../store/names/card'
 
 export default {
   data() {
     return {
-      namber: '',
-      cash: ''
+      number: this.$store.getters.getTempDataInPopUp.number,
+      cash: this.$store.getters.getTempDataInPopUp.cash
     }
   },
   methods: {
-    addCard() {
-      this.$store.dispatch(CREATE_CARD, {
+    editCard() {
+      this.$store.dispatch(EDIT_CARD, {
         number: this.number,
         cash: this.cash
         })

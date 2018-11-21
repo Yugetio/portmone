@@ -2,17 +2,31 @@ import { SET_CARDS, GET_CARDS, CREATE_CARD, EDIT_CARD, DELETE_CARD } from '../na
 import axios from 'axios';
 
 const state = {
-  cards: []
+  cards: [
+    {
+      id: 1,
+      number: '1111111111111',
+      cash: '121'
+    },
+    {
+      id: 2,
+      number: '22222222222222',
+      cash: '121'
+    },
+    {
+      id: 3,
+      number: '33333333333333',
+      cash: '121'
+    },
+    {
+      id: 4,
+      number: '444444444444444',
+      cash: '121'
+    }
+  ]
 }
 
 const mutations = {
-  /**
-   * 
-   * @param {Object} playload
-   */
-  addCard(state, playload) {//переробити
-    state.cards.push(playload);
-  },
   [SET_CARDS]: (state, playload) => {
     state.cards = playload;
   }
@@ -23,34 +37,59 @@ const actions = {
    * 
    * @param {Integer} playload, get folder id
    */
-  [GET_CARDS]: ({ commit }, playload = null) => {
-     axios.post('/cards', playload)
+  [GET_CARDS]: ({ commit }, folderId ) => {
+     axios.get('/card', folderId)
     .then(res => {
       commit(SET_CARDS, res.data)
-      resolve()
     })
     .catch(error => {
       console.error('Error: ' + error.message)
-    }); 
+    })
   },
-  [CREATE_CARD]: ({ dispatch }, playload) => {
-    axios.post('/createCard', playload)
+  [CREATE_CARD]: ({ dispatch }, { number, cash }) => {
+    return new Promise((resolve, reject) => {
+      axios.post('/card', {
+        number,
+        cash
+       })
+      .then(() => {
+        dispatch(GET_CARDS)
+        resolve()
+      })
+      .catch(error => {
+        reject(error)
+      })
+    })
+  },
+  [EDIT_CARD]: ({ dispatch }, { id, number, cash }) => {
+    return new Promise((resolve, reject) => {
+      axios.put('/card', {
+        id,
+        number,
+        cash
+       })
+      .then(() => {
+        dispatch(GET_CARDS)
+        resolve()
+      })
+      .catch(error => {
+        console.error('Error: ' + error.message)
+      })
+    })
+  },
+  [DELETE_CARD]: ({ dispatch }, id) => {
+    axios.delete('/card',id)
     .then(() => {
       dispatch(GET_CARDS)
-      resolve()
     })
     .catch(error => {
       console.error('Error: ' + error.message)
-    });
-  },
-  [EDIT_CARD]: () => {},
-  [DELETE_CARD]: () => {}
+    })
+  }
 }
 
 const getters = {
-  getCards(state) {
-    return state.cards;
-  }
+  getCards: state => state.cards
 }
 
 export default {

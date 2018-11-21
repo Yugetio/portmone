@@ -1,18 +1,21 @@
 <template>
 <section class="content">
-  <newElem></newElem>
+  <NewElem></NewElem>
+  <EditElem></EditElem>
   <h1 v-if="this.$store.state.folder.currentFolder.id" class="name-folder">
-    {{ this.$store.getters.getCurrentFolder.name }}
+    {{ this.$store.getters.getCurrentFolder.nameFolder }}
   </h1>  
   <div class="wallet-list">
     <ul>
       <li class="folder" v-for="folder in folders">
-        <router-link :to="`/workpage/${folder.id}`">
-          <button @click="setCurrentFolder(folder)"> {{ folder.name }} </button>
+        <router-link tag="div" :to="`/workpage/${folder.id}`">
+          <button @click="setCurrentFolder(folder)"> {{ folder.nameFolder }} </button>
+          <button @click="renameFolder(folder)"> Rename </button>
+          <button @click="deletFolder(folder.id)"> Delete </button>
         </router-link>  
       </li>
       <li class="wallet-folder" v-for="card in cards">
-        {{ card }}
+        {{ card.number }}, {{ card.cash }}
       </li>
     </ul>
   </div>
@@ -20,9 +23,11 @@
 </template>
 
 <script>
-import newElem from '../../main/elements/popUp/createEl.vue';
-import { GET_CURRENT_FOLDER, SET_CURRENT_FOLDER, GET_FOLDERS } from '../../../store/names/folder'
+import NewElem from '../../main/elements/popUp/createEl.vue';
+import EditElem from '../../main/elements/popUp/editEl.vue';
+import { GET_CURRENT_FOLDER, SET_CURRENT_FOLDER, GET_FOLDERS, DELETE_FOLDER } from '../../../store/names/folder'
 import { GET_CARDS } from '../../../store/names/card'
+import { SHOW_CREATE_OR_EDIT_BLOCK } from '../../../store/names/popUp.js'
 
 export default {
   data() {
@@ -32,17 +37,24 @@ export default {
     }
   },
   methods: {
-    currentDataUpdate(id) {
-      this.$store.dispatch(GET_FOLDERS, id);
-      this.$store.dispatch(GET_CARDS, id);
+    currentDataUpdate(folderId) {
+      this.$store.dispatch(GET_FOLDERS, folderId);
+      this.$store.dispatch(GET_CARDS, folderId);
     },
     setCurrentFolder(folder) {
       this.$store.commit(SET_CURRENT_FOLDER, folder);
       this.currentDataUpdate(folder.id);
+    },
+    renameFolder(folder) {
+      this.$store.commit(SHOW_CREATE_OR_EDIT_BLOCK, { name: 'renameFolder', data: folder })
+    },
+    deletFolder(folderId) {
+      this.$store.dispatch(DELETE_FOLDER, folderId)
     }
   },
   components: {
-    newElem
+    NewElem,
+    EditElem
   },
   created: function () {
     const id = Object.keys( this.$route.params ).length ? this.$route.params.id : null;

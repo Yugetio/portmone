@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="createEl">
+  <div class="createOrEditEl">
     <CreateFolder v-if="this.$store.state.popUp.show === 'folder'"></CreateFolder>
     <CreateCard v-if="this.$store.state.popUp.show === 'card'"></CreateCard>
   </div>
@@ -18,28 +18,28 @@
 <script>
 import CreateFolder from './elements/createFolder.vue';
 import CreateCard from './elements/createCard.vue';
-import { SHOW_CREATED_BLOCK } from '../../../../store/names/popUp'
+import { SHOW_CREATE_OR_EDIT_BLOCK } from '../../../../store/names/popUp'
 import { GET_CURRENT_FOLDER, GET_FOLDERS } from '../../../../store/names/folder'
 import { GET_CARDS } from '../../../../store/names/card'
 
 export default {
   methods: {
     setShowBlock(name) {
-      this.$store.commit(SHOW_CREATED_BLOCK, name)
+      this.$store.commit(SHOW_CREATE_OR_EDIT_BLOCK, { name })
     },
-    updateFolder() {
-      const parentID = this.$store.state.folder.currentFolder.parentID;
+    updateFolder() { //переробити щоб перенаправлення робило тільки після того як всі запроси відпрацюют успішно 
+      const parentId = this.$store.state.folder.currentFolder.parentId;
 
-      this.$store.dispatch(GET_CURRENT_FOLDER, parentID)
-      this.$store.dispatch(GET_FOLDERS, parentID)
-      this.$store.dispatch(GET_CARDS, parentID)
+      this.$store.dispatch(GET_CURRENT_FOLDER, parentId)
+      this.$store.dispatch(GET_FOLDERS, parentId)
+      this.$store.dispatch(GET_CARDS, parentId)
     },
     toBackFolder(){
-      const parentID = this.$store.state.folder.currentFolder.parentID;
+      const parentId = this.$store.state.folder.currentFolder.parentId;
       const workdir = '/workpage';
 
-      if (parentID) {
-        return `${workdir}/${parentID}`        
+      if (parentId) {
+        return `${workdir}/${parentId}`        
       }      
       return workdir
     }
@@ -52,5 +52,5 @@ export default {
 </script>
 
 <style>
-  @import '../../../../assets/style/createEl.css';
+  @import '../../../../assets/style/createOrEditEl.css';
 </style>

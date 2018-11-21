@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div>Create folder</div>
+    <div>Rename folder</div>
     <div>
       <form>
-        <input v-model="newFolder" type="text" placeholder="Type name" @keydown.prevent.enter="addFolder">
+        <input v-model="nameFolder" type="text" placeholder="Type name" @keydown.prevent.enter="renameFolder">
       </form>
       <div class="control-wallet">
-        <a @click="addFolder" class="button7">Add folder</a>
+        <a @click="renameFolder" class="button7">Rename</a>
         <a @click="hideBlock" class="button7">Cancel</a>
       </div>
     </div>
@@ -15,17 +15,17 @@
 
 <script>
 import { HIDE_CREATE_OR_EDIT_BLOCK } from '../../../../../store/names/popUp'
-import { CREATE_FOLDER } from '../../../../../store/names/folder'
+import { RENAME_FOLDER } from '../../../../../store/names/folder'
 
 export default {
   data() {
     return {
-      newFolder: ''
+      nameFolder: this.$store.getters.getTempDataInPopUp.nameFolder
     }
   },
   methods: {
-    addFolder() {
-      this.$store.dispatch(CREATE_FOLDER, this.newFolder)
+    renameFolder() {
+      this.$store.dispatch(RENAME_FOLDER, this.nameFolder)
       .then(() => {
         this.$store.commit(HIDE_CREATE_OR_EDIT_BLOCK) 
       })

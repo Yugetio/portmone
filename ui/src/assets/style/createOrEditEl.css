@@ -1,4 +1,4 @@
-.createEl {
+.createOrEditEl {
   display: flex;
   flex-wrap: wrap;
   
@@ -8,18 +8,18 @@
   transform: translate(-50%, -50%);
 
   background-color: #fff;
-  width: 70%;
+  width: 75%;
   border-radius: 2px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-.createEl > div {
+.createOrEditEl > div {
   width: 100%;
   margin: 10px;
   border: 1px solid rgb(214, 52, 52);
 }
 
-.createEl > div > div:first-child {
+.createOrEditEl > div > div:first-child {
   background-color: rgb(214, 52, 52);
   padding: 10px;
   color: white;
@@ -27,7 +27,7 @@
 }
 
 
-.createEl > div input {
+.createOrEditEl > div input {
   margin: 10px;
   width: calc(100% - 20px);
 
@@ -37,6 +37,20 @@
   resize: vertical;
   box-sizing: border-box
 }
+
+.createOrEditEl .input-from-card {
+  display: flex;
+}
+
+.createOrEditEl .input-from-card input:first-child {
+  width: 70%;
+  margin-right: 0;
+}
+
+.createOrEditEl .input-from-card input:last-child {
+  width: 30%;
+}
+
 
 .btnPanel {
   display: flex;

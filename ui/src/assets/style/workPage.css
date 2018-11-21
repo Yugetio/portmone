@@ -62,16 +62,42 @@
 }
 
 .wallet-list button {
-  display: block;
-  width: 100%;
-  height: 28px;
-  line-height: 28px;
+  display: flex;
+  justify-content: center;
+  min-height: 32px;
+  line-height: 20px;
   font-weight: bold;
   text-decoration: none;
   cursor: pointer;
-  border: 2px solid #FFFFFF;
+  border: 1px solid #FFFFFF;
   border-radius: 3px;
 }
+
+.wallet-list .folder div {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.wallet-list button:first-child {
+  width: 100%;
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+  background-color: #ddd;
+}
+.wallet-list button:nth-child(2)  {
+  width: 30%;
+  border-right: none;
+  border-radius: 0;
+  color: white;
+  background-color: rgba(0, 110, 255, 0.808);
+}
+.wallet-list button:last-child  {
+  width: 30%;
+  border-radius: 0 3px 3px 0;
+  color: white;
+  background-color: rgba(255, 0, 0, 0.616);
+}
+
 .wallet-list .folder{
   background-color: #84AAB6;
   padding: 20px 30px 20px 30px;
@@ -89,4 +115,12 @@
   border-radius: 4px;
   resize: vertical;
   box-sizing: border-box
+}
+
+.wallet-list .input-from-card input:first-child {
+  width: 80%;
+}
+
+.wallet-list .input-from-card input:last-child {
+  width: 20%;
 }
