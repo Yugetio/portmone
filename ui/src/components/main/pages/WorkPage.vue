@@ -14,8 +14,17 @@
           <button @click="deletFolder(folder.id)"> Delete </button>
         </router-link>  
       </li>
-      <li class="wallet-folder" v-for="card in cards">
-        {{ card.number }}, {{ card.cash }}
+      <li class="card" v-for="card in cards">
+        <div>
+          <div>
+            <p>Number: {{ card.number }}</p>
+            <p>Cash: {{ card.cash }}</p>
+          </div>
+          <div>
+            <button @click="editCard(card)"> Edit </button>
+            <button @click="deleteCard(card.id)"> Delete </button>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
@@ -26,7 +35,7 @@
 import NewElem from '../../main/elements/popUp/createEl.vue';
 import EditElem from '../../main/elements/popUp/editEl.vue';
 import { GET_CURRENT_FOLDER, SET_CURRENT_FOLDER, GET_FOLDERS, DELETE_FOLDER } from '../../../store/names/folder'
-import { GET_CARDS } from '../../../store/names/card'
+import { GET_CARDS, DELETE_CARD } from '../../../store/names/card'
 import { SHOW_CREATE_OR_EDIT_BLOCK } from '../../../store/names/popUp.js'
 
 export default {
@@ -50,6 +59,12 @@ export default {
     },
     deletFolder(folderId) {
       this.$store.dispatch(DELETE_FOLDER, folderId)
+    },
+    editCard(card){
+      this.$store.commit(SHOW_CREATE_OR_EDIT_BLOCK, { name: 'editCard', data: card })
+    },
+    deleteCard(cardId){
+      this.$store.dispatch(DELETE_CARD, cardId)
     }
   },
   components: {
