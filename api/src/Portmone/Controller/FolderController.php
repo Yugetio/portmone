@@ -27,23 +27,19 @@ class FolderController extends Controller
     /**
      * @Route("/folder", methods="POST")
      * @param Request $request
-     * @param ValidatorInterface $validator
      * @return JsonResponse
      */
-    public function createFolder(Request $request, ValidatorInterface $validator)
+    public function createFolder(Request $request)
     {
         try {
             $entityManager = $this->getDoctrine()->getManager();
 
-            $folder = new FolderEntity();
-            $folder->setUserId($request->get('userId') ?? 0);
-            $folder->setParentId($request->get('parentId') ?? 0);
-            $folder->setName($request->get('nameFolder') ?? '');
+            $folder = FolderEntity::deserialize($request->request->all());
 
-            if($errors = $this->validateFolderCredentials($folder, $validator)) {
-                return new JsonResponse($errors, 400);
+            //if (get_class($folder) != FolderEntity::class){
+            if (!$folder instanceof FolderEntity){
+                return new JsonResponse(['errors' => $folder], 400);
             }
-
             $entityManager->persist($folder);
             $entityManager->flush();
             return new JsonResponse(['msg' => 'Folder has been created successfully'], 201);
@@ -54,7 +50,7 @@ class FolderController extends Controller
     }
 
     /**
-     * @Route("/folder/{id}", methods={"PUT"})
+     * @Route("/folder/{id}", methods="PUT")
      * @param Request $request
      * @param int $id
      * @param ValidatorInterface $validator
