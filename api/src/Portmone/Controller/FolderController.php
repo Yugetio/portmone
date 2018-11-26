@@ -53,10 +53,9 @@ class FolderController extends Controller
      * @Route("/folder/{id}", methods="PUT")
      * @param Request $request
      * @param int $id
-     * @param ValidatorInterface $validator
      * @return JsonResponse
      */
-    public function updateFolder(Request $request, int $id, ValidatorInterface $validator) : Response
+    public function updateFolder(Request $request, int $id) : Response
     {
         try {
             $entityManager = $this->getDoctrine()->getManager();
@@ -67,12 +66,11 @@ class FolderController extends Controller
                 );
             }
             $folder->setName($request->get('nameFolder'));
-
-            if($errors = $this->validateFolderCredentials($folder, $validator)) {
-                return new JsonResponse($errors, 400);
+            $folder = FolderEntity::deserialize($folder->serialize());
+            if (!$folder instanceof FolderEntity){
+                return new JsonResponse(['errors' => $folder], 400);
             }
             $entityManager->flush();
-
             return new JsonResponse(['msg' =>'Folder has been updated successfully'], 200);
         }catch (Exception $e) {
             return $this->fail($e);

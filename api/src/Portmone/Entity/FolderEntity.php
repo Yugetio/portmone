@@ -24,20 +24,17 @@ class FolderEntity
 
 
     /**
-     * @Assert\NotBlank(message="The user Id  is required")
      * @ORM\Column(type="integer", length=255);
      */
     private $userId;
 
 
     /**
-     * @Assert\NotBlank(message="The parent Id  is required")
      * @ORM\Column(type="integer", length=255)
      */
     private $parentId;
 
     /**
-     * @Assert\NotBlank(message="The folder name is required")
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $nameFolder;
@@ -55,22 +52,9 @@ class FolderEntity
     }
 
 
-    public function setUserId(int $userId): self
-    {
-        $this->userId = $userId;
-        return $this;
-    }
-
     public function getUserId()
     {
         return $this->userId;
-    }
-
-
-    public function setParentId(int $parentId): self
-    {
-        $this->parentId = $parentId;
-        return $this;
     }
 
 
@@ -151,13 +135,12 @@ class FolderEntity
         $nameFolderError = $validator->validate($data['nameFolder'], [
             new Assert\NotBlank(),
             new Assert\Type([
-                'type'    => 'string',
+                'type' => 'string',
                 'message' => 'The value {{ value }} is not a valid {{ type }}.',
             ])
         ]);
 
         $errors = [];
-
         if(count($userIdError) > 0) {
             $errors['$userIdError'] = $userIdError[0]->getMessage();
         }
