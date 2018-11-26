@@ -3,6 +3,7 @@
 namespace App\Portmone\Controller;
 
 use FOS\RestBundle\Tests\Fixtures\User;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,51 +11,31 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use App\Portmone\Entity\UserEntity;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class UserController extends Controller
 {
-
-    public function validateUserCredentials(UserEntity $user, ValidatorInterface $validator)
-    {
-        $emailError = $validator->validateProperty($user, 'email');
-        $passwordError = $validator->validateProperty($user, 'password');
-        $errors = [];
-        if(count($emailError) > 0) {
-            $errors['emailError'] = $emailError[0]->getMessage();
-        }
-        if(count($passwordError) > 0) {
-            $errors['passwordError'] = $passwordError[0]->getMessage();
-        }
-        return $errors;
-    }
-
-
     /**
      * @Route("/user", methods="POST")
      * @param Request $request
-     * @param ValidatorInterface $validator
      * @return Response
      */
- public function createUser(Request $request, ValidatorInterface $validator) : Response
+ public function createUser(Request $request) : Response
   {
       try {
           $entityManager = $this->getDoctrine()->getManager();
-          $user = new UserEntity();
-          $user->setPassword($request->get('password') ?? '');
-          $user->setEmail($request->get('email') ?? '');
+          $user = UserEntity::deserialize($request->request->all());
           $user->updatedTimestamps();
-
-          if($errors = $this->validateUserCredentials($user, $validator)) {
-              return new JsonResponse($errors, 400);
+          if (!$user instanceof UserEntity){
+              return new JsonResponse(['errors' => $user], 400);
           }
           $entityManager->persist($user);
           $entityManager->flush();
           return new JsonResponse(['msg' => 'User has been created successfully'], 201);
+      } catch (UniqueConstraintViolationException $e) {
+          return new JsonResponse(['error' => "This email is already registered"], 400);
       } catch (\Exception $e) {
-          return new JsonResponse($e);
+          return $this->fail($e);
       }
   }
 
@@ -62,10 +43,9 @@ class UserController extends Controller
      * @Route("/user/{id}", methods="PUT")
      * @param Request $request
      * @param int $id
-     * @param ValidatorInterface $validator
      * @return Response
      */
- public function updateUser(Request $request, int $id, ValidatorInterface $validator) : Response
+ public function updateUser(Request $request, int $id) : Response
   {
       try {
           $entityManager = $this->getDoctrine()->getManager();
@@ -75,21 +55,23 @@ class UserController extends Controller
                   'No user found for id '.$id
               );
           }
-          $user->setPassword($request->get('password') ?? '');
-          $user->setEmail($request->get('email') ?? '');
+          $user->setPassword($request->get('password'));
+          $user->setEmail($request->get('email'));
           $user->updatedTimestamps();
 
-          if($errors = $this->validateUserCredentials($user, $validator)) {
-              return new JsonResponse($errors, 400);
+          $user = UserEntity::deserialize($user->serialize());
+          if (!$user instanceof UserEntity){
+              return new JsonResponse(['errors' => $user], 400);
           }
 
           $entityManager->flush();
           return new JsonResponse(['msg' => 'User has been updated successfully'], 200);
-      } catch (Exception $e) {
+      } catch (UniqueConstraintViolationException $e) {
+          return new JsonResponse(['error' => "This email is already registered"] , 400);
+      } catch (\Throwable $e) {
           return $this->fail($e);
       }
   }
-
 
     /**
      * @Route("/user/{id}", methods="DELETE")
@@ -164,7 +146,7 @@ class UserController extends Controller
    }
    private function fail(\Exception $e)
    {
-       return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
+       return new JsonResponse(['error' => $e->getMessage(), 'class'=>get_class($e)], $e->getCode() == 0 ? 500 : $e->getCode());
    }
 
 }

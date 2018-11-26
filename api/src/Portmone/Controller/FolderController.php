@@ -13,17 +13,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class FolderController extends Controller
 {
-    public function validateFolderCredentials(FolderEntity $folder, ValidatorInterface $validator)
-    {
-        $folderErrors = $validator->validate($folder);
-        $errors = [];
-        if(count($folderErrors) > 0) {
-            $errors['folderError'] = $folderErrors[0]->getMessage();
-        }
-        return $errors;
-    }
-
-
     /**
      * @Route("/folder", methods="POST")
      * @param Request $request

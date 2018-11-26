@@ -7,9 +7,10 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Validation;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
@@ -23,19 +24,12 @@ class UserEntity
     private $id;
 
     /**
-     * @Assert\Length(
-     *     min = 5,
-     *     minMessage="The password should be at least 5 characters long",
-     * )
-     * @Assert\NotBlank(message="The password is required")
      * @ORM\Column(type="string", length=255)
      */
     private $password;
 
 
     /**
-     * @Assert\Email(message = "The email is not a valid.")
-     * @Assert\NotBlank(message="The email is required")
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
@@ -58,37 +52,9 @@ class UserEntity
 
 
     /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
+     * @ORM\OneToMany(targetEntity="App\Portmone\Entity\FolderEntity", mappedBy="userId")
      */
-    public function updatedTimestamps(): void
-    {
-        $dateTimeNow = new DateTime('now');
-        $this->setUpdatedAt($dateTimeNow);
-        if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt($dateTimeNow);
-        }
-    }
-    public function getCreatedAt() :?DateTime
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(DateTime $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-    public function getUpdatedAt() :?DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(DateTime $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-        return $this;
-    }
+    private $folders;
 
 
 
@@ -120,14 +86,44 @@ class UserEntity
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Portmone\Entity\FolderEntity", mappedBy="userId")
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
-    private $folders;
-
-    public function __construct()
+    public function updatedTimestamps(): void
     {
-        $this->folders = new ArrayCollection();
+        try {
+            $dateTimeNow = new DateTime('now');
+            $this->setUpdatedAt($dateTimeNow);
+            if ($this->getCreatedAt() === null) {
+                $this->setCreatedAt($dateTimeNow);
+            }
+        }
+        catch (\Exception $e){
+        }
     }
+
+    public function getCreatedAt() :?DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    public function getUpdatedAt() :?DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
     /**
      * @return Collection|FolderEntity[]
      */
@@ -135,6 +131,62 @@ class UserEntity
     {
         return $this->folders;
     }
+
+
+    public function __construct(string $password, string $email)
+    {
+        $this->password = $password;
+        $this->email = $email;
+
+        $this->folders = new ArrayCollection();
+    }
+
+    public function serialize()
+    {
+        $serializedArray = [
+            'password' => $this->password,
+            'email' => $this->email,
+        ];
+        return $serializedArray;
+    }
+
+    static function deserialize(array $data)
+    {
+        $validator = Validation::createValidator();
+
+        $userPasswordError = $validator->validate($data['password'], [
+            new Assert\Length([
+                'min' => 6,
+                'max' => 32,
+                'minMessage' => 'Your password must be at least {{ limit }} characters long',
+                'maxMessage' => 'Your password cannot be longer than {{ limit }} characters'
+            ]),
+        ]);
+
+        $userEmailError = $validator->validate($data['email'], [
+            new Assert\NotBlank(),
+            new Assert\Email([
+                'message' => 'The email "{{ value }}" is not a valid email.',
+            ])
+        ]);
+
+        $errors = [];
+        if(count($userPasswordError) > 0) {
+            $errors['$userPasswordError'] = $userPasswordError[0]->getMessage();
+        }
+        if(count($userEmailError) > 0) {
+            $errors['$userEmailError'] = $userEmailError[0]->getMessage();
+        }
+        if($errors) {
+            return $errors;
+        }
+
+        return new self(
+            $data['password'],
+            $data['email']
+        );
+    }
+
 
     /**
      * Returns the roles granted to the user.
