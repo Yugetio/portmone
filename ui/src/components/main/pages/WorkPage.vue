@@ -1,129 +1,94 @@
 <template>
 <section class="content">
+  <NewElem></NewElem>
+  <EditElem></EditElem>
+  <h1 v-if="this.$store.state.folder.currentFolder.id" class="name-folder">
+    {{ this.$store.getters.getCurrentFolder.nameFolder }}
+  </h1>  
   <div class="wallet-list">
-    <form>
-      <input v-model="fName" type="text" placeholder="Type name">
-    </form>
-  </div>
-  <div class="wallet-list">
-    <h3>Folders:</h3>
     <ul>
-      <router-link to='/filepage'>
-      <li class="folder" v-for="folder in folderNameList">
-        <button @click="setFolder(folder)">{{folder}}</button>
+      <li class="folder" v-for="folder in folders">
+        <router-link tag="div" :to="`/workpage/${folder.id}`">
+          <button @click="setCurrentFolder(folder)"> {{ folder.nameFolder }} </button>
+          <button @click="renameFolder(folder)"> Rename </button>
+          <button @click="deletFolder(folder.id)"> Delete </button>
+        </router-link>  
       </li>
-      </router-link>
-    </ul>
-    <hr>
-    <h3>Files:</h3>
-    <ul>
-      <li class="folder" v-for="file in fileNameList">
-        <button >{{file}}</button>
+      <li class="card" v-for="card in cards">
+        <div>
+          <div>
+            <p>Number: {{ card.number }}</p>
+            <p>Cash: {{ card.cash }}</p>
+          </div>
+          <div>
+            <button @click="editCard(card)"> Edit </button>
+            <button @click="deleteCard(card.id)"> Delete </button>
+          </div>
+        </div>
       </li>
     </ul>
-  </div>
-  <div class="control-wallet">
-    <a @click='testJsonSend' class="button7">Add folder</a>
-    <a v-if="isIncludeFolders==true" @click='addFile' class="button7">Add file</a>
   </div>
 </section>
 </template>
 
 <script>
-  export default {
-    data(){
-     return{
-       folderNameList:[],
-       fileNameList:[],
-       fName: '',
-       isIncludeFolders: true,
-     }
-    },
-    created(){
-      fetch('/',{
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      }).then( response => response.json() )
-        .then((data) =>{
-          this.folderNameList = data.folders;
-          this.fileNameList = data.files;
-        })
-        .catch( error => console.error(error) );
-    },
-    watch: {
+import NewElem from '../../main/elements/popUp/createEl.vue';
+import EditElem from '../../main/elements/popUp/editEl.vue';
+import { GET_CURRENT_FOLDER, SET_CURRENT_FOLDER, GET_FOLDERS, DELETE_FOLDER } from '../../../store/names/folder'
+import { GET_CARDS, DELETE_CARD } from '../../../store/names/card'
+import { SHOW_CREATE_OR_EDIT_BLOCK } from '../../../store/names/popUp.js'
 
-      },
-    methods:{
-      addFolder(){
-        fetch('/', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({'foldername':this.fName})
-        }).then(this.showFolders())
-          .catch( error => console.error(error) );
-
-      },
-      addFile(){
-          fetch('/', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({'filename':this.fName})
-          }).then(this.showFolders() )
-            .catch( error => console.error(error) );
-
-      },
-      showFolders(){
-        console.log('ShowM');
-        this.folderNameList.push(this.fName)
-      },
-      showFiles(){
-        console.log('ShowM');
-        this.fileNameList.push(this.fName)
-      },
-      setFolder(folderS){
-        console.log(folderS);
-        localStorage.setItem('foldername',folderS)
-      },
-      testJsonSend(){
-        if (function f(){}) {
-          alert(typeof f);
-        }
-      },
+export default {
+  data() {
+    return {
+      folders: this.$store.getters.getFolders,
+      cards: this.$store.getters.getCards
+    }
+  },
+  methods: {
+    currentDataUpdate(folderId) {
+      this.$store.dispatch(GET_FOLDERS, folderId);
+      this.$store.dispatch(GET_CARDS, folderId);
     },
+    setCurrentFolder(folder) {
+      this.$store.commit(SET_CURRENT_FOLDER, folder);
+      this.currentDataUpdate(folder.id);
+    },
+    renameFolder(folder) {
+      this.$store.commit(SHOW_CREATE_OR_EDIT_BLOCK, { name: 'renameFolder', data: folder })
+    },
+    deletFolder(folderId) {
+      this.$store.dispatch(DELETE_FOLDER, folderId)
+    },
+    editCard(card){
+      this.$store.commit(SHOW_CREATE_OR_EDIT_BLOCK, { name: 'editCard', data: card })
+    },
+    deleteCard(cardId){
+      this.$store.dispatch(DELETE_CARD, cardId)
+    }
+  },
+  components: {
+    NewElem,
+    EditElem
+  },
+  created: function () {
+    const id = Object.keys( this.$route.params ).length ? this.$route.params.id : null;
+
+    this.$store.dispatch(GET_CURRENT_FOLDER, id)
+    .then(() => {
+      this.currentDataUpdate(id);
+    })
+    .catch(error => {
+      console.error(error.message);
+      // this.$router.push('/error');
+    })   
   }
+}
+
 </script>
 
 <style scoped>
   @import '../../../assets/style/workPage.css';
   @import '../../../assets/style/profilePage.css';
-  button {
-    display: block;
-    width: 100%;
-    height: 28px;
-    line-height: 28px;
-    font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
-    border: 2px solid #FFFFFF;
-    border-radius: 3px;
-  }
-  .folder{
-    background-color: #84AAB6;
-    padding: 20px 30px 20px 80px;
-    border-bottom: 2px solid #eee;
-  }
-  h3{
-    background-color: #84AAB6;
-    bottom: 30px;
-    border: #eee;
-  }
 </style>
+

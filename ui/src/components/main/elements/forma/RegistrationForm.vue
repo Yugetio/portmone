@@ -1,52 +1,70 @@
 <template>
-<section class="content">
-  <section class="forma">
-    <div class="wrapper-form">
-      <form
-        name="login-form"
-        class="login-form"
-        action="" method="post">
-        <div class="content-forms">
-          <div class="header-forms">
-            <h1>Registration</h1>
-            <span>Enter login information</span>
+  <div class="wrapper-form">
+    <form
+      class="login-form"
+      >
+      <div class="content-forms">
+        <div class="header-forms">
+          <h1>Registration</h1>
+          <span>Enter login information</span>
+        </div>
+        <div id="input">
+          <input
+            required
+            v-model="email"
+            type="email"
+            class="email"
+            placeholder="Email"
+          />
+          <input
+            required
+            v-model="password"
+            type="password"
+            class="password"
+            min="6"
+            placeholder="Password"
+           />
+        </div>
+      </div>
+      <div class="footer-forms">
+        <router-link to='/'>
+          <div id="app">
+          <input
+            @click="registration"
+            name="submit"
+            type="button"
+            value="Sign up"
+            class="button"
+           />
           </div>
-          <Input @sendInputData='receivedInputData' />
-        </div>
-        <div class="footer-forms">
-          <Login
-            :inputData="inputData"
-            :nameButton="nameButton" />
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <section class="description">
-    <Description></Description>
-  </section>
-</section>
+        </router-link>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
-import Login from '../../../main/elements/forma/FormButton.vue';
-import Input from '../../../main/elements/forma/FormInput.vue';
-import Description from '../../../main/elements/description/Description.vue';
+import { REG, SET_TOKEN } from '../../../../store/names/user'
+
 export default {
   data() {
     return {
-      inputData: {},
-      nameButton: "Sign up"
+      email: '',
+      password: ''
     }
   },
-  components: {
-    Login,
-    Input,
-    Description
-  },
   methods: {
-    receivedInputData(obj) {
-      this.inputData = obj;
+    registration() {
+      this.$store.dispatch(REG, {
+        email: this.email,
+        password: this.password
+      })
+      .then(res => {
+        this.$router.push('/workpage')
+      })
+      .catch(error => {
+        console.error('Error: ' + error.message)
+      })
     }
   }
 }

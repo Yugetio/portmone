@@ -12,7 +12,6 @@ export const router = new VueRouter({
   routes
 });
 
-
  sync(store, router);
 
 new Vue({

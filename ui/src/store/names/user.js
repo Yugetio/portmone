@@ -1,0 +1,6 @@
+export const LOGIN = 'LOGIN'
+export const REG = 'REG'
+export const EDIT_USER_DATA = 'EDIT_USER_DATA'
+export const LOGOUT = 'LOGOUT'
+export const DELETE_USER = 'DELETE_USER'
+export const SET_TOKEN = 'SET_TOKEN'

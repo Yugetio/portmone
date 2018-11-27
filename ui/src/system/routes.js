@@ -1,27 +1,34 @@
 import main from '../components/main/pages/MainPage.vue'
-import registrationForm from '../components/main/elements/forma/RegistrationForm.vue'
 import workPage from '../components/main/pages/WorkPage.vue'
 import profilePage from '../components/main/pages/ProfilePage.vue'
-import filePage from  '../components/main/pages/FilesPage.vue'
+import ErrorPage from '../components/main/pages/Error.vue'
+import {ifNotAuthenticated, ifAuthenticated } from './redirect';
 
 export const routes = [{
     path: '/',
-    component: main
+    component: main,
+    beforeEnter: ifNotAuthenticated,
   },
   {
     path: '/registration',
-    component: registrationForm
+    component: main,
+    beforeEnter: ifNotAuthenticated,
+
   },
   {
-    path: '/workpage',
-    component: workPage
+    path: '/workpage/:id?',
+    component: workPage,
+    beforeEnter: ifAuthenticated,
+
   },
   {
     path: '/profile',
-    component: profilePage
+    component: profilePage,
+    beforeEnter: ifAuthenticated,
+
   },
   {
-    path: '/filepage',
-    component: filePage
+    path: '*',
+    component: ErrorPage
   }
 ];

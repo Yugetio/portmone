@@ -1,0 +1,85 @@
+.createOrEditEl {
+  display: flex;
+  flex-wrap: wrap;
+  
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: #fff;
+  width: 75%;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.createOrEditEl > div {
+  width: 100%;
+  margin: 10px;
+  border: 1px solid rgb(214, 52, 52);
+}
+
+.createOrEditEl > div > div:first-child {
+  background-color: rgb(214, 52, 52);
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+
+.createOrEditEl > div input {
+  margin: 10px;
+  width: calc(100% - 20px);
+
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 4px;
+  resize: vertical;
+  box-sizing: border-box
+}
+
+.createOrEditEl .input-from-card {
+  display: flex;
+}
+
+.createOrEditEl .input-from-card input:first-child {
+  width: 70%;
+  margin-right: 0;
+}
+
+.createOrEditEl .input-from-card input:last-child {
+  width: 30%;
+}
+
+
+.btnPanel {
+  display: flex;
+  width: 100%;
+}
+
+.btnPanel > div {
+  box-sizing: border-box;
+  width: calc(50% - 10px);
+  height: 35px;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 2px;
+  background-color: #ddd;
+  color: #777;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btnPanel > div:hover {
+  background-color: #ccc;
+  color: #555;
+}
+
+.control-wallet {
+  justify-content: center;
+}
+
+.control-wallet > a:first-child {
+  margin-right: 10px;
+}

@@ -47,7 +47,7 @@
 
 /* Input field */
 
-.login-form .content-forms .input {
+.login-form .content-forms input {
   width: 188px;
   padding: 15px 25px;
   
@@ -66,12 +66,12 @@
   margin-top: 25px;
 }
 
-.login-form .content-forms .input:hover {
+.login-form .content-forms input:hover {
   background: #dfe9ec;
   color: #414848;
 }
 
-.login-form .content-forms .input:focus {
+.login-form .content-forms input:focus {
   background: #dfe9ec;
   color: #414848;
 }
@@ -90,7 +90,7 @@
 
 .login-form .footer-forms {
   padding: 25px 30px 27px 30px;
-  overflow: auto;
+  height: 50px;
   background: #d4dedf;
   border-top: 1px solid #fff;
 }

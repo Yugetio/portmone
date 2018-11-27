@@ -11,22 +11,22 @@
   display: block;
   margin: 2px auto;
   padding: 22px;
-  height: 300px;
+  max-width: 300px;
+  width: 80%;
 }
 
-.back img {
+.panel-navigation img {
   width: 25px;
   height: 25px;
-  margin: -7px 95px;
 }
 
 .panel-navigation {
-  height: 30px;
+  height: 35px;
   background: #b0bec5;
   display: flex;
   align-items: center;
   align-content: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .content {
@@ -37,6 +37,7 @@
 }
 
 a.button7 {
+  text-align: center;
   font-weight: 700;
   color: white;
   text-decoration: none;
@@ -49,6 +50,7 @@ a.button7 {
 
 a.button7:hover {
   background: rgb(210, 7, 7);
+  cursor: pointer;
 }
 
 a.button7:active {
@@ -57,7 +59,16 @@ a.button7:active {
 }
 
 .delete-profile {
-  text-align: center;
-  padding: 45px;
-  margin-top: 75px;
+  display: flex;
+  flex-wrap: wrap;
+  counter-reset: flex-item-counter;
+  justify-content: center;
+
+  margin: 45px;
 }
+
+.delete-profile a {
+  width: 109px;
+  margin: 5px;
+}
+

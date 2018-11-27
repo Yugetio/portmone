@@ -1,59 +1,151 @@
 .content {
-  flex: 1;
-  white-space: pre-line;
-  -ms-flex-preferred-size: auto;
-  background: url(./../../assets/images/bg.png) repeat;
+    flex: 1;
+    white-space: pre-line;
+    -ms-flex-preferred-size: auto;
+    background: url(./../../assets/images/bg.png) repeat;
+}
+
+.name-folder {
+    margin-top: 20px;
 }
 
 .wallet-list {
-  margin: 32px auto;
-  width: 70%;
-  background-color: #fff;
-  border-radius: 2px;
-}
-
-.wallet-folder {
-  background-color: #fff;
-  padding: 20px 30px 20px 80px;
-  border-bottom: 2px solid #eee;
-}
-
-.wallet-file {
-  background-color: #d2d1d1;
-  padding: 20px 30px 20px 80px;
-  border-bottom: 1px solid #eee;
+    margin: 32px auto;
+    width: 70%;
+    border-radius: 2px;
+    background-color: #84AAB6;
+    padding: 20px 0 20px;
 }
 
 .wallet-list ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: block;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: block;
 }
 
 .wallet-list ul li {
-  display: list-item;
-  text-align: -webkit-match-parent;
-}
-
-.wallet-file .title {
-  font-size: 26px;
-  font-weight: normal;
+    text-align: -webkit-match-parent;
+    padding: 20px 30px 20px 30px;
 }
 
 .title {
-  font-size: 26px;
-  font-weight: bold;
+    font-size: 26px;
+    font-weight: bold;
 }
 
 .control-wallet {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 .control-wallet img {
-  width: 100px;
-  height: 100px;
+    width: 100px;
+    height: 100px;
+}
+
+.wallet-list button {
+    display: flex;
+    justify-content: center;
+    min-height: 32px;
+    line-height: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid #FFFFFF;
+    border-radius: 3px;
+}
+
+.wallet-list .folder div {
+    display: flex;
+    box-sizing: border-box;
+}
+
+.wallet-list .folder button:first-child {
+    width: 100%;
+    border-right: none;
+    border-radius: 3px 0 0 3px;
+    background-color: #ddd;
+}
+
+.wallet-list .folder button:nth-child(2) {
+    max-width: 140px;
+    width: 30%;
+    border-right: none;
+    border-radius: 0;
+    color: white;
+    background-color: rgb(59, 123, 218);
+}
+
+.wallet-list .folder button:last-child {
+    max-width: 140px;
+    width: 30%;
+    border-radius: 0 3px 3px 0;
+    color: white;
+    background-color: rgb(206, 65, 69);
+}
+
+.wallet-list .card>div {
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.wallet-list .card>div>div:first-child {
+    padding: 20px;
+    width: 80%;
+}
+
+.wallet-list .card>div>div:last-child {
+    width: 20%;
+}
+
+.wallet-list .card p {
+    line-height: 28px;
+}
+
+.wallet-list .card button {
+    width: 100%;
+    height: 50%;
+    color: white;
+    border-radius: 0;
+}
+
+.wallet-list .card button:first-child {
+    background-color: rgb(59, 123, 218);
+    border-top-right-radius: 5px;
+    border-bottom-width: 0;
+}
+
+.wallet-list .card button:last-child {
+    background-color: rgb(206, 65, 69);
+    border-bottom-right-radius: 5px;
+}
+
+.wallet-list h3 {
+    background-color: #84AAB6;
+    bottom: 30px;
+    border: #eee;
+    padding: 10px 0 0 15px;
+}
+
+.wallet-list input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    box-sizing: border-box
+}
+
+.wallet-list .input-from-card input:first-child {
+    width: 80%;
+}
+
+.wallet-list .input-from-card input:last-child {
+    width: 20%;
 }

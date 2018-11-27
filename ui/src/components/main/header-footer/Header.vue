@@ -1,10 +1,14 @@
 <template>
 <div class="nav">
   <div class="header">
-    <Logo v-show="show"></Logo>
-    <LoginButton v-show="show"></LoginButton>
-    <Search v-show="!show"></Search>
-    <Account v-show="!show"></Account>
+    <template v-if="!this.$store.getters.isAuthenticated">
+      <Logo></Logo>
+      <LoginButton></LoginButton>
+    </template>
+    <template v-else-if="checkPath">
+      <Search></Search>
+      <Account></Account>
+    </template>
   </div>
 </div>
 </template>
@@ -22,16 +26,9 @@ export default {
     Search,
     Account
   },
-  data() {
-    return {
-      show: Boolean
-    }
-  },
-  created() {
-    if (this.$route.path === '/' || this.$route.path === '/registration') {
-      this.show = true;
-    } else {
-      this.show = false;
+  methods: {
+    checkPath() {
+      return this.$route.path == '/profile' || /\/workpage?\/\d/.test(this.$route.path);
     }
   }
 }

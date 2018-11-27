@@ -1,64 +1,46 @@
 <template>
 <section class="content">
-
   <div class="panel-navigation">
-    <div class="back">
-        <a href="#"><img src="../../../assets/images/back.png" alt="back"></a>
-        <a href="#"><img src="../../../assets/images/social.png" alt="social"></a>
-        <router-link to="/"> <img src="../../../assets/images/exit2.png" alt="exit"></router-link>
-    </div>
+    <a href="#" @click="$router.go(-1)"><img src="../../../assets/images/back.png" alt="back"></a>
+    <a href="#"><img src="../../../assets/images/social.png" alt="social"></a>
+    <router-link to="/workpage"><img src="../../../assets/images/exit2.png" alt="exit"></router-link>
   </div>
   <div class="username">
       <img src="./../../../assets/images/user_name.png" alt="user_name">
-      <h1>{{email}}</h1>
+      <h1>{{ this.$store.getters.getUser }}</h1>
   </div>
   <div class="delete-profile">
-      <a @click='deleteProfile' class="button7">Delete Profile</a>
-      <a @click='updateProfile' class="button7">Update Profile</a>
+      <a @click='editUser' class="button7">Edit</a>
+      <a @click='logout' class="button7">Logout</a>
+      <a @click='deleteUser' class="button7">Delete</a>
   </div>
 </section>
 </template>
 
 <script>
+  import { LOGOUT, DELETE_USER } from '../../../store/names/user';
+
   export default {
   data(){
     return{
-      email: ''
     }
   },
   methods:{
-    deleteProfile(){
-      if (this.tokenCheck(this.getToken()))
-      {
-        fetch('/user', {
-          method: 'DELETE',
-          body: JSON.stringify({
-            id: dataFromToken['id'],
-            email: dataFromToken['email'],
-            password: dataFromToken['token']
-          })
-        });
-      }else {
-        this.tokenTimeDown();
-      }
-    },
-    updateProfile(){
-      if (this.tokenCheck(this.getToken()))
-      {
-      fetch('/user', {
-        method: 'PUT',
-        body: JSON.stringify({
-            id: dataFromToken['id'],
-            email: dataFromToken['email'],
-            password: dataFromToken['token']
-          })
-        });
-      }else {
-        this.tokenTimeDown();
-      }
+    editUser() {
 
     },
-
+    logout() {
+      this.$store.dispatch(LOGOUT)
+      .then(() => {
+        this.$router.push('/')        
+      })
+    },
+    deleteUser() {
+      this.$store.dispatch(DELETE_USER)
+      .then(() => {
+        this.$router.push('/')        
+      })
+    }
   }
 }
 </script>
