@@ -15,7 +15,7 @@ describe("Cards getter", () => {
     }]
   }
 
-  it("getTempDataInPopUp", () => {
+  it("get cards", () => {
     const actual = getters.getCards(state)
 
     expect(actual).toEqual([{

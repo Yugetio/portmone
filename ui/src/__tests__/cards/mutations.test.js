@@ -6,7 +6,7 @@ describe("Cards mutation", () => {
     cards: []
   }
 
-  it("show popup", () => {
+  it("Set cards", () => {
     const data = [{
       id: 1,
       number: '1111111111111',
