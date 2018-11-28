@@ -1,4 +1,4 @@
-import store from "../../store/modules/cards"
+import store from "../../../store/modules/cards"
 const { getters } = store;
 
 describe("Cards getter", () => {

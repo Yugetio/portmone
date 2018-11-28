@@ -1,4 +1,4 @@
-import user from "../../store/modules/user"
+import user from "../../../store/modules/user"
 const { actions } = user;
 
 let url = ''
@@ -6,9 +6,9 @@ let body = {}
 let mockError = false
 
 jest.mock("axios", () => ({
-  post: (_url, _body) => { 
+  post: (_url, _body) => {
     return new Promise((resolve) => {
-      if (mockError) 
+      if (mockError)
         throw Error("Mock error")
 
       url = _url
@@ -26,9 +26,7 @@ describe("User action", () => {
     const password = "password"
 
     actions.LOGIN({ commit }, { email, password })
-    .catch(() => {
-      //no get response
-    })
+    .catch(() => {})
 
     expect(url).toBe("/auth")
     expect(body).toEqual({ email, password })

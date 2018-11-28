@@ -1,4 +1,4 @@
-import user from "../../store/modules/user"
+import user from "../../../store/modules/user"
 const { getters } = user;
 
 describe("User getters", () => {

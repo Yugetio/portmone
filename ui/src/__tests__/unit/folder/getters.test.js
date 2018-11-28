@@ -1,4 +1,4 @@
-import store from "../../store/modules/folder"
+import store from "../../../store/modules/folder"
 const { getters } = store;
 
 describe("Folders getters", () => {

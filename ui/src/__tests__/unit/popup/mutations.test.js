@@ -1,4 +1,4 @@
-import store from "../../store/modules/popUp"
+import store from "../../../store/modules/popUp"
 const { mutations } = store;
 
 describe("Popup mutations", () => {

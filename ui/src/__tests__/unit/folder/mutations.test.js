@@ -1,4 +1,4 @@
-import store from "../../store/modules/folder"
+import store from "../../../store/modules/folder"
 const { mutations } = store;
 
 describe("Folders mutations", () => {
