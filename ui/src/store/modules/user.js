@@ -103,7 +103,7 @@ const actions = {
 
 const getters = {
   getUser: state => state.user,
-  getToken: () => localStorage.auth,
+  getToken: state => state.token,
   isAuthenticated: state => !!state.token
 }
 

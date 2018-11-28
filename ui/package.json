@@ -10,7 +10,7 @@
     "build": "poi build",
     "report": "poi build --bundle-report",
     "serve": "serve dist --single",
-    "test": "tyu"
+    "test": "jest"
   },
   "author": {
     "info": "U_Team",
@@ -28,10 +28,27 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.25",
+    "babel-jest": "^23.6.0",
+    "jest": "^23.6.0",
+    "jest-localstorage-mock": "^2.3.0",
     "poi": "^9.0.0",
     "poi-preset-bundle-report": "^2.0.0",
     "poi-preset-offline": "^9.0.0",
     "serve": "^6.1.0",
-    "tyu": "^1.0.4"
+    "vue-jest": "^3.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "setupFiles": ["jest-localstorage-mock"]
   }
 }
