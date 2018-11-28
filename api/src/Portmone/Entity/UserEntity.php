@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
 
@@ -153,8 +154,15 @@ class UserEntity
     static function deserialize(array $data)
     {
         $validator = Validation::createValidator();
+        if (!isset($data['password'])) {
+            throw new BadRequestHttpException('Password shouldn`t be empty.');
+        }
+        if (!isset($data['email'])) {
+            throw new BadRequestHttpException('Email shouldn`t be empty.');
+        }
 
         $userPasswordError = $validator->validate($data['password'], [
+            new Assert\NotBlank(),
             new Assert\Length([
                 'min' => 6,
                 'max' => 32,
@@ -180,7 +188,6 @@ class UserEntity
         if($errors) {
             return $errors;
         }
-
         return new self(
             $data['password'],
             $data['email']

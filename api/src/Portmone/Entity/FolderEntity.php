@@ -5,10 +5,13 @@ namespace App\Portmone\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Egulias\EmailValidator\Validation\Exception\EmptyValidationList;
+use http\Exception\BadMessageException;
 use Symfony\Bundle\MakerBundle\Validator;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FolderEntityRepository")
@@ -35,7 +38,7 @@ class FolderEntity
     private $parentId;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
      */
     private $nameFolder;
 
@@ -107,9 +110,20 @@ class FolderEntity
     static function deserialize(array $data)
     {
         $validator = Validation::createValidator();
-
+        $errors = [];
+        if (!isset($data['userId'])) {
+            throw new BadRequestHttpException('User id shouldn`t be empty.');
+        }
+        if (!isset($data['parentId'])) {
+            $data['parentId'] = 0;
+        }
+        if (!isset($data['nameFolder'])) {
+            throw new BadRequestHttpException('name folder shouldn`t be empty.');
+        }
         $userIdError = $validator->validate($data['userId'], [
-            new Assert\NotBlank(),
+            new Assert\NotNull([
+                'message' => 'The value shouldn`t be null.'
+            ]),
             new Assert\Type([
                 'type' => 'integer',
                 'message' => 'The value {{ value }} is not a valid {{ type }}.'
@@ -121,7 +135,9 @@ class FolderEntity
         ]);
 
         $parentIdError = $validator->validate($data['parentId'], [
-            new Assert\NotBlank(),
+            new Assert\NotNull([
+                'message' => 'The value shouldn`t be null.'
+            ]),
             new Assert\Type([
                 'type' => 'integer',
                 'message' => 'The value {{ value }} is not a valid {{ type }}.'
@@ -133,6 +149,9 @@ class FolderEntity
         ]);
 
         $nameFolderError = $validator->validate($data['nameFolder'], [
+            new Assert\NotNull([
+                'message' => 'The value shouldn`t be null.'
+            ]),
             new Assert\NotBlank(),
             new Assert\Type([
                 'type' => 'string',
@@ -140,7 +159,6 @@ class FolderEntity
             ])
         ]);
 
-        $errors = [];
         if(count($userIdError) > 0) {
             $errors['$userIdError'] = $userIdError[0]->getMessage();
         }

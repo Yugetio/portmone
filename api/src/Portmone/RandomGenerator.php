@@ -29,6 +29,7 @@ class RandomGenerator
 
     static function generateRandomNumber(int $numbers)
     {
-        return str_pad(rand(0, pow(10, $numbers)-1), $numbers, '0', STR_PAD_LEFT);
+        return rand(pow(10, $numbers-1), pow(10, $numbers)-1);
+
     }
 }

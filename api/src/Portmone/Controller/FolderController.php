@@ -2,14 +2,15 @@
 
 namespace App\Portmone\Controller;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Portmone\Entity\FolderEntity;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class FolderController extends Controller
 {
@@ -22,7 +23,6 @@ class FolderController extends Controller
     {
         try {
             $entityManager = $this->getDoctrine()->getManager();
-
             $folder = FolderEntity::deserialize($request->request->all());
 
             //if (get_class($folder) != FolderEntity::class){
@@ -32,10 +32,11 @@ class FolderController extends Controller
             $entityManager->persist($folder);
             $entityManager->flush();
             return new JsonResponse(['msg' => 'Folder has been created successfully'], 201);
+        } catch (UniqueConstraintViolationException $e){
+            return new JsonResponse(['error' => "This name is already user"] , 400);
         } catch (\Exception $e) {
-            return $this->fail($e);
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
-
     }
 
     /**
@@ -50,19 +51,28 @@ class FolderController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $folder = $entityManager->find(FolderEntity::class, $id);
             if (!$folder) {
-                throw $this->createNotFoundException(
-                    'No folder found for id '.$id
+                throw new NotFoundHttpException(
+                    'No folder found with id '.$id
                 );
             }
-            $folder->setName($request->get('nameFolder'));
+            $nameFolder = $request->get('nameFolder');
+            if (!isset($nameFolder)) {
+                throw new BadRequestHttpException('Name folder shouldn`t be empty');
+            }
+            $folder->setName($nameFolder);
+
             $folder = FolderEntity::deserialize($folder->serialize());
             if (!$folder instanceof FolderEntity){
                 return new JsonResponse(['errors' => $folder], 400);
             }
             $entityManager->flush();
             return new JsonResponse(['msg' =>'Folder has been updated successfully'], 200);
-        }catch (Exception $e) {
-            return $this->fail($e);
+        } catch (UniqueConstraintViolationException $e){
+            return new JsonResponse(['error' => 'This name is already user'], 400);
+        } catch (NotFoundHttpException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 404);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
     }
 
@@ -78,7 +88,7 @@ class FolderController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $folder = $entityManager->find(FolderEntity::class, $id);
             if (!$folder) {
-                throw $this->createNotFoundException(
+                throw new NotFoundHttpException(
                     'No folder found with id '.$id
                 );
             }
@@ -86,13 +96,15 @@ class FolderController extends Controller
             $entityManager->flush();
 
             return new JsonResponse(['msg' => 'Folder has been deleted successfully'], 200);
-        }catch (Exception $e) {
-            return $this->fail($e);
+        } catch (NotFoundHttpException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 404);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
     }
-
-    private function fail(\Exception $e)
-    {
-        return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
-    }
+//
+//    private function fail(\Exception $e)
+//    {
+//        return new JsonResponse(['error' => $e->getMessage()], 500);
+//    }
 }

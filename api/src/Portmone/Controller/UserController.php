@@ -2,11 +2,10 @@
 
 namespace App\Portmone\Controller;
 
-use FOS\RestBundle\Tests\Fixtures\User;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -25,17 +24,17 @@ class UserController extends Controller
       try {
           $entityManager = $this->getDoctrine()->getManager();
           $user = UserEntity::deserialize($request->request->all());
-          $user->updatedTimestamps();
           if (!$user instanceof UserEntity){
               return new JsonResponse(['errors' => $user], 400);
           }
+          $user->updatedTimestamps();
           $entityManager->persist($user);
           $entityManager->flush();
           return new JsonResponse(['msg' => 'User has been created successfully'], 201);
       } catch (UniqueConstraintViolationException $e) {
           return new JsonResponse(['error' => "This email is already registered"], 400);
       } catch (\Exception $e) {
-          return $this->fail($e);
+          return new JsonResponse(['error' => $e->getMessage()], 500);
       }
   }
 
@@ -51,7 +50,7 @@ class UserController extends Controller
           $entityManager = $this->getDoctrine()->getManager();
           $user = $entityManager->find(UserEntity::class, $id);
           if (!$user) {
-              throw $this->createNotFoundException(
+              throw new NotFoundHttpException(
                   'No user found for id '.$id
               );
           }
@@ -68,8 +67,10 @@ class UserController extends Controller
           return new JsonResponse(['msg' => 'User has been updated successfully'], 200);
       } catch (UniqueConstraintViolationException $e) {
           return new JsonResponse(['error' => "This email is already registered"] , 400);
-      } catch (\Throwable $e) {
-          return $this->fail($e);
+      } catch (NotFoundHttpException $e) {
+          return new JsonResponse(['error' => $e->getMessage()], 404);
+      } catch (\Exception $e) {
+          return new JsonResponse(['error' => $e->getMessage()], 500);
       }
   }
 
@@ -84,15 +85,17 @@ class UserController extends Controller
          $entityManager = $this->getDoctrine()->getManager();
          $user = $entityManager->find(UserEntity::class, $id);
          if (!$user) {
-             throw $this->createNotFoundException(
+             throw new NotFoundHttpException(
                  'No user found for id '.$id
              );
          }
          $entityManager->remove($user);
          $entityManager->flush();
          return new JsonResponse(['msg' => 'User has been deleted successfully'], 200);
-     } catch (Exception $e) {
-         return $this->fail($e);
+     } catch (NotFoundHttpException $e) {
+         return new JsonResponse(['error' => $e->getMessage()], 404 );
+     } catch (\Exception $e) {
+         return new JsonResponse(['error' => $e->getMessage()], 500 );
      }
  }
 
@@ -143,10 +146,6 @@ class UserController extends Controller
            '.' .base64_encode($payload).
            '.' .base64_encode($signature)
        );
-   }
-   private function fail(\Exception $e)
-   {
-       return new JsonResponse(['error' => $e->getMessage(), 'class'=>get_class($e)], $e->getCode() == 0 ? 500 : $e->getCode());
    }
 
 }
