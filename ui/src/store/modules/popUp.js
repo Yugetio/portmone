@@ -8,8 +8,8 @@ const state = {
 const mutations = {
   /**
    * 
-   * @param { String  } name, get 'folder' or 'card'
-   * @param { Object  } data, get 'folder' or 'card'
+   * @param { String  } name
+   * @param { Object  } data
    */
   [SHOW_CREATE_OR_EDIT_BLOCK]: (state, { name, data }) => {
     state.show = name
@@ -21,8 +21,11 @@ const mutations = {
   }
 }
 
+/**
+ * @return { Object  } 
+ */
 const getters = {
-  getTempDataInPopUp: () => state.tempData
+  getTempDataInPopUp: state => state.tempData
 }
 
 export default {
