@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Portmone\Entity\TransactionEntity;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use App\Repository\TransactionEntityRepository;
 use Elastica\Client;
 use Elastica\Document;
 use Elasticsearch\ClientBuilder;
@@ -35,24 +33,17 @@ class TransactionController extends Controller
     public function createTransactionDocument(Request $request)
     {
         try {
-            $transactionId = substr(uniqid('', true), -6);
-
-            $transaction = [
-                'id' => $transactionId,
-                'sourceCardId' => $request->get('sourceCardId'),
-                'destinationCardId' => $request->get('destinationCardId'),
-                'transferredMoney' => $request->get('money'),
-                'date' => time()
-            ];
-            $transactionEntity = TransactionEntity::deserialize($transaction);
-            $transactionDocument = new Document($id = '', $transactionEntity->serialize($transactionId));
+            $transactionEntity = TransactionEntity::deserialize($request->request->all());
+            if (!$transactionEntity instanceof TransactionEntity) {
+                return new JsonResponse(['errors' => $transactionEntity], 400);
+            }
+            $transactionDocument = new Document($id = '', $transactionEntity->serialize());
             $elasticaType = $this->client->getIndex('portmone')->getType('transaction');
             $elasticaType->addDocument($transactionDocument);
             $elasticaType->getIndex()->refresh();
-
             return new JsonResponse(['msg' => 'Transaction has been created successfully'], 201);
-        } catch (Exception $e) {
-            return $this->fail($e);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
     }
 
@@ -63,21 +54,24 @@ class TransactionController extends Controller
      */
     public function searchTransactionSameTransferredMoney(Request $request)
     {
-        $client = $this->getSearchClient();
-        $params = [
-            'index' => 'portmone',
-            'type' => 'transaction',
-            'body' => [
-                'query' => [
-                    'match' => [
-                        'transferredMoney' => $request->get('money')
-                    ],
+        try {
+            $client = $this->getSearchClient();
+            $params = [
+                'index' => 'portmone',
+                'type' => 'transaction',
+                'body' => [
+                    'query' => [
+                        'match' => [
+                            'transferredMoney' => $request->get('money')
+                        ],
+                    ]
                 ]
-            ]
-        ];
-        $response = $client->search($params);
-
-        return new JsonResponse($response);
+            ];
+            $response = $client->search($params);
+            return new JsonResponse($response);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -87,24 +81,26 @@ class TransactionController extends Controller
      */
     public function searchTransactionGreatThanTransferredMoney(Request $request)
     {
-        $client = $this->getSearchClient();
-        $params = [
-            'index' => 'portmone',
-            'type' => 'transaction',
-            'body' => [
-                'query' => [
-                    'range' => [
-                        'transferredMoney' => [
-                            'gt' => $request->get('money')],
+        try {
+            $client = $this->getSearchClient();
+            $params = [
+                'index' => 'portmone',
+                'type' => 'transaction',
+                'body' => [
+                    'query' => [
+                        'range' => [
+                            'transferredMoney' => [
+                                'gt' => $request->get('money')],
+                        ]
                     ]
                 ]
-            ]
-        ];
-        $response = $client->search($params);
-
-        return new JsonResponse($response);
+            ];
+            $response = $client->search($params);
+            return new JsonResponse($response);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
     }
-
 
     /**
      * @Route("/date_after", methods="POST")
@@ -114,25 +110,28 @@ class TransactionController extends Controller
     public function searchTransactionOfDate(Request $request)
     {
         // example "date": "2018/11/16", "date": "2018-11-16",
-        $requestDate = new \DateTime($request->get('date'));
-        $requestTimestamp = $requestDate->getTimestamp();
-        $client = $this->getSearchClient();
-        $params = [
-            'index' => 'portmone',
-            'type' => 'transaction',
-            'body' => [
-                'query' => [
-                    'range' => [
-                        'date' =>[
-                            'gt' => $requestTimestamp
+        try {
+            $requestDate = new \DateTime($request->get('date'));
+            $requestTimestamp = $requestDate->getTimestamp();
+            $client = $this->getSearchClient();
+            $params = [
+                'index' => 'portmone',
+                'type' => 'transaction',
+                'body' => [
+                    'query' => [
+                        'range' => [
+                            'date' => [
+                                'gt' => $requestTimestamp
                             ],
+                        ]
                     ]
                 ]
-            ]
-        ];
-        $response = $client->search($params);
-
-        return new JsonResponse($response);
+            ];
+            $response = $client->search($params);
+            return new JsonResponse($response);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
     }
 
 
@@ -147,8 +146,4 @@ class TransactionController extends Controller
         return $client;
     }
 
-    private function fail(\Exception $e)
-    {
-        return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
-    }
 }

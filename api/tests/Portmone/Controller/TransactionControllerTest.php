@@ -2,45 +2,93 @@
 
 namespace App\Portmone\Controller;
 
-use PHPUnit\Framework\TestCase;
+use App\Portmone\RandomGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class TransactionControllerTest extends WebTestCase
 {
-    public function testSuccess()
+
+    public function testCreateTransactionWithTrueData()
     {
-        $this->assertTrue(true);
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            '/transaction',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
+                'sourceCardId' => RandomGenerator::generateRandomNumber(6),
+                'destinationCardId' => RandomGenerator::generateRandomNumber(6),
+                'transferredMoney' => RandomGenerator::generateRandomFloat(0.1, 1000, 2)
+            ])
+        );
+        $this->assertJsonResponse($client->getResponse(), 201);
     }
-//    public function testCreateTransaction()
-//    {
-//        $client = static::createClient();
-//        $client->request(
-//            'POST',
-//            '/transaction',
-//            array(),
-//            array(),
-//            array('CONTENT_TYPE' => 'application/json'),
-//            json_encode([
-//                'sourceCardId' => "111111",
-//                'destinationCardId' => "222222",
-//                'money' => 1
-//            ])
-//        );
-//        var_dump($client->getResponse());
-//        $this->assertJsonResponse($client->getResponse(), 201);
-//    }
-//
-//
-//    protected function assertJsonResponse(Response $response, $statusCode = 200)
-//    {
-//        $this->assertEquals(
-//            $statusCode, $response->getStatusCode(),
-//            $response->getContent()
-//        );
-//        $this->assertTrue(
-//            $response->headers->contains('Content-Type', 'application/json'),
-//            $response->headers
-//        );
-//    }
+
+
+    public function testCreateTransactionWithoutSourceCardId()
+    {
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            '/transaction',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
+                'destinationCardId' => RandomGenerator::generateRandomNumber(6),
+                'transferredMoney' => RandomGenerator::generateRandomFloat(0.1, 1000, 2)
+            ])
+        );
+        $this->assertJsonResponse($client->getResponse(), 500);
+    }
+
+    public function testCreateTransactionWithoutDestinationCardId()
+    {
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            '/transaction',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
+                'sourceCardId' => RandomGenerator::generateRandomNumber(6),
+                'transferredMoney' => RandomGenerator::generateRandomFloat(0.1, 1000, 2)
+            ])
+        );
+        $this->assertJsonResponse($client->getResponse(), 500);
+    }
+
+    public function testCreateTransactionWithoutTransferredMoney()
+    {
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            '/transaction',
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
+                'transferredMoney' => RandomGenerator::generateRandomFloat(0.1, 1000, 2)
+            ])
+        );
+        $this->assertJsonResponse($client->getResponse(), 500);
+    }
+
+
+    protected function assertJsonResponse(Response $response, $statusCode = 200)
+    {
+        $this->assertEquals(
+            $statusCode, $response->getStatusCode(),
+            $response->getContent()
+        );
+        $this->assertTrue(
+            $response->headers->contains('Content-Type', 'application/json'),
+            $response->headers
+        );
+    }
 }

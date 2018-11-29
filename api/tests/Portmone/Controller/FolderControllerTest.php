@@ -15,9 +15,9 @@ class FolderControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/folder',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 'userId' => RandomGenerator::generateRandomNumber(5),
                 'parentId' => RandomGenerator::generateRandomNumber(5),
@@ -35,9 +35,9 @@ class FolderControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/folder',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 'userId' => RandomGenerator::generateRandomNumber(7),
                 'parentId' => RandomGenerator::generateRandomNumber(7),
@@ -54,9 +54,9 @@ class FolderControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/folder',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 'nameFolder' => RandomGenerator::generateRandomName(10)
             ])
@@ -71,9 +71,9 @@ class FolderControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/folder',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json']
         );
         $client->getResponse();
         $this->assertJsonResponse($client->getResponse(), 500);
@@ -85,9 +85,9 @@ class FolderControllerTest extends WebTestCase
         $client->request(
             'PUT',
             '/folder/3',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 'nameFolder' => RandomGenerator::generateRandomName(10)
             ])
@@ -102,9 +102,9 @@ class FolderControllerTest extends WebTestCase
         $client->request(
             'PUT',
             '/folder/3',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 'nameFolder' => ""
             ])
@@ -119,9 +119,9 @@ class FolderControllerTest extends WebTestCase
         $client->request(
             'PUT',
             '/folder/3',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json']
         );
         $client->getResponse();
         $this->assertJsonResponse($client->getResponse(), 500);
@@ -133,9 +133,9 @@ class FolderControllerTest extends WebTestCase
         $client->request(
             'PUT',
             '/folder/9999',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json']
         );
         $this->assertJsonResponse($client->getResponse(), 404);
     }
@@ -147,9 +147,9 @@ class FolderControllerTest extends WebTestCase
         $client->request(
             'DELETE',
             '/folder/15', //Change id !!!!!
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json']
         );
         $this->assertJsonResponse($client->getResponse(), 200);
     }
@@ -160,9 +160,9 @@ class FolderControllerTest extends WebTestCase
         $client->request(
             'DELETE',
             '/folder/9999',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json']
         );
         $this->assertJsonResponse($client->getResponse(), 404);
     }

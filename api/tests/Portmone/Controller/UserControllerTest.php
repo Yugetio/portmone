@@ -15,9 +15,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/user',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => RandomGenerator::generateRandomNumber(7),
                 "email" => RandomGenerator::generateRandomEmail(7)
@@ -32,9 +32,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/user',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => RandomGenerator::generateRandomNumber(7)
             ])
@@ -48,9 +48,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/user',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "email" => RandomGenerator::generateRandomEmail(7)
             ])
@@ -64,9 +64,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/user',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json')
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json']
         );
         $this->assertJsonResponse($client->getResponse(), 500);
     }
@@ -77,9 +77,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/user',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => "",
                 "email" => ""
@@ -94,9 +94,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/user',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => "test123",
                 "email" => ""
@@ -111,9 +111,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/user',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => "test123",
                 "email" => "123"
@@ -130,9 +130,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/user',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => "",
                 "email" =>  RandomGenerator::generateRandomEmail(7)
@@ -148,9 +148,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'POST',
             '/user',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => RandomGenerator::generateRandomNumber(3),
                 "email" =>  RandomGenerator::generateRandomEmail(7)
@@ -165,9 +165,9 @@ class CreateUserControllerTest extends WebTestCase
          $client->request(
              'PUT',
              '/user/1',
-             array(),
-             array(),
-             array('CONTENT_TYPE' => 'application/json'),
+             [],
+             [],
+             ['CONTENT_TYPE' => 'application/json'],
              json_encode([
                  "password" => RandomGenerator::generateRandomNumber(10),
                  "email" => RandomGenerator::generateRandomEmail(7)
@@ -182,9 +182,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'PUT',
             '/user/1',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => "",
                 "email" => ""
@@ -199,9 +199,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'PUT',
             '/user/1',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => RandomGenerator::generateRandomNumber(10),
                 "email" => "ss"
@@ -216,9 +216,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'PUT',
             '/user/1',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => "1",
                 "email" => RandomGenerator::generateRandomEmail(7)
@@ -234,9 +234,9 @@ class CreateUserControllerTest extends WebTestCase
         $client->request(
             'PUT',
             '/user/99999',
-            array(),
-            array(),
-            array('CONTENT_TYPE' => 'application/json'),
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
             json_encode([
                 "password" => RandomGenerator::generateRandomNumber(10),
                 "email" => RandomGenerator::generateRandomEmail(7)
@@ -251,9 +251,9 @@ class CreateUserControllerTest extends WebTestCase
          $client->request(
          'DELETE',
          '/user/12',  //change id!!!!
-         array(),
-         array(),
-         array('CONTENT_TYPE' => 'application/json')
+             [],
+             [],
+             ['CONTENT_TYPE' => 'application/json']
          );
          $this->assertJsonResponse($client->getResponse(), 200);
      }
@@ -262,11 +262,11 @@ class CreateUserControllerTest extends WebTestCase
      {
          $client = static::createClient();
          $client->request(
-         'DELETE',
-         '/user/9999',
-         [],
-         [],
-         ['CONTENT_TYPE' => 'application/json']
+             'DELETE',
+             '/user/9999',
+             [],
+             [],
+             ['CONTENT_TYPE' => 'application/json']
          );
 
          $this->assertEquals(

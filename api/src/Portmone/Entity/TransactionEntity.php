@@ -3,8 +3,10 @@
 namespace App\Portmone\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\This;
-use Symfony\Component\VarDumper\Cloner\Data;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity
@@ -18,6 +20,32 @@ class TransactionEntity
      */
     private $id;
 
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $sourceCardId;
+
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $destinationCardId;
+
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $transferredMoney;
+
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $transactionDate;
+
+
+
     public function setId(int $id): self
     {
         $this->id = $id;
@@ -30,11 +58,6 @@ class TransactionEntity
     }
 
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $sourceCardId;
-
     public function getSourceCardId()
     {
         return $this->sourceCardId;
@@ -45,10 +68,6 @@ class TransactionEntity
         return $this;
     }
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $destinationCardId;
 
     public function getDestinationCardId()
     {
@@ -60,10 +79,6 @@ class TransactionEntity
         return $this;
     }
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $transferredMoney;
 
     public function getTransferredMoney(): ?float
     {
@@ -76,10 +91,6 @@ class TransactionEntity
         return $this;
     }
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $transactionDate;
 
     public function getTransactionDate()
     {
@@ -92,10 +103,21 @@ class TransactionEntity
         return $this;
     }
 
-    public function serialize($id)
+    public function __construct(int $sourceCardId, int $destinationCardId, float $transferredMoney)
+    {
+        $id = substr(uniqid('', true), -6);
+
+        $this->id = $id;
+        $this->sourceCardId = $sourceCardId;
+        $this->destinationCardId = $destinationCardId;
+        $this->transferredMoney = $transferredMoney;
+        $this->transactionDate = time();
+    }
+
+    public function serialize()
     {
         $serializedArray = [
-            'id' => $id,
+            'id' => $this->id,
             'sourceCardId' => $this->sourceCardId,
             'destinationCardId' => $this->destinationCardId,
             'transferredMoney' => $this->transferredMoney,
@@ -104,16 +126,72 @@ class TransactionEntity
         return $serializedArray;
     }
 
+    /**
+     * @param array $data
+     * @return TransactionEntity|array
+     */
     static function deserialize(array $data)
     {
-        $transactionEntity = new TransactionEntity();
-        $transactionEntity->setSourceCardId($data['sourceCardId']);
-        $transactionEntity->setDestinationCardId($data['destinationCardId']);
-        $transactionEntity->setTransferredMoney($data['transferredMoney']);
-        $transactionEntity->setTransactionDate($data['date']);
+        $validator = Validation::createValidator();
+        $errors = [];
+        if (!isset($data['sourceCardId'])) {
+            throw new BadRequestHttpException('source card id shouldn`t be empty.');
+        }
+        if (!isset($data['destinationCardId'])) {
+            throw new BadRequestHttpException('destination card id shouldn`t be empty.');
+        }
+        if (!isset($data['transferredMoney'])) {
+            throw new BadRequestHttpException('Transferred money shouldn`t be empty.');
+        }
 
-        return $transactionEntity;
+        $sourceCardIdError = $validator->validate($data['sourceCardId'], [
+            new Assert\NotBlank(),
+            new Assert\Type([
+                'type' => 'integer',
+                'message' => 'The value {{ value }} is not a valid {{ type }}.'
+            ]),
+            new Assert\GreaterThanOrEqual([
+                'value' => 0,
+                'message' => 'The value must be greater or equal 0.'
+            ])
+        ]);
+
+        $destinationCardIdError = $validator->validate($data['destinationCardId'], [
+            new Assert\NotBlank(),
+            new Assert\Type([
+                'type' => 'integer',
+                'message' => 'The value {{ value }} is not a valid {{ type }}.'
+            ]),
+            new Assert\GreaterThanOrEqual([
+                'value' => 0,
+                'message' => 'The value must be greater or equal 0.'
+            ]),
+        ]);
+
+        $transferredMoneyError = $validator->validate($data['transferredMoney'], [
+            new Assert\NotBlank(),
+            new Assert\Type([
+                'type' => 'float',
+                'message' => 'The value {{ value }} is not a valid {{ type }}.',
+            ])
+        ]);
+
+        if(count($sourceCardIdError) > 0) {
+            $errors['$sourceCardIdError'] = $sourceCardIdError[0]->getMessage();
+        }
+        if(count($destinationCardIdError) > 0) {
+            $errors['$destinationCardIdError'] = $destinationCardIdError[0]->getMessage();
+        }
+        if(count($transferredMoneyError) > 0) {
+            $errors['$transferredMoneyError'] = $transferredMoneyError[0]->getMessage();
+        }
+        if($errors) {
+            return $errors;
+        }
+
+        return new self(
+            $data['sourceCardId'],
+            $data['destinationCardId'],
+            $data['transferredMoney']);
     }
-
-
 }
