@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class TransactionControllerTest extends WebTestCase
 {
-    public function testSucces()
+    public function testSuccess()
     {
         $this->assertTrue(true);
     }
