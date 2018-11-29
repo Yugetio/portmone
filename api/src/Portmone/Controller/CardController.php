@@ -2,17 +2,15 @@
 
 namespace App\Portmone\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Config\Definition\Exception\Exception;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use FOS\ElasticaBundle\Manager\RepositoryManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Portmone\Entity\CardEntity;
-
-
 
 
 class CardController extends Controller
@@ -27,73 +25,85 @@ class CardController extends Controller
 
         try {
             $entityManager = $this->getDoctrine()->getManager();
-            $card = new CardEntity();
-            $card->setFolderId($request->get('folderId'));
-            $card->setNumber($request->get('number'));
-            $card->setCash($request->get('cash'));
+            $card = CardEntity::deserialize($request->request->all());
+
+            if (!$card instanceof CardEntity){
+                return new JsonResponse(['errors' => $card], 400);
+            }
             $entityManager->persist($card);
             $entityManager->flush();
 
             return new JsonResponse(['msg' => 'Card has been created successfully'],201);
-        }catch (Exception $e) {
-            return $this->fail($e);
+        } catch (UniqueConstraintViolationException $e) {
+            return new JsonResponse(['error' => "This card is already used"], 400);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
     }
 
     /**
-     * @Route("/card", methods="PUT")
+     * @Route("/card/{id}", methods="PUT")
      * @param Request $request
+     * @param int $id
      * @return Response
      */
-    public function updateCard(Request $request) : Response
+    public function updateCard(Request $request, int $id) : Response
     {
-
         try {
             $entityManager = $this->getDoctrine()->getManager();
-            $card = $entityManager->find(CardEntity::class, $request->get('id'));
+            $card = $entityManager->find(CardEntity::class, $id);
             if (!$card) {
-                throw $this->createNotFoundException(
-                    'No card found for id '.$request->get('id')
+                throw new NotFoundHttpException(
+                    'No card found for id '.$id
                 );
             }
-            $card->setCash($request->get('cash'));
+            $cash = $request->get('cash');
+            if (!isset($cash)) {
+                throw new BadRequestHttpException('Cash folder shouldn`t be empty');
+            }
+            $card->setCash($cash);
+
+            $card = CardEntity::deserialize($card->serialize());
+            if (!$card instanceof CardEntity){
+                return new JsonResponse(['errors' => $card], 400);
+            }
             $entityManager->flush();
 
             return new JsonResponse(['msg' =>'Card has been updated successfully'],200);
-        }catch (Exception $e) {
-            return $this->fail($e);
+        } catch (NotFoundHttpException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 404);
+        }catch (UniqueConstraintViolationException $e) {
+            return new JsonResponse(['error' => "This card is already used"], 400);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
     }
 
     /**
-     * @Route("/card", methods="DELETE")
-     * @param Request $request
+     * @Route("/card/{id}", methods="DELETE")
+     * @param int $id
      * @return Response
      */
-    public function deleteCard(Request $request) : Response
+    public function deleteCard(int $id) : Response
     {
 
         try {
             $entityManager = $this->getDoctrine()->getManager();
-            $card = $entityManager->find(CardEntity::class, $request->get('id'));
+            $card = $entityManager->find(CardEntity::class, $id);
             if (!$card) {
-                throw $this->createNotFoundException(
-                    'No card found for id '.$request->get('id')
+                throw new NotFoundHttpException(
+                    'No card found for id '.$id
                 );
             }
             $entityManager->remove($card);
             $entityManager->flush();
 
             return new JsonResponse(['msg' => 'Card has been deleted successfully'],200);
-        }catch (Exception $e) {
-            return $this->fail($e);
+        } catch (NotFoundHttpException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 404);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
     }
-
-    private function fail(\Exception $e)
-    {
-        return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
-    }
-
 
 }

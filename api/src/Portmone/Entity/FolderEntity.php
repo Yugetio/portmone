@@ -5,10 +5,6 @@ namespace App\Portmone\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Egulias\EmailValidator\Validation\Exception\EmptyValidationList;
-use http\Exception\BadMessageException;
-use Symfony\Bundle\MakerBundle\Validator;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
@@ -160,13 +156,13 @@ class FolderEntity
         ]);
 
         if(count($userIdError) > 0) {
-            $errors['$userIdError'] = $userIdError[0]->getMessage();
+            $errors['userIdError'] = $userIdError[0]->getMessage();
         }
         if(count($parentIdError) > 0) {
-            $errors['$parentIdError'] = $parentIdError[0]->getMessage();
+            $errors['parentIdError'] = $parentIdError[0]->getMessage();
         }
         if(count($nameFolderError) > 0) {
-            $errors['$nameFolderError'] = $nameFolderError[0]->getMessage();
+            $errors['nameFolderError'] = $nameFolderError[0]->getMessage();
         }
         if($errors) {
             return $errors;

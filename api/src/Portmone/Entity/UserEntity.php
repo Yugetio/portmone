@@ -69,21 +69,9 @@ class UserEntity
         return $this->password;
     }
 
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
-    }
-
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
-        return $this;
     }
 
     /**

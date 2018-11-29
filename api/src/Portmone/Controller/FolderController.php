@@ -33,7 +33,7 @@ class FolderController extends Controller
             $entityManager->flush();
             return new JsonResponse(['msg' => 'Folder has been created successfully'], 201);
         } catch (UniqueConstraintViolationException $e){
-            return new JsonResponse(['error' => "This name is already user"] , 400);
+            return new JsonResponse(['error' => "This name is already used"] , 400);
         } catch (\Exception $e) {
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
@@ -68,7 +68,7 @@ class FolderController extends Controller
             $entityManager->flush();
             return new JsonResponse(['msg' =>'Folder has been updated successfully'], 200);
         } catch (UniqueConstraintViolationException $e){
-            return new JsonResponse(['error' => 'This name is already user'], 400);
+            return new JsonResponse(['error' => 'This name is already used'], 400);
         } catch (NotFoundHttpException $e) {
             return new JsonResponse(['error' => $e->getMessage()], 404);
         } catch (\Exception $e) {
