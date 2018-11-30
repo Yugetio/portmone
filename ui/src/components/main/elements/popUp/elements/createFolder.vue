@@ -3,7 +3,7 @@
     <div>Create folder</div>
     <div>
       <form>
-        <input v-model="newFolder" type="text" placeholder="Type name" @keydown.prevent.enter="addFolder">
+        <input v-model="nameFolder" type="text" placeholder="Type name" @keydown.prevent.enter="addFolder">
       </form>
       <div class="control-wallet">
         <a @click="addFolder" class="button7">Add folder</a>
@@ -20,12 +20,12 @@ import { CREATE_FOLDER } from '../../../../../store/names/folder'
 export default {
   data() {
     return {
-      newFolder: ''
+      nameFolder: ''
     }
   },
   methods: {
     addFolder() {
-      this.$store.dispatch(CREATE_FOLDER, this.newFolder)
+      this.$store.dispatch(CREATE_FOLDER, this.nameFolder)
       .then(() => {
         this.$store.commit(HIDE_CREATE_OR_EDIT_BLOCK) 
       })

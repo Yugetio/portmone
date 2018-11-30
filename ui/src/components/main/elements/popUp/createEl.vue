@@ -5,9 +5,10 @@
     <CreateCard v-if="this.$store.state.popUp.show === 'card'"></CreateCard>
   </div>
   <div class="btnPanel">
-    <router-link  tag="div"  v-if="this.$store.state.folder.currentFolder.id" @click.native="updateFolder" :to="toBackFolder()">
+    <!-- <router-link  tag="div"  v-if="this.$store.state.folder.currentFolder.id" @click.native="updateFolder" :to="toBackFolder()"> -->
+    <div v-if="this.$store.state.folder.currentFolder.id" @click="goBack">
       <span><<<</span>
-    </router-link>  
+    </div>  
 
     <div @click="setShowBlock('folder')">Create Folder</div>
     <div @click="setShowBlock('card')">Create Card</div>
@@ -27,21 +28,24 @@ export default {
     setShowBlock(name) {
       this.$store.commit(SHOW_CREATE_OR_EDIT_BLOCK, { name })
     },
-    updateFolder() { //переробити щоб перенаправлення робило тільки після того як всі запроси відпрацюют успішно 
-      const parentId = this.$store.state.folder.currentFolder.parentId;
+    goBack() {
+      const parentId = this.$store.state.folder.currentFolder.parentId
 
       this.$store.dispatch(GET_CURRENT_FOLDER, parentId)
-      this.$store.dispatch(GET_FOLDERS, parentId)
-      this.$store.dispatch(GET_CARDS, parentId)
-    },
-    toBackFolder(){
-      const parentId = this.$store.state.folder.currentFolder.parentId;
-      const workdir = '/workpage';
-
-      if (parentId) {
-        return `${workdir}/${parentId}`        
-      }      
-      return workdir
+      .then(() => {
+        this.$store.dispatch(GET_FOLDERS, parentId)
+        this.$store.dispatch(GET_CARDS, parentId)
+      })
+      .then(() => {
+        const workdir = '/workpage';
+        if (parentId) {
+          this.$router.push(`${workdir}/${parentId}`)
+        } else {
+          this.$router.push(workdir)
+        }
+      })
+      .catch(() => {})
+      
     }
   },
   components: {

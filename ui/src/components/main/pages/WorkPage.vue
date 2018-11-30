@@ -3,13 +3,13 @@
   <NewElem></NewElem>
   <EditElem></EditElem>
   <h1 v-if="this.$store.state.folder.currentFolder.id" class="name-folder">
-    {{ this.$store.getters.getCurrentFolder.nameFolder }}
+    {{ this.$store.getters.getCurrentFolder.name }}
   </h1>  
   <div class="wallet-list">
     <ul>
       <li class="folder" v-for="folder in folders">
         <router-link tag="div" :to="`/workpage/${folder.id}`">
-          <button @click="setCurrentFolder(folder)"> {{ folder.nameFolder }} </button>
+          <button @click="setCurrentFolder(folder)"> {{ folder.name }} </button>
           <button @click="renameFolder(folder)"> Rename </button>
           <button @click="deletFolder(folder.id)"> Delete </button>
         </router-link>  
@@ -47,12 +47,12 @@ export default {
   },
   methods: {
     currentDataUpdate(folderId) {
-      this.$store.dispatch(GET_FOLDERS, folderId);
-      this.$store.dispatch(GET_CARDS, folderId);
+      this.$store.dispatch(GET_FOLDERS, folderId)
+      this.$store.dispatch(GET_CARDS, folderId)
     },
     setCurrentFolder(folder) {
-      this.$store.commit(SET_CURRENT_FOLDER, folder);
-      this.currentDataUpdate(folder.id);
+      this.$store.commit(SET_CURRENT_FOLDER, folder)
+      this.currentDataUpdate(folder.id)
     },
     renameFolder(folder) {
       this.$store.commit(SHOW_CREATE_OR_EDIT_BLOCK, { name: 'renameFolder', data: folder })
@@ -76,11 +76,11 @@ export default {
 
     this.$store.dispatch(GET_CURRENT_FOLDER, id)
     .then(() => {
-      this.currentDataUpdate(id);
+      this.currentDataUpdate(id)
     })
     .catch(error => {
-      console.error(error.message);
-      // this.$router.push('/error');
+      console.error(error.message)
+      // this.$router.push('/error') //скрите так як треба щоб було звернення для серверу, щоб не перекидало в кетч відразу ж
     })   
   }
 }

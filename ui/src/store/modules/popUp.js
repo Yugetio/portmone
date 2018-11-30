@@ -21,10 +21,10 @@ const mutations = {
   }
 }
 
-/**
- * @return { Object  } 
- */
 const getters = {
+ /**
+ * @return { Object } 
+ */
   getTempDataInPopUp: state => state.tempData
 }
 
