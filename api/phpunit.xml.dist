@@ -15,6 +15,7 @@
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <env name="DATABASE_URL" value="pgsql://api_user:1111@postgres.loc:5432/portmonea" />
+        <env name="ELASTICSEARCH_HOST" value="elasticsearch:9200" />
         <!-- define your env variables for the test env here -->
         <!-- ###+ nelmio/cors-bundle ### -->
         <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>

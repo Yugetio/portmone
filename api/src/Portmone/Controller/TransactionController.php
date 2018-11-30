@@ -62,7 +62,7 @@ class TransactionController extends Controller
                 'body' => [
                     'query' => [
                         'match' => [
-                            'transferredMoney' => $request->get('money')
+                            'transferredMoney' => $request->get('transferredMoney')
                         ],
                     ]
                 ]
@@ -90,7 +90,7 @@ class TransactionController extends Controller
                     'query' => [
                         'range' => [
                             'transferredMoney' => [
-                                'gt' => $request->get('money')],
+                                'gt' => $request->get('transferredMoney')],
                         ]
                     ]
                 ]
@@ -139,8 +139,9 @@ class TransactionController extends Controller
     public function getSearchClient()
     {
         $hostName = [
-            $_ENV['ELASTICSEARCH_HOST']
+            $_ENV["ELASTICSEARCH_HOST"],
         ];
+
         $client = ClientBuilder::create()->setHosts($hostName)->build();
 
         return $client;
