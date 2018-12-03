@@ -2,11 +2,18 @@ import { LOGIN, REG, LOGOUT, DELETE_USER, SET_TOKEN, EDIT_USER_DATA } from '../n
 import axios from 'axios';
 
 const state = {
-  user: '',
+  user: {
+    id: null,
+    email: ''
+  },
   token: localStorage.auth || ''
 }
 
 const mutations = {
+  /**
+   * 
+   * @param { String } token
+   */
   [SET_TOKEN]: (state, token) => {
     state.token = token
   },
@@ -16,6 +23,10 @@ const mutations = {
 }
 
 const actions = {
+  /**
+   * 
+   * @param { Object } playload,  { String } = { email, password }
+   */
   [LOGIN]: ({ commit }, { email, password }) => {
     return new Promise((resolve, reject) => {
       axios.post('/auth', {
@@ -37,6 +48,10 @@ const actions = {
       })
     })
   },
+  /**
+   * 
+   * @param { Object } playload,  { String } = { email, password }
+   */
   [REG]: ({ commit }, { email, password }) => {
     return new Promise((resolve, reject) => {
       axios.post('/user', {
@@ -58,6 +73,10 @@ const actions = {
       })
     })
   },
+  /**
+   * 
+   * @param { Object } playload,  { String } = { email, password } ???
+   */
   [EDIT_USER_DATA]: ({ commit }, { email, password }) => {
     return new Promise((resolve, reject) => {
       axios.post('/user', {
@@ -87,6 +106,9 @@ const actions = {
       resolve()
     })
   },
+  /**
+   * @param { Integer } id
+   */
   [DELETE_USER]: ({ dispatch }, id) => {
     return new Promise((resolve, reject) => {
       axios.delete('/user', id)
@@ -102,8 +124,19 @@ const actions = {
 }
 
 const getters = {
+  /**
+   * @return { Object }
+   */
   getUser: state => state.user,
-  getToken: () => localStorage.auth,
+  /**
+   * 
+   * @return { String }
+   */
+  getToken: state => state.token,
+  /**
+   * 
+   * @return { Boolean }
+   */
   isAuthenticated: state => !!state.token
 }
 

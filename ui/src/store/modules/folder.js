@@ -4,17 +4,17 @@ import axios from 'axios';
 const state = {
   folders: [
     {
-      nameFolder: 'a',
+      name: 'a',
       id: 1,
       parentId: null
     },
     {
-      nameFolder: 'b',
+      name: 'b',
       id: 2,
       parentId: null
     },
     {
-      nameFolder: 'c',
+      name: 'c',
       id: 3,
       parentId: null
     }
@@ -22,7 +22,7 @@ const state = {
    currentFolder: {
      id: null,
      parentId: null,
-     nameFolder: ''
+     name: ''
    } 
 }
 
@@ -30,7 +30,7 @@ const state = {
 const mutations = {
 
   /**
-   * @param { Object } playload
+   * @param { Object } playload, { id, parentId, name }
    * 
    */
   [SET_CURRENT_FOLDER]: (state, payload) => {
@@ -45,6 +45,10 @@ const mutations = {
 }
 
 const actions = {
+  /**
+   * 
+   * @param { Integer or Null } id
+   */
   [GET_CURRENT_FOLDER]: ({ commit }, id = null) => {
     return new Promise((resolve, reject) => {
       axios.get(`/currentFolder/${id}`)
@@ -57,6 +61,10 @@ const actions = {
       });
     });
   },
+  /**
+   * 
+   * @param { Integer or Null } id
+   */
   [GET_FOLDERS]: ({ commit }, id = null) => {
     axios.get(`/folder/${id}`)
     .then(res => {
@@ -66,6 +74,10 @@ const actions = {
       console.error('Error: ' + error.message)
     });
   },
+  /**
+   * 
+   * @param { String } name
+   */
   [CREATE_FOLDER]: ({ dispatch }, nameFolder = '') => {
     return new Promise((resolve, reject) => {
       axios.post('/folder', nameFolder)
@@ -78,6 +90,10 @@ const actions = {
       });
     })
   },
+  /**
+   * 
+   *  @param { Integer } id
+   */
   [DELETE_FOLDER]: ({ dispatch }, id) => {
     axios.delete('/folder', id)
     .then(() => {
@@ -87,11 +103,15 @@ const actions = {
       console.error('Error: ' + error.message)
     });
   },
-  [RENAME_FOLDER]: ({ dispatch }, folder, nameFolder = '') => {
+  /**
+   * 
+   * @param { Object } folder
+   */
+  [RENAME_FOLDER]: ({ dispatch }, folder) => {
     return new Promise((resolve, reject) => {
       axios.put('/folder', {
         id: folder.id,
-        nameFolder
+        nameFolder: folder.name
       })
       .then(() => {
         dispatch(GET_FOLDERS)
@@ -105,7 +125,13 @@ const actions = {
 }
 
 const getters = {
+  /**
+   * @return { Array }
+   */
   getFolders: state => state.folders,
+  /**
+   * @return { Object }
+   */
   getCurrentFolder: state => state.currentFolder
 }
 

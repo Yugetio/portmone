@@ -7,7 +7,7 @@
   </div>
   <div class="username">
       <img src="./../../../assets/images/user_name.png" alt="user_name">
-      <h1>{{ this.$store.getters.getUser }}</h1>
+      <h1>{{ this.$store.getters.getUser.email }}</h1>
   </div>
   <div class="delete-profile">
       <a @click='editUser' class="button7">Edit</a>

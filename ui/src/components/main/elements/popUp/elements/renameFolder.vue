@@ -3,7 +3,7 @@
     <div>Rename folder</div>
     <div>
       <form>
-        <input v-model="nameFolder" type="text" placeholder="Type name" @keydown.prevent.enter="renameFolder">
+        <input v-model="folder.name" type="text" placeholder="Type name" @keydown.prevent.enter="renameFolder">
       </form>
       <div class="control-wallet">
         <a @click="renameFolder" class="button7">Rename</a>
@@ -20,12 +20,12 @@ import { RENAME_FOLDER } from '../../../../../store/names/folder'
 export default {
   data() {
     return {
-      nameFolder: this.$store.getters.getTempDataInPopUp.nameFolder
+      folder: this.$store.getters.getTempDataInPopUp
     }
   },
   methods: {
     renameFolder() {
-      this.$store.dispatch(RENAME_FOLDER, this.nameFolder)
+      this.$store.dispatch(RENAME_FOLDER, this.folder)
       .then(() => {
         this.$store.commit(HIDE_CREATE_OR_EDIT_BLOCK) 
       })

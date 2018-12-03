@@ -27,6 +27,10 @@ const state = {
 }
 
 const mutations = {
+  /**
+   * 
+   * @param { Array } playload
+   */
   [SET_CARDS]: (state, playload) => {
     state.cards = playload;
   }
@@ -35,7 +39,7 @@ const mutations = {
 const actions = {
   /**
    * 
-   * @param {Integer} playload, get folder id
+   * @param {Integer} folderId
    */
   [GET_CARDS]: ({ commit }, folderId ) => {
      axios.get('/card', folderId)
@@ -46,6 +50,12 @@ const actions = {
       console.error('Error: ' + error.message)
     })
   },
+  /**
+   * 
+   * @param { Object } playload, { number, cash }
+   * @param { String or Integer } number
+   * @param { String or Integer } cash
+   */
   [CREATE_CARD]: ({ dispatch }, { number, cash }) => {
     return new Promise((resolve, reject) => {
       axios.post('/card', {
@@ -61,6 +71,10 @@ const actions = {
       })
     })
   },
+  /**
+   * 
+   * @param { Object } playload, { id, number, cash }
+   */
   [EDIT_CARD]: ({ dispatch }, { id, number, cash }) => {
     return new Promise((resolve, reject) => {
       axios.put('/card', {
@@ -77,6 +91,10 @@ const actions = {
       })
     })
   },
+  /**
+   * 
+   * @param { Integer } id
+   */
   [DELETE_CARD]: ({ dispatch }, id) => {
     axios.delete('/card',id)
     .then(() => {
@@ -89,6 +107,9 @@ const actions = {
 }
 
 const getters = {
+  /**
+   * @return { Array }
+   */
   getCards: state => state.cards
 }
 
