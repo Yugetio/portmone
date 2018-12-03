@@ -95,9 +95,6 @@
     "fig/link-util": {
         "version": "1.0.0"
     },
-    "firebase/php-jwt": {
-        "version": "v5.0.0"
-    },
     "friendsofsymfony/elastica-bundle": {
         "version": "5.0",
         "recipe": {
@@ -115,9 +112,6 @@
             "version": "2.2",
             "ref": "258300d52be6ad59b32a888d5ddafbf9638540ff"
         }
-    },
-    "gesdinet/jwt-refresh-token-bundle": {
-        "version": "v0.5.3"
     },
     "guzzlehttp/guzzle": {
         "version": "6.3.3"
@@ -146,26 +140,11 @@
     "jms/serializer": {
         "version": "1.13.0"
     },
-    "lcobucci/jwt": {
-        "version": "3.2.4"
-    },
-    "lexik/jwt-authentication-bundle": {
-        "version": "2.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.5",
-            "ref": "509b1542f3180a1cfe248ade8b7bf5092c2d4127"
-        }
-    },
     "monolog/monolog": {
         "version": "1.23.0"
     },
     "myclabs/deep-copy": {
         "version": "1.8.1"
-    },
-    "namshi/jose": {
-        "version": "7.2.3"
     },
     "nelmio/cors-bundle": {
         "version": "1.5",

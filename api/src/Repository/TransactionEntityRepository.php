@@ -21,48 +21,6 @@ class TransactionEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, TransactionEntity::class);
     }
 
-    public function ConnectToDB()
-    {
-        $elasticaClient = new \Elastica\Client(
-            [
-                'servers' => [
-                    [
-                        'host' => 'elasticsearch',
-                        'port' => 9200
-                    ],
-                ]
-            ]);
-
-        // Load index
-        $elasticaIndex = $elasticaClient->getIndex('portmone');
-        if (!$elasticaIndex->exists()){
-            $elasticaIndex->create();
-        }
-        //Create a type
-        $elasticaType = $elasticaIndex->getType('transaction');
-
-        $mapping = new \Elastica\Type\Mapping();
-        $mapping->setType($elasticaType);
-
-        $mapping->setProperties([
-            'id' => [
-                'type' => 'integer'
-            ],
-            'folderId' => [
-                'type' => 'integer'
-            ],
-            'transferredMoney' => [
-                'type' => 'float'
-            ],
-            'date' => [
-                'type' => 'date'
-            ]
-        ]);
-        $mapping->send();
-
-        return $elasticaType;
-    }
-
 
 //    /**
 //     * @return TransactionEntity[] Returns an array of TransactionEntity objects

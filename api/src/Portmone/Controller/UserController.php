@@ -5,34 +5,36 @@ namespace App\Portmone\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Portmone\Security\UserAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use App\Portmone\Entity\UserEntity;
-use Gesdinet\JWTRefreshTokenBundle\Entity\AbstractRefreshToken;
-
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class UserController extends Controller
 {
-
     /**
      * @Route("/user", methods="POST")
      * @param Request $request
      * @return Response
      */
- public function createAction(Request $request) : Response
+ public function createUser(Request $request) : Response
   {
       try {
           $entityManager = $this->getDoctrine()->getManager();
-          $user = new UserEntity();
-          $user->setPassword($request->get('password'));
-          $user->setEmail($request->get('email'));
+          $user = UserEntity::deserialize($request->request->all());
+          if (!$user instanceof UserEntity){
+              return new JsonResponse(['errors' => $user], 400);
+          }
+          $user->updatedTimestamps();
           $entityManager->persist($user);
           $entityManager->flush();
           return new JsonResponse(['msg' => 'User has been created successfully'], 201);
+      } catch (UniqueConstraintViolationException $e) {
+          return new JsonResponse(['error' => "This email is already registered"], 400);
       } catch (\Exception $e) {
-          return new JsonResponse($e);
+          return new JsonResponse(['error' => $e->getMessage()], 500);
       }
   }
 
@@ -42,67 +44,83 @@ class UserController extends Controller
      * @param int $id
      * @return Response
      */
- public function updateAction(Request $request, int $id) : Response
+ public function updateUser(Request $request, int $id) : Response
   {
       try {
           $entityManager = $this->getDoctrine()->getManager();
-          $myUser = $entityManager->find(UserEntity::class, $id);
-          if (!$myUser) {
-              throw $this->createNotFoundException('No user found for id');
+          $user = $entityManager->find(UserEntity::class, $id);
+          if (!$user) {
+              throw new NotFoundHttpException(
+                  'No user found for id '.$id
+              );
           }
-          $myUser->setPassword($request->get('password'));
-          $myUser->setEmail($request->get('email'));
+          $user->setPassword($request->get('password'));
+          $user->setEmail($request->get('email'));
+          $user->updatedTimestamps();
+
+          $user = UserEntity::deserialize($user->serialize());
+          if (!$user instanceof UserEntity){
+              return new JsonResponse(['errors' => $user], 400);
+          }
+
           $entityManager->flush();
           return new JsonResponse(['msg' => 'User has been updated successfully'], 200);
-      } catch (Exception $e) {
-          return $this->fail($e);
+      } catch (UniqueConstraintViolationException $e) {
+          return new JsonResponse(['error' => "This email is already registered"] , 400);
+      } catch (NotFoundHttpException $e) {
+          return new JsonResponse(['error' => $e->getMessage()], 404);
+      } catch (\Exception $e) {
+          return new JsonResponse(['error' => $e->getMessage()], 500);
       }
   }
-
 
     /**
      * @Route("/user/{id}", methods="DELETE")
      * @param int $id
      * @return Response
      */
- public function deleteAction(int $id) : Response
+ public function deleteUser(int $id) : Response
  {
      try {
          $entityManager = $this->getDoctrine()->getManager();
-         $myUser = $entityManager->find(UserEntity::class, $id);
-         if (!$myUser) {
-             throw $this->createNotFoundException('No user found for id');
+         $user = $entityManager->find(UserEntity::class, $id);
+         if (!$user) {
+             throw new NotFoundHttpException(
+                 'No user found for id '.$id
+             );
          }
-         $entityManager->remove($myUser);
+         $entityManager->remove($user);
          $entityManager->flush();
          return new JsonResponse(['msg' => 'User has been deleted successfully'], 200);
-     } catch (Exception $e) {
-         return $this->fail($e);
+     } catch (NotFoundHttpException $e) {
+         return new JsonResponse(['error' => $e->getMessage()], 404 );
+     } catch (\Exception $e) {
+         return new JsonResponse(['error' => $e->getMessage()], 500 );
      }
  }
 
 
-    /**
-     * @Route("/auth", methods="POST")
-     * @param Request $request
-     * @return Response
-     */
-  public function userAuth(Request $request) : Response
-   {
-
-        try{
-            $repository = $this->getDoctrine()->getManager()->getRepository(UserEntity::class);
-            $myUser = $repository->findOneBy(['password' => $request->get('password')]);
-            return new JsonResponse($myUser);
-//            if ( $myUser !== $request->get('email') || $myUser !== $request->get('password')) {
-//                throw $this->createNotFoundException('User not found');
-//            }
-//            $token = $this->accessToken($myUser->id);
-//            return new JsonResponse(['token' => $token], 200);
-        } catch (Exception $e) {
-            return $this->fail($e);
-        }
-   }
+//    /**
+//     * @Route("/auth", methods="POST")
+//     * @param Request $request
+//     * @return Response
+//     */
+//  public function userAuth(Request $request) : Response
+//   {
+//
+//        try{
+//            $repository = $this->getDoctrine()->getManager()->getRepository(UserEntity::class);
+//            $myUser = $repository->findOneBy(['password' => $request->get('password')]);
+//            return new JsonResponse($myUser);
+////            if ( $myUser !== $request->get('email') || $myUser !== $request->get('password')) {
+////                throw $this->createNotFoundException('User not found');
+////            }
+////            $token = $this->accessToken($myUser->id);
+////            return new JsonResponse(['token' => $token], 200);
+//        } catch (Exception $e) {
+//            return $this->fail($e);
+//        }
+//   }
 
    public function refreshToken()
    {
@@ -128,10 +146,6 @@ class UserController extends Controller
            '.' .base64_encode($payload).
            '.' .base64_encode($signature)
        );
-   }
-   private function fail(\Exception $e)
-   {
-       return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
    }
 
 }
