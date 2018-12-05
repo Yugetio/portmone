@@ -23,20 +23,22 @@
     "object-assign": "^4.1.1",
     "offline-plugin": "^4.8.0",
     "promise-polyfill": "^6.0.2",
-    "vue-router": "^3.0.1",
+    "vue-router": "^3.0.2",
     "vuex": "^3.0.1",
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.25",
+    "@babel/preset-env": "^7.2.0",
+    "@vue/test-utils": "^1.0.0-beta.26",
     "babel-jest": "^23.6.0",
     "jest": "^23.6.0",
     "jest-localstorage-mock": "^2.3.0",
-    "poi": "^9.0.0",
+    "poi": "^10.2.11",
     "poi-preset-bundle-report": "^2.0.0",
     "poi-preset-offline": "^9.0.0",
     "serve": "^6.1.0",
-    "vue-jest": "^3.0.1"
+    "vue-jest": "^3.0.1",
+    "webpack-api-mocker": "^1.6.3"
   },
   "jest": {
     "testEnvironment": "node",
@@ -49,6 +51,8 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
     },
-    "setupFiles": ["jest-localstorage-mock"]
+    "setupFiles": [
+      "jest-localstorage-mock"
+    ]
   }
 }

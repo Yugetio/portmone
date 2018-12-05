@@ -1,4 +1,4 @@
-import { LOGIN, REG, LOGOUT, DELETE_USER, SET_TOKEN, EDIT_USER_DATA } from '../names/user';
+import { LOGIN, REG, LOGOUT, DELETE_USER, SET_TOKEN, EDIT_USER_DATA, GET_USER_DATA } from '../names/user';
 import axios from 'axios';
 
 const state = {
@@ -29,7 +29,7 @@ const actions = {
    */
   [LOGIN]: ({ commit }, { email, password }) => {
     return new Promise((resolve, reject) => {
-      axios.post('/auth', {
+      axios.post('/api/auth', {
         email,
         password
       })
@@ -54,7 +54,7 @@ const actions = {
    */
   [REG]: ({ commit }, { email, password }) => {
     return new Promise((resolve, reject) => {
-      axios.post('/user', {
+      axios.post('/api/user', {
         email,
         password
       })
@@ -79,7 +79,7 @@ const actions = {
    */
   [EDIT_USER_DATA]: ({ commit }, { email, password }) => {
     return new Promise((resolve, reject) => {
-      axios.post('/user', {
+      axios.put('/api/user', {
         email,
         password
       })
@@ -98,6 +98,7 @@ const actions = {
       })
     })
   },
+  // Потрібно читати дані user-a [GET_USER_DATA]: ({ commit })
   [LOGOUT]: ({ commit }) => {
     return new Promise((resolve, reject) => {
       delete axios.defaults.headers.common['Authorization']

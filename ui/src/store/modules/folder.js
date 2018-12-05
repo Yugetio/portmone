@@ -2,28 +2,8 @@ import { SET_CURRENT_FOLDER, SET_FOLDERS, GET_CURRENT_FOLDER, GET_FOLDERS, CREAT
 import axios from 'axios';
 
 const state = {
-  folders: [
-    {
-      name: 'a',
-      id: 1,
-      parentId: null
-    },
-    {
-      name: 'b',
-      id: 2,
-      parentId: null
-    },
-    {
-      name: 'c',
-      id: 3,
-      parentId: null
-    }
-  ],
-   currentFolder: {
-     id: null,
-     parentId: null,
-     name: ''
-   } 
+  folders: [],
+  currentFolder: {}
 }
 
 
@@ -39,8 +19,9 @@ const mutations = {
   /**
    * @param { Array } playload
    */
-  [SET_FOLDERS]: (stage, playload) => {
-    stage.folders = playload;
+  [SET_FOLDERS]: (state, playload) => {
+
+    state.folders = playload;
   }
 }
 
@@ -51,7 +32,8 @@ const actions = {
    */
   [GET_CURRENT_FOLDER]: ({ commit }, id = null) => {
     return new Promise((resolve, reject) => {
-      axios.get(`/currentFolder/${id}`)
+      const url = '/api/currentFolder' + (id ? `/${id}` : '');
+      axios.get(url)
       .then(res => {
         commit(SET_CURRENT_FOLDER, res.data)
         resolve()
@@ -66,7 +48,8 @@ const actions = {
    * @param { Integer or Null } id
    */
   [GET_FOLDERS]: ({ commit }, id = null) => {
-    axios.get(`/folder/${id}`)
+    const url = '/api/folder' + (id ? `/${id}` : '');
+    axios.get(url)
     .then(res => {
       commit(SET_FOLDERS, res.data)
     })
@@ -80,9 +63,9 @@ const actions = {
    */
   [CREATE_FOLDER]: ({ dispatch }, nameFolder = '') => {
     return new Promise((resolve, reject) => {
-      axios.post('/folder', nameFolder)
+      axios.post('/api/folder', nameFolder)
       .then(() => {
-        dispatch(GET_FOLDERS)
+        // dispatch(GET_FOLDERS)
         resolve()
       })
       .catch(error => {
@@ -95,7 +78,7 @@ const actions = {
    *  @param { Integer } id
    */
   [DELETE_FOLDER]: ({ dispatch }, id) => {
-    axios.delete('/folder', id)
+    axios.delete(`/api/folder/${id}`) // В DELETE метода немає body
     .then(() => {
       dispatch(GET_FOLDERS)
     })
@@ -109,7 +92,7 @@ const actions = {
    */
   [RENAME_FOLDER]: ({ dispatch }, folder) => {
     return new Promise((resolve, reject) => {
-      axios.put('/folder', {
+      axios.put('/api/folder/' + folder.id, { // в PUT кразе передавати id в url
         id: folder.id,
         nameFolder: folder.name
       })
@@ -132,7 +115,7 @@ const getters = {
   /**
    * @return { Object }
    */
-  getCurrentFolder: state => state.currentFolder
+  getCurrentFolder: state => state.currentFolder,
 }
 
 export default {

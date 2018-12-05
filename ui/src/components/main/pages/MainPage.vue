@@ -1,24 +1,26 @@
 <template>
+
 <section class="content">
   <section class="forma">
-    <Forma v-if="this.$route.path === '/'"></Forma>
+    <LoginForm v-if="this.$route.path === '/'"></LoginForm>
     <Registration v-else></Registration>
   </section>
 
-  <section class="description">
-    <Description></Description>
-  </section>
+  <Description></Description> <!-- Не потрібно робити обгортку ... якщо її можна зробити всередині -->
+
 </section>
+
 </template>
 
 <script>
-import Forma from '../../main/elements/forma/LoginForm.vue';
+
+import LoginForm from '../../main/elements/forma/LoginForm.vue';
 import Description from '../../main/elements/description/Description.vue';
 import Registration from '../../main/elements/forma/RegistrationForm.vue';
 
 export default {
   components: {
-    Forma,
+    LoginForm,
     Description,
     Registration
   }
@@ -26,5 +28,19 @@ export default {
 </script>
 
 <style>
-@import '../../../assets/style/main.css';
+
+.content {
+  flex: 1;
+  white-space: pre-line;
+  -ms-flex-preferred-size: auto;
+  background: none;
+}
+
+.forma {
+  display: flex;
+  background: url(./../../../assets/images/bg-section-welcome.jpg) repeat;
+  height: 700px;
+  background-size: cover;
+}
+
 </style>

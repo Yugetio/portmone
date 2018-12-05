@@ -1,12 +1,17 @@
 const path = require('path')
 const pkg = require('./package')
 
+// Нам потрібен Mock щоб не залежати від back-end
+// Для цього ставимо webpack-api-mocker
+
+const apiMocker = require('webpack-api-mocker');
+
 module.exports = {
-  // devServer: {
-  //   proxy: {
-  //     '/api': 'fot ex: http://localhost:3000'
-  //   }
-  // },
+  devServer: {
+     before(app){ // Всі запити спочатку обробляються ./mocker/index.js там всі правила, щоб тут не заважали
+         apiMocker(app, require.resolve('./mocker/index.js'))
+     }
+  },
   entry: [
     'src/polyfills.js',
     'src/index.js'
@@ -29,3 +34,4 @@ module.exports = {
     })
   ]
 }
+

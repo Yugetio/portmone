@@ -2,28 +2,7 @@ import { SET_CARDS, GET_CARDS, CREATE_CARD, EDIT_CARD, DELETE_CARD } from '../na
 import axios from 'axios';
 
 const state = {
-  cards: [
-    {
-      id: 1,
-      number: '1111111111111',
-      cash: '121'
-    },
-    {
-      id: 2,
-      number: '22222222222222',
-      cash: '121'
-    },
-    {
-      id: 3,
-      number: '33333333333333',
-      cash: '121'
-    },
-    {
-      id: 4,
-      number: '444444444444444',
-      cash: '121'
-    }
-  ]
+  cards: []
 }
 
 const mutations = {
@@ -42,7 +21,7 @@ const actions = {
    * @param {Integer} folderId
    */
   [GET_CARDS]: ({ commit }, folderId ) => {
-     axios.get('/card', folderId)
+     axios.get('/api/card', folderId)
     .then(res => {
       commit(SET_CARDS, res.data)
     })
@@ -77,7 +56,7 @@ const actions = {
    */
   [EDIT_CARD]: ({ dispatch }, { id, number, cash }) => {
     return new Promise((resolve, reject) => {
-      axios.put('/card', {
+      axios.put('/api/card', {
         id,
         number,
         cash
@@ -96,7 +75,7 @@ const actions = {
    * @param { Integer } id
    */
   [DELETE_CARD]: ({ dispatch }, id) => {
-    axios.delete('/card',id)
+    axios.delete('/api/card',id)
     .then(() => {
       dispatch(GET_CARDS)
     })
